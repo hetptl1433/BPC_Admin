@@ -17,20 +17,25 @@ import {
   Row,
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
-import { createImages, getImages, removeImages, updateImages } from "../../functions/Gallery/Gallery";
+import { createImages, getImages, removeImages, updateImages } from "../../functions/Services/Service";
 const initialState = {
-  title: "",
+  name: "",
+  shortdesc:"",
+    desc:"",
+    image:"",   
   sortOrder:"",
-  image: "",
   IsActive: false,
 };
 
-const Gallery = () => {
+const Service = () => {
   const [values, setValues] = useState(initialState);
-  const { title, sortOrder, image, IsActive } = values;
+  const { name, shortdesc, desc, image, sortOrder, IsActive } = values;
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
@@ -42,10 +47,12 @@ const Gallery = () => {
   const [remove_id, setRemove_id] = useState("");
 
   const [data, setData] = useState([]);
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
+
+
+useEffect(() => {
+  fetchCategories();
+}, []);
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -76,12 +83,14 @@ const Gallery = () => {
         console.log(res);
         setValues({
           ...values,
-          title: res.title,
+          name: res.name,
+          shortdesc: res.shortdesc,
+            desc: res.desc,
+            image: res.image,
           sortOrder: res.sortOrder,
-          image: res.image,
           IsActive: res.IsActive,
         });
-        console.log("res", values.title);
+        console.log("res", values.name);
       })
       .catch((err) => {
         console.log(err);
@@ -89,9 +98,13 @@ const Gallery = () => {
   };
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setValues({ ...values, name: e.target.value });
   };
+const HandleShortDesc = (e) => {
+  setValues({ ...values, shortdesc: e.target.value });
 
+};
+ 
  const handleSortnum = (e) => {
   setValues({ ...values, sortOrder: e.target.value });
   };
@@ -117,7 +130,27 @@ const Gallery = () => {
     if (values.title !== "") {
       setErrSR(false);
     }
-
+      if (values.desc === "") {
+      errors.title = "Description is required!";
+      setErrSR(true);
+    }
+    if (values.desc !== "") {
+      setErrSR(false);
+    }
+  if (values.shortdesc === "") {
+      errors.title = "short Description is required!";
+      setErrSR(true);
+    }
+    if (values.shortdesc !== "") {
+      setErrSR(false);
+    }
+  if (values.sortOrder === "") {
+      errors.title = "short order is required!";
+      setErrSR(true);
+    }
+    if (values.sortOrder !== "") {
+      setErrSR(false);
+    }
     if (values.image === "") {
       errors.image = "Image is required!";
       setErrBI(true);
@@ -147,7 +180,10 @@ const Gallery = () => {
 
       formdata.append("myFile", values.image);
       formdata.append("sortOrder", values.sortOrder);
-      formdata.append("title", values.title);
+      formdata.append("name", values.name);
+      formdata.append("desc", values.desc);
+      formdata.append("shortdesc", values.shortdesc);
+
       formdata.append("IsActive", values.IsActive);
 
       createImages(formdata)
@@ -188,9 +224,12 @@ const Gallery = () => {
     if (Object.keys(errors).length === 0) {
       const formdata = new FormData();
 
-      formdata.append("myFile", values.image);
-      formdata.append("title", values.title);
+   formdata.append("myFile", values.image);
       formdata.append("sortOrder", values.sortOrder);
+      formdata.append("name", values.name);
+      formdata.append("desc", values.desc);
+      formdata.append("shortdesc", values.shortdesc);
+
       formdata.append("IsActive", values.IsActive);
 
       updateImages(_id, formdata)
@@ -233,7 +272,7 @@ const Gallery = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/galleryimg`,
+        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/serviceimage`,
         {
           skip: skip,
           per_page: perPage,
@@ -286,6 +325,9 @@ const Gallery = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
+   const handleFilter1 = (e) => {
+  
+   };
   const renderImage = (uploadimage) => {
     const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
 
@@ -300,10 +342,10 @@ const Gallery = () => {
 
   const col = [
     {
-      name: "title",
-      selector: (row) => row.title,
+      name: "name",
+      selector: (row) => row.name,
       sortable: true,
-      sortField: "title",
+      sortField: "name",
       maxWidth: "150px",
     },
       {
@@ -363,7 +405,7 @@ const Gallery = () => {
     },
   ];
 
-  document.title = "Gallery | Neon11";
+  document.title = "Services | BPC";
 
   return (
     <React.Fragment>
@@ -376,7 +418,7 @@ const Gallery = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Gallery </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Services </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -388,6 +430,7 @@ const Gallery = () => {
                           value={filter}
                           defaultChecked={true}
                           onChange={handleFilter}
+                          onClick={handleFilter1}
                         />
                         <Label className="form-check-label ms-2">Active</Label>
                       </div>
@@ -453,6 +496,7 @@ const Gallery = () => {
           tog_list();
         }}
         centered
+        fullscreen
       >
         <ModalHeader
           className="bg-light p-3"
@@ -461,42 +505,68 @@ const Gallery = () => {
             setIsSubmit(false);
           }}
         >
-          Add Gallery Images
+          Add Services
         </ModalHeader>
         <form>
           <ModalBody>
-            
-           <div className="form-floating mb-3">
-  <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className={`form-control ${validClassSR}`}
+                required
+                name="name"
+                value={name}
+                onChange={handleChange}
+                placeholder="Enter Name"
+              />
+              <label>
+                Name<span className="text-danger">*</span>
+              </label>
+              {isSubmit && <p className="text-danger">{formErrors.name}</p>}
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className={`form-control ${validClassSR}`}
+                required
+                name="short description"
+                value={shortdesc}
+                onChange={HandleShortDesc}
+                placeholder="Enter short description"
+              />
+              <label>
+                short description<span className="text-danger">*</span>
+              </label>
+              {isSubmit && (
+                <p className="text-danger">{formErrors.shortdesc}</p>
+              )}
+            </div>
+            <Col lg={12}>
+              <div className="mb-3">
+                <label htmlFor="role-field" className="form-label">
+                  Description
+                  <span className="text-danger">*</span>
+                </label>
+                <CKEditor
+                  key={"desc_" + _id}
+                  editor={ClassicEditor}
+                  data={values.desc}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
 
-    
-</select>
-  <label>
-    Title<span className="text-danger">*</span>{" "}
-  </label>
-</div>
-          <div className="form-floating mb-3 col-md-6">
+                    values.desc = data;
+                  }}
+                />
+
+                {isSubmit && <p className="text-danger">{formErrors.desc}</p>}
+              </div>
+            </Col>
+
+            <div className="form-floating mb-3 col-md-6">
               <Input
                 type="number"
                 className={validClassSR}
-                placeholder="Enter title "
+                placeholder="Enter sortOrder "
                 required
                 name="sortOrder"
                 value={sortOrder}
@@ -505,11 +575,13 @@ const Gallery = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.sortOrder}</p>
+              )}
             </div>
             <Col lg={6}>
               <label>
-                Image <span className="text-danger">*</span>
+                Icon <span className="text-danger">*</span>
               </label>
 
               <input
@@ -520,9 +592,7 @@ const Gallery = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.image}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -593,32 +663,69 @@ const Gallery = () => {
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
-               <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className={`form-control ${validClassSR}`}
+                required
+                name="Name"
+                value={name}
+                onChange={handleChange}
+              />
+              <label>
+                Name<span className="text-danger">*</span>
+              </label>
+              {isSubmit && <p className="text-danger">{formErrors.name}</p>}
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className={`form-control ${validClassSR}`}
+                required
+                name="short description"
+                value={shortdesc}
+                onChange={HandleShortDesc}
+                placeholder="Enter short description"
+              />
+              <label>
+                short description<span className="text-danger">*</span>
+              </label>
+              {isSubmit && (
+                <p className="text-danger">{formErrors.shortdesc}</p>
+              )}
+            </div>
+            <Col lg={12}>
+              <div className="mb-3">
+                <label htmlFor="role-field" className="form-label">
+                  Description
+                  <span className="text-danger">*</span>
+                </label>
+                <CKEditor
+                  key={"desc_" + _id}
+                  editor={ClassicEditor}
+                  data={values.desc}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
 
-    
+                    values.desc = data;
+                  }}
+                />
 
-    {/* Add more options as needed */}
-  </select>
+                {isSubmit && <p className="text-danger">{formErrors.desc}</p>}
+              </div>
+            </Col>
+            <div className="form-floating mb-3 mt-3 col-md-6">
+              <Input
+                type="number"
+                className={validClassSR}
+                placeholder="Enter title "
+                required
+                name="sortOrder"
+                value={sortOrder}
+                onChange={handleSortnum}
+              />
               <Label>
-                title<span className="text-danger">*</span>{" "}
+                Sort Order<span className="text-danger">*</span>{" "}
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.title}</p>}
             </div>
@@ -636,9 +743,7 @@ const Gallery = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.image}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -651,22 +756,6 @@ const Gallery = () => {
               ) : null}
             </Col>
 
-         
-         <div className="form-floating mb-3 mt-3 col-md-6">
-              <Input
-                type="number"
-                className={validClassSR}
-                placeholder="Enter title "
-                required
-                name="sortOrder"
-                value={sortOrder}
-                onChange={handleSortnum}
-              />
-              <Label>
-                Sort Order<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
-            </div>
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -768,4 +857,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default Service;

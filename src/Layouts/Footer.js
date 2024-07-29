@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className="footer">
         <Container fluid>
           <Row>
-            <Col sm={6}>{new Date().getFullYear()} © Neon11</Col>
+            <Col sm={6}>{new Date().getFullYear()} © BPC India</Col>
             <Col sm={6}>
               <div className="text-sm-end d-none d-sm-block">
                 Developed by <b>BarodaWeb: The e-Catalogue Designer</b>

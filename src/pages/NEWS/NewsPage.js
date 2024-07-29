@@ -19,32 +19,42 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
 import DataTable from "react-data-table-component";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { createImages, getImages, removeImages, updateImages } from "../../functions/Gallery/Gallery";
+import { createNewsdesc, getNewsdesc, removeNewsdesc, updateNewsdesc } from "../../functions/NewsFun/Function";
+import TextArea from "antd/es/input/TextArea";
+
 const initialState = {
-  title: "",
-  sortOrder:"",
-  image: "",
+    Title: "",
+    Desc: "",
   IsActive: false,
 };
 
-const Gallery = () => {
+const NewsPage = () => {
   const [values, setValues] = useState(initialState);
-  const { title, sortOrder, image, IsActive } = values;
+//   const { Title, subTitle, Desc, ytLink, IsActive } = values;
+const [Title, setTitle] = useState("");
+const [Desc, setDesc] = useState("");
+const [IsActive, setIsActive] = useState(false);
+
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
-  
+
+  const [errTI, setErrTI] = useState(false);
+  const [errSTI, setErrSTI] = useState(false);
+  const [errDS, setErrDS] = useState(false);
+  const [errYT, setErrYT] = useState(false);
 
   const [query, setQuery] = useState("");
 
   const [_id, set_Id] = useState("");
   const [remove_id, setRemove_id] = useState("");
 
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const [categories, setCategories] = useState([]);
+
+
 
   useEffect(() => {
     console.log(formErrors);
@@ -58,6 +68,9 @@ const Gallery = () => {
     setmodal_list(!modal_list);
     setValues(initialState);
     setIsSubmit(false);
+    setTitle("");
+    setDesc("");
+    setIsActive(false);
   };
 
   const [modal_delete, setmodal_delete] = useState(false);
@@ -71,17 +84,13 @@ const Gallery = () => {
     setmodal_edit(!modal_edit);
     setIsSubmit(false);
     set_Id(_id);
-    getImages(_id)
+    getNewsdesc(_id)
       .then((res) => {
         console.log(res);
-        setValues({
-          ...values,
-          title: res.title,
-          sortOrder: res.sortOrder,
-          image: res.image,
-          IsActive: res.IsActive,
-        });
-        console.log("res", values.title);
+        setTitle(res.Title);
+        setDesc(res.Desc);
+        setIsActive(res.IsActive)
+        
       })
       .catch((err) => {
         console.log(err);
@@ -92,85 +101,70 @@ const Gallery = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
- const handleSortnum = (e) => {
-  setValues({ ...values, sortOrder: e.target.value });
-  };
   const handleCheck = (e) => {
-    setValues({ ...values, IsActive: e.target.checked });
+    // setValues({ ...values, IsActive: e.target.checked });
+    setIsActive(e.target.checked)
   };
-
-  const [errSR, setErrSR] = useState(false);
-  const [errBI, setErrBI] = useState(false);
-//   const [errB1, setErrB1] = useState(false);
-//   const [errB2, setErrB2] = useState(false);
-//   const [errB3, setErrB3] = useState(false);
-//   const [errB4, setErrB4] = useState(false);
-//   const [errDS, setErrDS] = useState(false);
-
-  const validate = (values) => {
-    const errors = {};
-
-    if (values.title === "") {
-      errors.title = "title is required!";
-      setErrSR(true);
-    }
-    if (values.title !== "") {
-      setErrSR(false);
-    }
-
-    if (values.image === "") {
-      errors.image = "Image is required!";
-      setErrBI(true);
-    }
-    if (values.image !== "") {
-      setErrBI(false);
-    }
-
-    return errors;
-  };
-
-  const validClassSR =
-    errSR && isSubmit ? "form-control is-invalid" : "form-control";
-
-  const validClassBI =
-    errBI && isSubmit ? "form-control is-invalid" : "form-control";
 
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    let errors = validate(values);
+    console.log("country", values);
+    let errors = validate(Title, Desc, );
     setFormErrors(errors);
     setIsSubmit(true);
 
     if (Object.keys(errors).length === 0) {
+        // setLoadingOption(true);
       const formdata = new FormData();
 
-      formdata.append("myFile", values.image);
-      formdata.append("sortOrder", values.sortOrder);
-      formdata.append("title", values.title);
-      formdata.append("IsActive", values.IsActive);
-
-      createImages(formdata)
-        .then((res) => {
-          setmodal_list(!modal_list);
-          setValues(initialState);
-          setCheckImagePhoto(false);
-          setIsSubmit(false);
-          setFormErrors({});
-          setPhotoAdd("");
-
-          fetchCategories();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      formdata.append("Title", Title);
+      formdata.append("Desc", Desc);
+      formdata.append("IsActive", IsActive);
+      createNewsdesc(formdata)
+      .then((res) => {
+        console.log(res);
+        setTitle("");
+        setDesc("");
+        setIsActive(false);
+        fetchCategories();
+        setmodal_list(!modal_list);
+      })
+      .catch((err) => {
+        console.log("Error from server:", err);
+      });
     }
+
+    // createNewsdesc(values)
+    //   .then((res) => {
+    //     setmodal_list(!modal_list);
+    //     setValues(initialState);
+    //     fetchCategories();
+        // if (res.isOk) {
+        //   setmodal_list(!modal_list);
+        //   setValues(initialState);
+        //   fetchCategories();
+        // } else {
+        //   if (res.field === 1) {
+        //     setErrCN(true);
+        //     setFormErrors({
+        //       categoryName: "This Category name is already exists!",
+        //     });
+        //   }
+        // }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
-    removeImages(remove_id)
+    removeNewsdesc(remove_id)
       .then((res) => {
+        setTitle("");
+        setDesc("");
+        setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
       })
@@ -181,31 +175,60 @@ const Gallery = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    let errors = validate(values);
-    setFormErrors(errors);
+    let erros = validate(Title, Desc,);
+    setFormErrors(erros);
     setIsSubmit(true);
 
-    if (Object.keys(errors).length === 0) {
-      const formdata = new FormData();
+    if (Object.keys(erros).length === 0) {
 
-      formdata.append("myFile", values.image);
-      formdata.append("title", values.title);
-      formdata.append("sortOrder", values.sortOrder);
-      formdata.append("IsActive", values.IsActive);
+        const formdata = new FormData();
 
-      updateImages(_id, formdata)
+        formdata.append("Title", Title);
+        formdata.append("Desc", Desc);
+        formdata.append("IsActive", IsActive);
+      updateNewsdesc(_id, formdata)
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
-          setPhotoAdd("");
-
-          setCheckImagePhoto(false);
         })
         .catch((err) => {
-          console.log(err);
+            console.log("Error from server:", err);
         });
     }
   };
+
+  const validate = (Title, Desc) => {
+    const errors = {};
+
+    if (Title === "") {
+      errors.Title = "Title is required!";
+      setErrTI(true);
+    }
+    if (Title !== "") {
+      setErrTI(false);
+    }
+  
+    if (Desc === "") {
+      errors.Desc = "Description is required!";
+      setErrDS(true);
+    }
+    if (Desc !== "") {
+      setErrDS(false);
+    }
+ 
+
+    return errors;
+  };
+
+  const validClassTitle =
+    errTI && isSubmit ? "form-control is-invalid" : "form-control";
+  const validClassSubTitle =
+    errSTI && isSubmit ? "form-control is-invalid" : "form-control";
+  const validClassDesc =
+    errDS && isSubmit ? "form-control is-invalid" : "form-control";
+  const validClassYTLink = 
+    errYT && isSubmit ? "form-control is-invalid" : "form-control";
+  
 
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
@@ -223,6 +246,9 @@ const Gallery = () => {
     // fetchUsers(1); // fetch page 1 of users
   }, []);
 
+  useEffect(() => {
+    fetchCategories();
+  }, [pageNo, perPage, column, sortDirection, query, filter]);
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -233,7 +259,7 @@ const Gallery = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/galleryimg`,
+        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/Newsdesc`,
         {
           skip: skip,
           per_page: perPage,
@@ -247,10 +273,10 @@ const Gallery = () => {
         if (response.length > 0) {
           let res = response[0];
           setLoading(false);
-          setData(res.data);
+          setCategories(res.data);
           setTotalRows(res.count);
         } else if (response.length === 0) {
-          setData([]);
+          setCategories([]);
         }
         // console.log(res);
       });
@@ -262,23 +288,6 @@ const Gallery = () => {
     setPageNo(page);
   };
 
-  const [photoAdd, setPhotoAdd] = useState();
-  const [checkImagePhoto, setCheckImagePhoto] = useState(false);
-
-  const PhotoUpload = (e) => {
-    if (e.target.files.length > 0) {
-      const image = new Image();
-
-      let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
-    //   abtImage=imageurl;
-      setPhotoAdd(imageurl);
-      
-      setValues({ ...values, image: e.target.files[0] });
-      setCheckImagePhoto(true);
-    }
-  };
-
   const handlePerRowsChange = async (newPerPage, page) => {
     // setPageNo(page);
     setPerPage(newPerPage);
@@ -286,46 +295,30 @@ const Gallery = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
-
-    return (
-      <img
-        src={imageUrl}
-        alt="Image"
-        style={{ width: "75px", height: "75px", padding: "5px" }}
-      />
-    );
-  };
-
   const col = [
     {
-      name: "title",
-      selector: (row) => row.title,
+      name: "Title",
+      selector: (row) => row.Title,
       sortable: true,
-      sortField: "title",
+      sortField: "Title",
       maxWidth: "150px",
     },
+ 
       {
-      name: "sortOrder",
-      selector: (row) => row.sortOrder,
-      sortable: true,
-      sortField: "sortOrder",
-      maxWidth: "150px",
-    },
+        name: "Description",
+        selector: (row) => row.Desc,
+        sortable: true,
+        sortField: "Description",
+        maxWidth: "250px",
+      },
+
     {
-      name: "image",
-      selector: (row) => renderImage(row.image),
+      name: "Status",
+      selector: (row) => {
+        return <p>{row.IsActive ? "Active" : "InActive"}</p>;
+      },
       sortable: false,
-      sortField: "image",
-      minWidth: "150px",
-    },
-    {
-        name: "Active",
-        selector:(row) => row.IsActive?"Active" : "In Active",
-        sortable: false,
-        sortField: "Active",
-        maxWidth: "150px",
+      sortField: "Status",
     },
     {
       name: "Action",
@@ -363,20 +356,24 @@ const Gallery = () => {
     },
   ];
 
-  document.title = "Gallery | Neon11";
+  document.title = "NEWS | BPC";
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="Gallery" pageTitle="CMS" />
+          <BreadCrumb
+            maintitle="Home- YT Description"
+            title="Home- YT Description"
+            pageTitle="CMS "
+          />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Gallery </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Home- NEWS</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -424,7 +421,7 @@ const Gallery = () => {
                     <div className="table-responsive table-card mt-1 mb-1 text-right">
                       <DataTable
                         columns={col}
-                        data={data}
+                        data={categories}
                         progressPending={loading}
                         sortServer
                         onSort={(column, sortDirection, sortedRows) => {
@@ -447,6 +444,7 @@ const Gallery = () => {
       </div>
 
       {/* Add Modal */}
+      
       <Modal
         isOpen={modal_list}
         toggle={() => {
@@ -461,80 +459,49 @@ const Gallery = () => {
             setIsSubmit(false);
           }}
         >
-          Add Gallery Images
+          Add Description
         </ModalHeader>
         <form>
           <ModalBody>
-            
-           <div className="form-floating mb-3">
-  <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
-
-    
-</select>
-  <label>
-    Title<span className="text-danger">*</span>{" "}
-  </label>
-</div>
-          <div className="form-floating mb-3 col-md-6">
+            <div className="form-floating mb-3">
               <Input
-                type="number"
-                className={validClassSR}
-                placeholder="Enter title "
+                type="text"
+                className={validClassTitle}
+                placeholder="Enter Title"
                 required
-                name="sortOrder"
-                value={sortOrder}
-                onChange={handleSortnum}
+                name="Title"
+                value={Title}
+                onChange={(e)=>{setTitle(e.target.value)}}
               />
               <Label>
-                Sort Order<span className="text-danger">*</span>{" "}
+              Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
-            </div>
-            <Col lg={6}>
-              <label>
-                Image <span className="text-danger">*</span>
-              </label>
-
-              <input
-                type="file"
-                name="image"
-                className={validClassBI}
-                // accept="images/*"
-                accept=".jpg, .jpeg, .png"
-                onChange={PhotoUpload}
-              />
               {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
+                <p className="text-danger">{formErrors.Title}</p>
               )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
-              ) : null}
-            </Col>
+            </div>
+            
+            <div className="mb-3">
+            <Label>
+                Description <span className="text-danger">*</span>
+              </Label>
+            <CKEditor
+                                          key={"Desc_" + _id}
+                                          editor={ClassicEditor}
+                                          data={Desc}
+                                          
+                                          onChange={(event, editor) => {
+                                            const data = editor.getData();
 
+                                            setDesc(data);
+                                          }}
+                                        />
+              
+              {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
+             
+            </div>
+            
+           
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -563,8 +530,6 @@ const Gallery = () => {
                   setmodal_list(false);
                   setValues(initialState);
                   setIsSubmit(false);
-                  setCheckImagePhoto(false);
-                  setPhotoAdd("");
                 }}
               >
                 Cancel
@@ -589,84 +554,57 @@ const Gallery = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Banner
+          Edit Description
         </ModalHeader>
         <form>
           <ModalBody>
           <div className="form-floating mb-3">
-               <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
-
-    
-
-    {/* Add more options as needed */}
-  </select>
-              <Label>
-                title<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
-            </div>
-
-            <Col lg={6}>
-              <label>
-                Image <span className="text-danger">*</span>
-              </label>
-
-              <input
-                type="file"
-                name="image"
-                className={validClassBI}
-                // accept="images/*"
-                accept=".jpg, .jpeg, .png"
-                onChange={PhotoUpload}
-              />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
-              ) : null}
-            </Col>
-
-         
-         <div className="form-floating mb-3 mt-3 col-md-6">
               <Input
-                type="number"
-                className={validClassSR}
-                placeholder="Enter title "
+                type="text"
+                className={validClassTitle}
+                placeholder="Enter Title"
                 required
-                name="sortOrder"
-                value={sortOrder}
-                onChange={handleSortnum}
+                name="Title"
+                value={Title}
+                onChange={(e)=>{setTitle(e.target.value)}}
               />
               <Label>
-                Sort Order<span className="text-danger">*</span>{" "}
+              Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.Title}</p>
+              )}
             </div>
+       
+            <div className="mb-3">
+              {/* <TextArea
+                type="text"
+                className={validClassDesc}
+                placeholder="Enter Description"
+                required
+                name="Desc"
+                value={Desc}
+                rows={15}
+                onChange={(e)=>{setDesc(e.target.value)}}
+              /> */}
+              <Label>
+                Description <span className="text-danger">*</span>
+              </Label>
+              <CKEditor
+                                          key={"Desc_" + _id}
+                                          editor={ClassicEditor}
+                                          data={Desc}
+                                          
+                                          onChange={(event, editor) => {
+                                            const data = editor.getData();
+
+                                            setDesc(data);
+                                          }}
+                                        />
+              
+              {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
+            </div>
+            
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -697,9 +635,7 @@ const Gallery = () => {
                 onClick={() => {
                   setmodal_edit(false);
                   setIsSubmit(false);
-                  setCheckImagePhoto(false);
                   setFormErrors({});
-                  setPhotoAdd("");
                 }}
               >
                 Cancel
@@ -723,7 +659,7 @@ const Gallery = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Category
         </ModalHeader>
         <form>
           <ModalBody>
@@ -768,4 +704,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default NewsPage;

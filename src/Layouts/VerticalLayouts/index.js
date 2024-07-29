@@ -231,7 +231,7 @@ const VerticalLayout = (props) => {
                       className="nav-link menu-link"
                       to="/neonsigns-category"
                     >
-                      <span data-key="t-apps">Neon Signs Category </span>
+                      <span data-key="t-apps">BPC Signs Category </span>
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -323,6 +323,16 @@ const VerticalLayout = (props) => {
           //   id="sidebarApps"
         >
           <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/galleryimg">
+                <span data-key="t-apps">Gallery Images</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/service">
+                <span data-key="t-apps">Services</span>
+              </Link>
+            </li>
             {/* <li className="nav-item">
               <Link className="nav-link menu-link" to="/blogs">
                 <span data-key="t-apps">Blogs </span>
@@ -359,11 +369,7 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">About Us</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link menu-link" to="/galleryimg">
-                <span data-key="t-apps">Gallery Images</span>
-              </Link>
-            </li>
+            
             <li className="nav-item">
               <Link to="/ledboard-details" className="nav-link">
                 LED Board Details

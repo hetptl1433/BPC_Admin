@@ -31,6 +31,10 @@ import NeonDesc from "../pages/NeonSigns/NeonDesc";
 import Logo from "../pages/Logo/Logo";
 import NeonGoProducts from "../pages/NeonGoProducts/NeonGoProducts";
 import ControllerProducts from "../pages/ControllerProducts/ControllerProducts";
+import Service from "../pages/Services/Service";
+import { components } from "react-select";
+import NewsPage from "../pages/NEWS/NewsPage";
+
 const authProtectedRoutes = [
   // { path: "/dashboard", component: <DashboardCrm /> },
   { path: "/profile", component: <UserProfile /> },
@@ -62,6 +66,9 @@ const authProtectedRoutes = [
   { path: "/neondesc-details", component: <NeonDesc /> },
   { path: "/neongo-products", component: <NeonGoProducts /> },
   { path: "/controller-products", component: <ControllerProducts /> },
+  { path: "/service", component: <Service/> },
+  { path: "/news", component: <NewsPage></NewsPage>},
+
 
 
   {
