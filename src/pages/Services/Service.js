@@ -259,8 +259,10 @@ const HandleShortDesc = (e) => {
   };
 
   useEffect(() => {
-    // fetchUsers(1); // fetch page 1 of users
-  }, []);
+    fetchCategories();
+  }, [pageNo, perPage, column, sortDirection, query, filter]);
+
+
 
 
   const fetchCategories = async () => {
@@ -325,9 +327,7 @@ const HandleShortDesc = (e) => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-   const handleFilter1 = (e) => {
   
-   };
   const renderImage = (uploadimage) => {
     const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
 
@@ -430,7 +430,6 @@ const HandleShortDesc = (e) => {
                           value={filter}
                           defaultChecked={true}
                           onChange={handleFilter}
-                          onClick={handleFilter1}
                         />
                         <Label className="form-check-label ms-2">Active</Label>
                       </div>
@@ -497,6 +496,7 @@ const HandleShortDesc = (e) => {
         }}
         centered
         fullscreen
+        
       >
         <ModalHeader
           className="bg-light p-3"

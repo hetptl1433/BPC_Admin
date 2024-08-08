@@ -39,6 +39,15 @@ import LocationNumUs from "../pages/LocationNum/LocationNum";
 import ExtraBooking from "../pages/ExtraBooking/ExtraBooking";
 import Content from "../pages/Content/Content";
 import EmailPage from "../pages/Email/EmailPage";
+import HallBooking from "../pages/HallBooking/HallBooking";
+import HallImageMaster from "../pages/Category/HallImageMaster";
+import HalleBoard from "../pages/HallImage/HallImage";
+import TestCategory from "../pages/TestCat/TestCat";
+import TestCatMaster from "../pages/TextCatMaster/TextCatMaster";
+import Points from "../pages/Points/Point";
+import PointMaster from "../pages/PointMaster/PointMaster";
+import TestQuestionMaster from "../pages/TestQuestionMaster/TestQuestionMaster";
+// import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
   // { path: "/dashboard", component: <DashboardCrm /> },
@@ -49,36 +58,43 @@ const authProtectedRoutes = [
   { path: "/location", component: <CompanyLocation /> },
   { path: "/admin-user", component: <AdminUser /> },
   { path: "/company-details", component: <CompanyDetails /> },
-  {path:"/contact",component:<ContactUs/>},
-  {path:"/socialmedia", component:<SocialMedia/>},
-  {path:"/logo", component:<Logo/>},
-  {path:"/aboutus", component:<AboutUs/>},
-  {path:"/galleryimg", component:<Gallery/>},
-  {path:"/ytdesc", component:<YTDesc/>},
-  {path:"/home-about", component:<HomeAbout/>},
-  {path:"/vision-mission", component:<Visionmission/>},
+  { path: "/contact", component: <ContactUs /> },
+  { path: "/socialmedia", component: <SocialMedia /> },
+  { path: "/logo", component: <Logo /> },
+  { path: "/aboutus", component: <AboutUs /> },
+  { path: "/galleryimg", component: <Gallery /> },
+  { path: "/ytdesc", component: <YTDesc /> },
+  { path: "/home-about", component: <HomeAbout /> },
+  { path: "/vision-mission", component: <Visionmission /> },
   { path: "/category", component: <CategoryMaster /> },
-  { path: "/neonsigns-category", component: <NeonSignsCategoryMaster/> },
-  { path: "/led-category", component: <LEDCategoryMaster/> },
-  {path:"/review",component:<Review/>},
+  { path: "/neonsigns-category", component: <NeonSignsCategoryMaster /> },
+  { path: "/led-category", component: <LEDCategoryMaster /> },
+  { path: "/review", component: <Review /> },
   { path: "/blogs", component: <Blogs /> },
   { path: "/banner", component: <Banner /> },
   { path: "/promocode-master", component: <PromocodeMaster /> },
-  {path:"/newproject",component:<NewProject/>},
+  { path: "/newproject", component: <NewProject /> },
   { path: "/product-details", component: <ProductDetails /> },
   { path: "/ledboard-details", component: <LEDBoard /> },
   { path: "/neonsigns-details", component: <NeonSigns /> },
   { path: "/neondesc-details", component: <NeonDesc /> },
   { path: "/neongo-products", component: <NeonGoProducts /> },
   { path: "/controller-products", component: <ControllerProducts /> },
-  { path: "/service", component: <Service/> },
-  { path: "/news", component: <NewsPage></NewsPage>},
-  { path: "/courses", component: <Courses/> },
-  { path: "/locationnum", component: <LocationNumUs/> },
-  { path: "/ExtraBooking", component: <ExtraBooking/> },
-  { path: "/content", component: <Content/> },
-  { path: "/email", component: <EmailPage/> },
-
+  { path: "/service", component: <Service /> },
+  { path: "/news", component: <NewsPage></NewsPage> },
+  { path: "/courses", component: <Courses /> },
+  { path: "/locationnum", component: <LocationNumUs /> },
+  { path: "/ExtraBooking", component: <ExtraBooking /> },
+  { path: "/content", component: <Content /> },
+  { path: "/email", component: <EmailPage /> },
+  { path: "/HallBooking", component: <HallBooking /> },
+  { path: "/HallImage", component: <HallImageMaster /> },
+  { path: "/HallImagePage", component: <HalleBoard /> },
+  { path: "/TestGroup", component: <TestCategory /> },
+  { path: "/TestMaster", component: <TestCatMaster /> },
+  { path: "/Point", component: <Points /> },
+  { path: "/PointMaster", component: <PointMaster /> },
+  { path: "/TestQuestion", component: <TestQuestionMaster /> },
 
   {
     path: "/",

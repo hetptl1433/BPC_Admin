@@ -20,31 +20,32 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
-import { createImages, getImages, removeImages, updateImages } from "../../functions/Gallery/Gallery";
+
+import { createNeonSignsCategory, getNeonSignsCategory, removeNeonSignsCategory, updateNeonSignsCategory } from "../../functions/Category/NeonSignsCategory";
+
+
+import { createpoint, getpoint, removepoint, updatepoint } from "../../functions/Points/Point";
+
 const initialState = {
-  title: "",
-  sortOrder:"",
-  image: "",
+  PointName: "",
   IsActive: false,
 };
 
-const Gallery = () => {
+const Points = () => {
   const [values, setValues] = useState(initialState);
-  const { title, sortOrder, image, IsActive } = values;
+  const { PointName, IsActive } = values;
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
-  
+ 
+  const [errCN, setErrCN] = useState(false);
 
   const [query, setQuery] = useState("");
 
   const [_id, set_Id] = useState("");
   const [remove_id, setRemove_id] = useState("");
 
-  const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   fetchCategories();
-  // }, []);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     console.log(formErrors);
@@ -71,17 +72,14 @@ const Gallery = () => {
     setmodal_edit(!modal_edit);
     setIsSubmit(false);
     set_Id(_id);
-    getImages(_id)
+    getpoint(_id)
       .then((res) => {
         console.log(res);
         setValues({
           ...values,
-          title: res.title,
-          sortOrder: res.sortOrder,
-          image: res.image,
+          PointName: res.PointName,
           IsActive: res.IsActive,
         });
-        console.log("res", values.title);
       })
       .catch((err) => {
         console.log(err);
@@ -92,84 +90,47 @@ const Gallery = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
- const handleSortnum = (e) => {
-  setValues({ ...values, sortOrder: e.target.value });
-  };
   const handleCheck = (e) => {
     setValues({ ...values, IsActive: e.target.checked });
   };
 
-  const [errSR, setErrSR] = useState(false);
-  const [errBI, setErrBI] = useState(false);
-//   const [errB1, setErrB1] = useState(false);
-//   const [errB2, setErrB2] = useState(false);
-//   const [errB3, setErrB3] = useState(false);
-//   const [errB4, setErrB4] = useState(false);
-//   const [errDS, setErrDS] = useState(false);
-
-  const validate = (values) => {
-    const errors = {};
-
-    if (values.title === "") {
-      errors.title = "title is required!";
-      setErrSR(true);
-    }
-    if (values.title !== "") {
-      setErrSR(false);
-    }
-
-    if (values.image === "") {
-      errors.image = "Image is required!";
-      setErrBI(true);
-    }
-    if (values.image !== "") {
-      setErrBI(false);
-    }
-
-    return errors;
-  };
-
-  const validClassSR =
-    errSR && isSubmit ? "form-control is-invalid" : "form-control";
-
-  const validClassBI =
-    errBI && isSubmit ? "form-control is-invalid" : "form-control";
-
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
+    console.log("country", values);
     let errors = validate(values);
     setFormErrors(errors);
     setIsSubmit(true);
-
     if (Object.keys(errors).length === 0) {
-      const formdata = new FormData();
-
-      formdata.append("myFile", values.image);
-      formdata.append("sortOrder", values.sortOrder);
-      formdata.append("title", values.title);
-      formdata.append("IsActive", values.IsActive);
-
-      createImages(formdata)
+        createpoint(values)
         .then((res) => {
           setmodal_list(!modal_list);
-          setValues(initialState);
-          setCheckImagePhoto(false);
-          setIsSubmit(false);
-          setFormErrors({});
-          setPhotoAdd("");
-
-          fetchCategories();
+            setValues(initialState);
+            fetchCategories();
+          // if (res.isOk) {
+          //   setmodal_list(!modal_list);
+          //   setValues(initialState);
+          //   fetchCategories();
+          // } else {
+          //   if (res.field === 1) {
+          //     setErrCN(true);
+          //     setFormErrors({
+          //       PointName: "This Category name is already exists!",
+          //     });
+          //   }
+          // }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.log(error);
         });
     }
+
+      
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
-    removeImages(remove_id)
+    removepoint(remove_id)
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
@@ -186,26 +147,33 @@ const Gallery = () => {
     setIsSubmit(true);
 
     if (Object.keys(errors).length === 0) {
-      const formdata = new FormData();
-
-      formdata.append("myFile", values.image);
-      formdata.append("title", values.title);
-      formdata.append("sortOrder", values.sortOrder);
-      formdata.append("IsActive", values.IsActive);
-
-      updateImages(_id, formdata)
+      updatepoint(_id, values)
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
-          setPhotoAdd("");
-
-          setCheckImagePhoto(false);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (values.PointName === "") {
+      errors.PointName = "Category Name is required!";
+      setErrCN(true);
+    }
+    if (values.PointName !== "") {
+      setErrCN(false);
+    }
+
+    return errors;
+  };
+
+  const validClassPointName =
+    errCN && isSubmit ? "form-control is-invalid" : "form-control";
 
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
@@ -220,9 +188,12 @@ const Gallery = () => {
   };
 
   useEffect(() => {
+    // fetchUsers(1); // fetch page 1 of users
+  }, []);
+
+  useEffect(() => {
     fetchCategories();
   }, [pageNo, perPage, column, sortDirection, query, filter]);
-
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -233,7 +204,7 @@ const Gallery = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/galleryimg`,
+        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/point`,
         {
           skip: skip,
           per_page: perPage,
@@ -247,10 +218,10 @@ const Gallery = () => {
         if (response.length > 0) {
           let res = response[0];
           setLoading(false);
-          setData(res.data);
+          setCategories(res.data);
           setTotalRows(res.count);
         } else if (response.length === 0) {
-          setData([]);
+          setCategories([]);
         }
         // console.log(res);
       });
@@ -262,23 +233,6 @@ const Gallery = () => {
     setPageNo(page);
   };
 
-  const [photoAdd, setPhotoAdd] = useState();
-  const [checkImagePhoto, setCheckImagePhoto] = useState(false);
-
-  const PhotoUpload = (e) => {
-    if (e.target.files.length > 0) {
-      const image = new Image();
-
-      let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
-    //   abtImage=imageurl;
-      setPhotoAdd(imageurl);
-      
-      setValues({ ...values, image: e.target.files[0] });
-      setCheckImagePhoto(true);
-    }
-  };
-
   const handlePerRowsChange = async (newPerPage, page) => {
     // setPageNo(page);
     setPerPage(newPerPage);
@@ -286,46 +240,22 @@ const Gallery = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
-
-    return (
-      <img
-        src={imageUrl}
-        alt="Image"
-        style={{ width: "75px", height: "75px", padding: "5px" }}
-      />
-    );
-  };
-
   const col = [
     {
-      name: "title",
-      selector: (row) => row.title,
+      name: "Category Name",
+      selector: (row) => row.PointName,
       sortable: true,
-      sortField: "title",
-      maxWidth: "150px",
-    },
-      {
-      name: "sortOrder",
-      selector: (row) => row.sortOrder,
-      sortable: true,
-      sortField: "sortOrder",
-      maxWidth: "150px",
-    },
-    {
-      name: "image",
-      selector: (row) => renderImage(row.image),
-      sortable: false,
-      sortField: "image",
+      sortField: "PointName",
       minWidth: "150px",
     },
+
     {
-        name: "Active",
-        selector:(row) => row.IsActive?"Active" : "In Active",
-        sortable: false,
-        sortField: "Active",
-        maxWidth: "150px",
+      name: "Status",
+      selector: (row) => {
+        return <p>{row.IsActive ? "Active" : "InActive"}</p>;
+      },
+      sortable: false,
+      sortField: "Status",
     },
     {
       name: "Action",
@@ -363,20 +293,24 @@ const Gallery = () => {
     },
   ];
 
-  document.title = "Gallery | Neon11";
+  document.title = "Point Category| BPC";
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="Gallery" pageTitle="CMS" />
+          <BreadCrumb
+            maintitle="Category"
+            title="Point Category"
+            pageTitle="Category"
+          />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Gallery </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Point Category</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -424,7 +358,7 @@ const Gallery = () => {
                     <div className="table-responsive table-card mt-1 mb-1 text-right">
                       <DataTable
                         columns={col}
-                        data={data}
+                        data={categories}
                         progressPending={loading}
                         sortServer
                         onSort={(column, sortDirection, sortedRows) => {
@@ -461,79 +395,25 @@ const Gallery = () => {
             setIsSubmit(false);
           }}
         >
-          Add Gallery Images
+          Add Category
         </ModalHeader>
         <form>
           <ModalBody>
-            
-           <div className="form-floating mb-3">
-  <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
-
-    
-</select>
-  <label>
-    Title<span className="text-danger">*</span>{" "}
-  </label>
-</div>
-          <div className="form-floating mb-3 col-md-6">
+            <div className="form-floating mb-3">
               <Input
-                type="number"
-                className={validClassSR}
-                placeholder="Enter title "
+                type="text"
+                className={validClassPointName}
+                placeholder="Enter Category Name"
                 required
-                name="sortOrder"
-                value={sortOrder}
-                onChange={handleSortnum}
+                name="PointName"
+                value={PointName}
+                onChange={handleChange}
               />
-              <Label>
-                Sort Order<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
-            </div>
-            <Col lg={6}>
-              <label>
-                Image <span className="text-danger">*</span>
-              </label>
-
-              <input
-                type="file"
-                name="image"
-                className={validClassBI}
-                // accept="images/*"
-                accept=".jpg, .jpeg, .png"
-                onChange={PhotoUpload}
-              />
+              <Label>Category Name <span className="text-danger">*</span></Label>
               {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
+                <p className="text-danger">{formErrors.PointName}</p>
               )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
-              ) : null}
-            </Col>
+            </div>
 
             <div className="form-check mb-2">
               <Input
@@ -563,8 +443,6 @@ const Gallery = () => {
                   setmodal_list(false);
                   setValues(initialState);
                   setIsSubmit(false);
-                  setCheckImagePhoto(false);
-                  setPhotoAdd("");
                 }}
               >
                 Cancel
@@ -589,84 +467,26 @@ const Gallery = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Banner
+          Edit Category
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
-               <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
-
-    
-
-    {/* Add more options as needed */}
-  </select>
-              <Label>
-                title<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
-            </div>
-
-            <Col lg={6}>
-              <label>
-                Image <span className="text-danger">*</span>
-              </label>
-
-              <input
-                type="file"
-                name="image"
-                className={validClassBI}
-                // accept="images/*"
-                accept=".jpg, .jpeg, .png"
-                onChange={PhotoUpload}
-              />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
-              ) : null}
-            </Col>
-
-         
-         <div className="form-floating mb-3 mt-3 col-md-6">
+            <div className="form-floating mb-3">
               <Input
-                type="number"
-                className={validClassSR}
-                placeholder="Enter title "
+                type="text"
+                className={validClassPointName}
+                placeholder="Enter Category Name"
                 required
-                name="sortOrder"
-                value={sortOrder}
-                onChange={handleSortnum}
+                name="PointName"
+                value={PointName}
+                onChange={handleChange}
               />
-              <Label>
-                Sort Order<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
+              <Label>Category Name <span className="text-danger">*</span></Label>
+              {isSubmit && (
+                <p className="text-danger">{formErrors.PointName}</p>
+              )}
             </div>
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -697,9 +517,7 @@ const Gallery = () => {
                 onClick={() => {
                   setmodal_edit(false);
                   setIsSubmit(false);
-                  setCheckImagePhoto(false);
                   setFormErrors({});
-                  setPhotoAdd("");
                 }}
               >
                 Cancel
@@ -723,7 +541,7 @@ const Gallery = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Category
         </ModalHeader>
         <form>
           <ModalBody>
@@ -768,4 +586,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default Points;

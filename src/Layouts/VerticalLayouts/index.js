@@ -239,6 +239,11 @@ const VerticalLayout = (props) => {
                       <span data-key="t-apps">LED Category </span>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link menu-link" to="/HallImage">
+                      <span data-key="t-apps">Hall Image Category </span>
+                    </Link>
+                  </li>
                 </ul>
               </Collapse>
             </li>
@@ -331,6 +336,16 @@ const VerticalLayout = (props) => {
             <li className="nav-item">
               <Link className="nav-link menu-link" to="/service">
                 <span data-key="t-apps">Services</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/HallImagePage">
+                <span data-key="t-apps">Hall Image</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/HallBooking">
+                <span data-key="t-apps">Hall Booking</span>
               </Link>
             </li>
             <li className="nav-item">
@@ -467,6 +482,50 @@ const VerticalLayout = (props) => {
                   </li>
                 </ul>
               </Collapse>
+            </li>
+          </ul>
+        </Collapse>
+      </li>
+
+      <li className="nav-item">
+        <Link
+          className="nav-link menu-link"
+          to="#"
+          data-bs-toggle="collapse"
+          onClick={() => {
+            setSetup(!setup);
+          }}
+        >
+          <span data-key="t-apps"> Test </span>
+        </Link>
+
+        <Collapse className="menu-dropdown" isOpen={setup}>
+          <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link to="/TestGroup" className="nav-link">
+                Test Group
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/TestMaster" className="nav-link">
+                Test Category Master
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Point" className="nav-link">
+                Point Category
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/PointMaster" className="nav-link">
+                Point Master
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/TestQuestion" className="nav-link">
+               Test Question Master
+              </Link>
             </li>
           </ul>
         </Collapse>
