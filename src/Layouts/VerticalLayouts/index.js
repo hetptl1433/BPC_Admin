@@ -275,7 +275,7 @@ const VerticalLayout = (props) => {
             </li>
             <li className="nav-item">
               <Link to="/controller-products" className="nav-link">
-              Controller Products
+                Controller Products
               </Link>
             </li>
           </ul>
@@ -333,19 +333,44 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">Services</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/email">
+                <span data-key="t-apps">Email</span>
+              </Link>
+            </li>
             {/* <li className="nav-item">
               <Link className="nav-link menu-link" to="/blogs">
                 <span data-key="t-apps">Blogs </span>
               </Link>
             </li> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link menu-link" to="/logo">
                 <span data-key="t-apps">Logo </span>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link menu-link" to="/contact">
                 <span data-key="t-apps">Contact Us </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/courses">
+                <span data-key="t-apps">Courses </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/locationnum">
+                <span data-key="t-apps">Location </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/ExtraBooking">
+                <span data-key="t-apps">Extra Booking </span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/Content">
+                <span data-key="t-apps">Content</span>
               </Link>
             </li>
             {/* <li className="nav-item">
@@ -369,7 +394,7 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">About Us</span>
               </Link>
             </li>
-            
+
             <li className="nav-item">
               <Link to="/ledboard-details" className="nav-link">
                 LED Board Details

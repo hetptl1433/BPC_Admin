@@ -34,6 +34,11 @@ import ControllerProducts from "../pages/ControllerProducts/ControllerProducts";
 import Service from "../pages/Services/Service";
 import { components } from "react-select";
 import NewsPage from "../pages/NEWS/NewsPage";
+import Courses from "../pages/Courses/Courses";
+import LocationNumUs from "../pages/LocationNum/LocationNum";
+import ExtraBooking from "../pages/ExtraBooking/ExtraBooking";
+import Content from "../pages/Content/Content";
+import EmailPage from "../pages/Email/EmailPage";
 
 const authProtectedRoutes = [
   // { path: "/dashboard", component: <DashboardCrm /> },
@@ -68,7 +73,11 @@ const authProtectedRoutes = [
   { path: "/controller-products", component: <ControllerProducts /> },
   { path: "/service", component: <Service/> },
   { path: "/news", component: <NewsPage></NewsPage>},
-
+  { path: "/courses", component: <Courses/> },
+  { path: "/locationnum", component: <LocationNumUs/> },
+  { path: "/ExtraBooking", component: <ExtraBooking/> },
+  { path: "/content", component: <Content/> },
+  { path: "/email", component: <EmailPage/> },
 
 
   {
