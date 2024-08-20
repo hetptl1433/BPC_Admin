@@ -23,6 +23,10 @@ const VerticalLayout = (props) => {
   const [policy, setPolicy] = useState(false);
   const [neonsigns, setNeonSigns] = useState(false);
   const [cms, setCMS] = useState(false);
+  const [locationBar, setLocationBar] = useState(false);
+  const [testbar, setTestbar]= useState(false);
+  const [industrybar, setIndustrybar]= useState(false);
+  const [contentBar, setContentBar]= useState(false);
 
   const navData = navdata().props.children;
   const path = props.router.location.pathname;
@@ -373,21 +377,13 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">Courses </span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link menu-link" to="/locationnum">
-                <span data-key="t-apps">Location </span>
-              </Link>
-            </li>
+
             <li className="nav-item">
               <Link className="nav-link menu-link" to="/ExtraBooking">
                 <span data-key="t-apps">Extra Booking </span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link menu-link" to="/Content">
-                <span data-key="t-apps">Content</span>
-              </Link>
-            </li>
+
             {/* <li className="nav-item">
               <Link className="nav-link menu-link" to="/newproject">
                 <span data-key="t-apps">New Project </span>
@@ -415,6 +411,59 @@ const VerticalLayout = (props) => {
                 LED Board Details
               </Link>
             </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link menu-link"
+                to="#"
+                data-bs-toggle="collapse"
+                onClick={() => {
+                  setContentBar(!contentBar);
+                }}
+              >
+                <span data-key="t-apps"> Content</span>
+              </Link>
+              <Collapse className="menu-dropdown" isOpen={contentBar}>
+                <ul className="nav nav-sm flex-column test"></ul>
+                <ul className="nav nav-sm flex-column test">
+                  <li className="nav-item">
+                    <Link className="nav-link menu-link" to="/Content">
+                      <span data-key="t-apps">Content</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/BannerImage" className="nav-link">
+                      Banner Image
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/CompanyProfile" className="nav-link">
+                      Company Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/media" className="nav-link">
+                      Media
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/ContentContact" className="nav-link">
+                      Contact
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/download" className="nav-link">
+                      Download
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/serve" className="nav-link">
+                      Serve
+                    </Link>
+                  </li>
+                </ul>
+                <ul className="nav nav-sm flex-column test"></ul>
+              </Collapse>
+            </li>
 
             <li className="nav-item">
               <Link
@@ -438,6 +487,47 @@ const VerticalLayout = (props) => {
                   <li className="nav-item">
                     <Link to="/neondesc-details" className="nav-link">
                       Neon Description Details
+                    </Link>
+                  </li>
+                </ul>
+                <ul className="nav nav-sm flex-column test"></ul>
+              </Collapse>
+              <Link
+                className="nav-link menu-link"
+                to="#"
+                data-bs-toggle="collapse"
+                onClick={() => {
+                  setLocationBar(!locationBar);
+                }}
+              >
+                <span data-key="t-apps"> Location</span>
+              </Link>
+              <Collapse className="menu-dropdown" isOpen={locationBar}>
+                <ul className="nav nav-sm flex-column test"></ul>
+                <ul className="nav nav-sm flex-column test">
+                  <li className="nav-item">
+                    <Link className="nav-link menu-link" to="/locationnum">
+                      <span data-key="t-apps">Location </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/area" className="nav-link">
+                      Area
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/city" className="nav-link">
+                      City
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/state" className="nav-link">
+                      State
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/Country" className="nav-link">
+                      Country
                     </Link>
                   </li>
                 </ul>
@@ -493,13 +583,13 @@ const VerticalLayout = (props) => {
           to="#"
           data-bs-toggle="collapse"
           onClick={() => {
-            setSetup(!setup);
+            setTestbar(!testbar);
           }}
         >
           <span data-key="t-apps"> Test </span>
         </Link>
 
-        <Collapse className="menu-dropdown" isOpen={setup}>
+        <Collapse className="menu-dropdown" isOpen={testbar}>
           <ul className="nav nav-sm flex-column test">
             <li className="nav-item">
               <Link to="/TestGroup" className="nav-link">
@@ -524,7 +614,39 @@ const VerticalLayout = (props) => {
             </li>
             <li className="nav-item">
               <Link to="/TestQuestion" className="nav-link">
-               Test Question Master
+                Test Question Master
+              </Link>
+            </li>
+          </ul>
+        </Collapse>
+      </li>
+      <li>
+        <Link
+          className="nav-link menu-link"
+          to="#"
+          data-bs-toggle="collapse"
+          onClick={() => {
+            setIndustrybar(!industrybar);
+          }}
+        >
+          <span data-key="t-apps"> User </span>
+        </Link>
+        <Collapse className="menu-dropdown" isOpen={industrybar}>
+          <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link to="/Industry" className="nav-link">
+                Industry
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/UserGroups" className="nav-link">
+                User Group Master
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/IndustryUserMaster" className="nav-link">
+                User Master
               </Link>
             </li>
           </ul>

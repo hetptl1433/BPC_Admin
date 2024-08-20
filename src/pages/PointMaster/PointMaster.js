@@ -341,7 +341,7 @@ const loadPoints = () => {
     }
 
     await axios
-      .post(`${process.env.REACT_APP_API_URL_COFFEE}/api/auth/location/PMParam`, {
+      .post(`${process.env.REACT_APP_API_URL_BPC}/api/auth/location/PMParam`, {
         skip: skip,
         per_page: perPage,
         sorton: column,

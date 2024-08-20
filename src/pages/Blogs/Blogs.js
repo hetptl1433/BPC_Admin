@@ -79,7 +79,7 @@ const Blogs = () => {
                 .then((res) => {
                   console.log("res", res.url);
                   resolve({
-                    default: `${process.env.REACT_APP_API_URL_COFFEE}/uploads/BlogCKImages/${res.url}`,
+                    default: `${process.env.REACT_APP_API_URL_BPC}/uploads/BlogCKImages/${res.url}`,
                   });
                 })
                 .catch((err) => console.log(err));
@@ -318,7 +318,7 @@ const Blogs = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/blogs`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/blogs`,
         {
           skip: skip,
           per_page: perPage,
@@ -938,7 +938,7 @@ const Blogs = () => {
                                         src={
                                           checkImagePhoto
                                             ? photoAdd
-                                            : `${process.env.REACT_APP_API_URL_COFFEE}/${blogImage}`
+                                            : `${process.env.REACT_APP_API_URL_BPC}/${blogImage}`
                                         }
                                         width="180"
                                         height="200"

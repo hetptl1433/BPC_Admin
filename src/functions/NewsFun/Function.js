@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createNewsdesc = async (values) => {
   return await axios.post(
-    `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/Newsdesc`,
+    `${process.env.REACT_APP_API_URL_BPC}/api/auth/Newsdesc`,
     values,
     {
         headers: {
@@ -14,19 +14,19 @@ export const createNewsdesc = async (values) => {
 
 export const removeNewsdesc = async (_id) => {
   return await axios.delete(
-    `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/remove/Newsdesc/${_id}`
+    `${process.env.REACT_APP_API_URL_BPC}/api/auth/remove/Newsdesc/${_id}`
   );
 };
 
 //   export const listContact = async () => {
 //     return await axios.get(
-//       `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list/company-locations`
+//       `${process.env.REACT_APP_API_URL_BPC}/api/auth/list/company-locations`
 //     );
 //   };
 
 export const updateNewsdesc = async (_id, values) => {
   return await axios.put(
-    `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/update/Newsdesc/${_id}`,
+    `${process.env.REACT_APP_API_URL_BPC}/api/auth/update/Newsdesc/${_id}`,
     values,
     {
         headers: {
@@ -38,12 +38,12 @@ export const updateNewsdesc = async (_id, values) => {
 
 export const getNewsdesc = async (_id) => {
   return await axios.get(
-    `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/get/Newsdesc/${_id}`
+    `${process.env.REACT_APP_API_URL_BPC}/api/auth/get/Newsdesc/${_id}`
   );
 };
 
 // export const findContact = async (_id, country, city) => {
 //   return await axios.get(
-//     `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/find/company-locations/${country}/${city}`
+//     `${process.env.REACT_APP_API_URL_BPC}/api/auth/find/company-locations/${country}/${city}`
 //   );
 // };

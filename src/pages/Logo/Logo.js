@@ -209,7 +209,7 @@ const Logo = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/logo`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/logo`,
         {
           skip: skip,
           per_page: perPage,
@@ -263,7 +263,7 @@ const Logo = () => {
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img

@@ -33,7 +33,7 @@ const initialState = {
   IsActive: false,
 };
 
-const Banner = () => {
+const BannerImage = () => {
   const [values, setValues] = useState(initialState);
   const { Title, keyWord, Description, bannerImage, IsActive } = values;
   const [formErrors, setFormErrors] = useState({});
@@ -244,7 +244,7 @@ const Banner = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/banner-images`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/banner-images`,
         {
           skip: skip,
           per_page: perPage,
@@ -297,7 +297,7 @@ const Banner = () => {
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -677,7 +677,7 @@ const Banner = () => {
                   src={
                     checkImagePhoto
                       ? photoAdd
-                      : `${process.env.REACT_APP_API_URL_COFFEE}/${values.bannerImage}`
+                      : `${process.env.REACT_APP_API_URL_BPC}/${values.bannerImage}`
                   }
                   width="300"
                   height="200"
@@ -786,4 +786,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default BannerImage;

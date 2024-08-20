@@ -259,7 +259,7 @@ const [IsActive, setIsActive] = useState(false);
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/EmailControl`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/EmailControl`,
         {
           skip: skip,
           per_page: perPage,

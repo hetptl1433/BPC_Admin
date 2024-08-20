@@ -86,7 +86,7 @@ const NewProject = () => {
               console.log("Upload response URL:", Url);
 
               return {
-                default: `${process.env.REACT_APP_API_URL_COFFEE}/uploads/descriptionCKImages/${Url}`,
+                default: `${process.env.REACT_APP_API_URL_BPC}/uploads/descriptionCKImages/${Url}`,
               };
             })
             .catch((err) => {
@@ -403,7 +403,7 @@ const NewProject = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/newproject`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/newproject`,
         {
           skip: skip,
           per_page: perPage,

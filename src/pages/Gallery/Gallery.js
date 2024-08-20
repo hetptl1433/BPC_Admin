@@ -233,7 +233,7 @@ const Gallery = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/galleryimg`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/galleryimg`,
         {
           skip: skip,
           per_page: perPage,
@@ -287,7 +287,7 @@ const Gallery = () => {
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img

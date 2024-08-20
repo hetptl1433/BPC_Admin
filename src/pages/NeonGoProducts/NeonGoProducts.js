@@ -130,7 +130,7 @@ const NeonGoProducts = () => {
     },
   ];
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -154,7 +154,7 @@ const NeonGoProducts = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/neongoproducts`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/neongoproducts`,
         {
           skip: skip,
           per_page: perPage,
@@ -872,7 +872,7 @@ const NeonGoProducts = () => {
                                         src={
                                           checkImagePhoto
                                             ? photoAdd
-                                            : `${process.env.REACT_APP_API_URL_COFFEE}/${values.image}`
+                                            : `${process.env.REACT_APP_API_URL_BPC}/${values.image}`
                                         }
                                         width="180"
                                         height="200"

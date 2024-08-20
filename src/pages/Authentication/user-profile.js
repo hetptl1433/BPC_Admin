@@ -60,7 +60,7 @@ const UserProfile = () => {
         setLastName(response.lastName);
         setPassword(response.password);
         setemail(response.email);
-        setPhoto(`${process.env.REACT_APP_API_URL_COFFEE}/${response.bannerImage}`);
+        setPhoto(`${process.env.REACT_APP_API_URL_BPC}/${response.bannerImage}`);
         setIsActive(response.IsActive);
         // console.log(IsActive);
       })

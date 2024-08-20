@@ -270,7 +270,7 @@ const CompanyDetails = () => {
         //     // console.log(uri);
         //     setLoading(true);
         //     axios
-        //       .post(process.env.REACT_APP_API_URL_COFFEE + "/api/uploadimages", {
+        //       .post(process.env.REACT_APP_API_URL_BPC + "/api/uploadimages", {
         //         image: uri,
         //       })
         //       .then((res) => {
@@ -316,7 +316,7 @@ const CompanyDetails = () => {
         //   (uri) => {
         //     // console.log(uri);
         //     axios
-        //       .post(process.env.REACT_APP_API_URL_COFFEE + "/api/uploadimages", {
+        //       .post(process.env.REACT_APP_API_URL_BPC + "/api/uploadimages", {
         //         image: uri,
         //       })
         //       .then((res) => {
@@ -361,7 +361,7 @@ const CompanyDetails = () => {
         //   (uri) => {
         //     // console.log(uri);
         //     axios
-        //       .post(process.env.REACT_APP_API_URL_COFFEE + "/api/uploadimages", {
+        //       .post(process.env.REACT_APP_API_URL_BPC + "/api/uploadimages", {
         //         image: uri,
         //       })
         //       .then((res) => {
@@ -406,7 +406,7 @@ const CompanyDetails = () => {
         //   (uri) => {
         //     // console.log(uri);
         //     axios
-        //       .post(process.env.REACT_APP_API_URL_COFFEE + "/api/uploadimages", {
+        //       .post(process.env.REACT_APP_API_URL_BPC + "/api/uploadimages", {
         //         image: uri,
         //       })
         //       .then((res) => {
@@ -730,7 +730,7 @@ const CompanyDetails = () => {
                                 key={values.Favicon}
                                 alt="fav-icon"
                                 src={
-                                  process.env.REACT_APP_API_URL_COFFEE +
+                                  process.env.REACT_APP_API_URL_BPC +
                                   "/" +
                                   values.Favicon
                                 }
@@ -763,7 +763,7 @@ const CompanyDetails = () => {
                                 key={values.Icon}
                                 alt="menu-icon"
                                 src={
-                                  process.env.REACT_APP_API_URL_COFFEE +
+                                  process.env.REACT_APP_API_URL_BPC +
                                   "/" +
                                   values.Icon
                                 }
@@ -791,7 +791,7 @@ const CompanyDetails = () => {
                                 key={values.Logo}
                                 alt="logo-img"
                                 src={
-                                  process.env.REACT_APP_API_URL_COFFEE +
+                                  process.env.REACT_APP_API_URL_BPC +
                                   "/" +
                                   values.Logo
                                 }
@@ -818,7 +818,7 @@ const CompanyDetails = () => {
                               <img
                                 key={values.DigitalSignature}
                                 src={
-                                  process.env.REACT_APP_API_URL_COFFEE +
+                                  process.env.REACT_APP_API_URL_BPC +
                                   "/" +
                                   values.DigitalSignature
                                 }

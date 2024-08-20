@@ -286,7 +286,7 @@ const HomeAbout = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/home-about`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/home-about`,
         {
           skip: skip,
           per_page: perPage,
@@ -340,7 +340,7 @@ const HomeAbout = () => {
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img

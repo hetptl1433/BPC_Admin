@@ -256,7 +256,7 @@ const AdminUser = () => {
     setsortDirection(sortDirection);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -284,7 +284,7 @@ const AdminUser = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/listByparams/adminUser`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/listByparams/adminUser`,
         {
           skip: skip,
           per_page: perPage,
@@ -732,7 +732,7 @@ const AdminUser = () => {
                   src={
                     checkImagePhoto
                       ? photoAdd
-                      : `${process.env.REACT_APP_API_URL_COFFEE}/${values.bannerImage}`
+                      : `${process.env.REACT_APP_API_URL_BPC}/${values.bannerImage}`
                   }
                   width="300"
                   height="200"

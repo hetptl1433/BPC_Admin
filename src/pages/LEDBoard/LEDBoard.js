@@ -120,7 +120,7 @@ const LEDBoard = () => {
     },
   ];
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -144,7 +144,7 @@ const LEDBoard = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/ledboard-details`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/ledboard-details`,
         {
           skip: skip,
           per_page: perPage,
@@ -805,7 +805,7 @@ const LEDBoard = () => {
                                         src={
                                           checkImagePhoto
                                             ? photoAdd
-                                            : `${process.env.REACT_APP_API_URL_COFFEE}/${values.productImage}`
+                                            : `${process.env.REACT_APP_API_URL_BPC}/${values.productImage}`
                                         }
                                         width="180"
                                         height="200"

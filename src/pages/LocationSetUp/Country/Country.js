@@ -226,7 +226,7 @@ const Country = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/location/countries`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/location/countries`,
         {
           skip: skip,
           per_page: perPage,

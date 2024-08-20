@@ -229,7 +229,7 @@ const ExtraBooking = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/ExtraBooking`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/ExtraBooking`,
         {
           skip: skip,
           per_page: perPage,

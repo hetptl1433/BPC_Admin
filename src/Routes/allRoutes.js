@@ -47,6 +47,17 @@ import TestCatMaster from "../pages/TextCatMaster/TextCatMaster";
 import Points from "../pages/Points/Point";
 import PointMaster from "../pages/PointMaster/PointMaster";
 import TestQuestionMaster from "../pages/TestQuestionMaster/TestQuestionMaster";
+import Area from "../pages/LocationSetUp/Area/Area";
+import Industry from "../pages/Industry/Industry";
+import UserGroup from "../pages/UserGroup/UserGroup";
+import IndustryUserMaster from "../pages/IndustryUserMaster/IndustryUserMaster";
+import BannerImage from "../pages/CMS/Banner";
+import BannerImages from "../pages/BannerImage/BannerImage";
+import CompanyProfile from "../pages/CompanyProfile/CompanyProfile";
+import MediaFiles from "../pages/Media/Media";
+import ContentContact from "../pages/ContentContact/ContentContact";
+import DownloadFiles from "../pages/Download/Download";
+import ServeFiles from "../pages/Serve/Serve";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -95,6 +106,16 @@ const authProtectedRoutes = [
   { path: "/Point", component: <Points /> },
   { path: "/PointMaster", component: <PointMaster /> },
   { path: "/TestQuestion", component: <TestQuestionMaster /> },
+  { path: "/Area", component: <Area /> },
+  { path: "/industry", component: <Industry /> },
+  { path: "/UserGroups", component: <UserGroup/>},
+  { path: "/IndustryUserMaster", component: <IndustryUserMaster/>},
+  { path: "/BannerImage", component: <BannerImages/>},
+  { path: "/CompanyProfile", component: <CompanyProfile/>},
+  { path: "/media", component: <MediaFiles/>},
+  { path: "/ContentContact", component: <ContentContact/>},
+  { path: "/download", component: <DownloadFiles/>},
+  { path: "/serve", component: <ServeFiles/>},
 
   {
     path: "/",

@@ -302,7 +302,7 @@ const AboutUs = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/aboutus`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/aboutus`,
         {
           skip: skip,
           per_page: perPage,
@@ -356,7 +356,7 @@ const AboutUs = () => {
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img

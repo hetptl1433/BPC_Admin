@@ -180,7 +180,7 @@ const PromocodeMaster = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/PromocodeMaster`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/PromocodeMaster`,
         {
           skip: skip,
           per_page: perPage,

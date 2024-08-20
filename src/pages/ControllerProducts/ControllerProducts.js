@@ -131,7 +131,7 @@ const ControllerProducts = () => {
     },
   ];
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -155,7 +155,7 @@ const ControllerProducts = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/controllerproducts`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/controllerproducts`,
         {
           skip: skip,
           per_page: perPage,
@@ -873,7 +873,7 @@ const ControllerProducts = () => {
                                         src={
                                           checkImagePhoto
                                             ? photoAdd
-                                            : `${process.env.REACT_APP_API_URL_COFFEE}/${values.image}`
+                                            : `${process.env.REACT_APP_API_URL_BPC}/${values.image}`
                                         }
                                         width="180"
                                         height="200"

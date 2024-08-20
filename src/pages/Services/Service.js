@@ -274,7 +274,7 @@ const HandleShortDesc = (e) => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/serviceimage`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/serviceimage`,
         {
           skip: skip,
           per_page: perPage,
@@ -329,7 +329,7 @@ const HandleShortDesc = (e) => {
   };
   
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -411,7 +411,7 @@ const HandleShortDesc = (e) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="Gallery" pageTitle="CMS" />
+          <BreadCrumb maintitle="CMS" title="Services" pageTitle="CMS" />
           <Row>
             <Col lg={12}>
               <Card>

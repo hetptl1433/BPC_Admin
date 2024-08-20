@@ -229,7 +229,7 @@ const SocialMedia = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/socialmedia`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/socialmedia`,
         {
           skip: skip,
           per_page: perPage,

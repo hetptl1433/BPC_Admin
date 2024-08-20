@@ -32,17 +32,17 @@ import TextArea from "antd/es/input/TextArea";
 const initialState = {
   Name: "",
   Desc: "",
-  HalfDayCapacity: 0,
-  HalfDayBasicValue: 0,
-  HalfDayCentralGST: 0,
-  HalfDayStateGST: 0,
-  HalfDayTotal: 0,
-  FullDayCapacity: 0,
-  FullDayBasicValue: 0,
-  FullDayCentralGST: 0,
-  FullDayStateGST: 0,
-  FullDayTotal: 0,
-  SortOrder: 0,
+  HalfDayCapacity: "",
+  HalfDayBasicValue: "",
+  HalfDayCentralGST: "",
+  HalfDayStateGST: "",
+  HalfDayTotal: "",
+  FullDayCapacity: "",
+  FullDayBasicValue: "",
+  FullDayCentralGST: "",
+  FullDayStateGST: "",
+  FullDayTotal: "",
+  SortOrder: "",
   Icon: "",
   IsActive: false,
 };
@@ -66,8 +66,7 @@ const HallBooking = () => {
    SortOrder,
    Icon,
    IsActive,
- } = values;
-
+ } =values;
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
@@ -100,39 +99,48 @@ const HallBooking = () => {
   };
 
   const [modal_edit, setmodal_edit] = useState(false);
-  const handleTog_edit = (_id) => {
-    setmodal_edit(!modal_edit);
-    setIsSubmit(false);
-    set_Id(_id);
-    getHallBook(_id)
-      .then((res) => {
-        console.log(res);
-        setValues({
-          ...values,
-          Name: res.Name,
-          Desc: res.Desc,
-          HalfDayCapacity: res.HalfDayCapacity,
-          HalfDayBasicValue: res.HalfDayBasicValue,
-          HalfDayCentralGST: res.HalfDayCentralGST,
-          HalfDayStateGST: res.HalfDayStateGST,
-          HalfDayTotal: res.HalfDayTotal,
-          FullDayCapacity: res.FullDayCapacity,
-          FullDayBasicValue: res.FullDayBasicValue,
-          FullDayCentralGST: res.FullDayCentralGST,
-          FullDayStateGST: res.FullDayStateGST,
-          FullDayTotal: res.FullDayTotal,
-          SortOrder: res.SortOrder,
-          Icon: res.Icon,
-          IsActive: res.IsActive,
-        });
+const handleTog_edit = async (_id) => {
+  console.log("Fetching data for ID:", _id);
 
-        console.log("res", values.Tagline);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  setIsSubmit(false);
+  set_Id(_id);
 
+  try {
+    const res = await getHallBook(_id);
+    console.log("API Response:", res);
+
+    // Set the form values
+    setValues({
+      Name: res.Name,
+      Desc: res.Desc,
+      HalfDayCapacity: res.HalfDayCapacity,
+      HalfDayBasicValue: res.HalfDayBasicValue,
+      HalfDayCentralGST: res.HalfDayCentralGST,
+      HalfDayStateGST: res.HalfDayStateGST,
+      HalfDayTotal: res.HalfDayTotal,
+      FullDayCapacity: res.FullDayCapacity,
+      FullDayBasicValue: res.FullDayBasicValue,
+      FullDayCentralGST: res.FullDayCentralGST,
+      FullDayStateGST: res.FullDayStateGST,
+      FullDayTotal: res.FullDayTotal,
+      SortOrder: res.SortOrder,
+      Icon: res.Icon,
+      IsActive: res.IsActive,
+    });
+
+    // Wait until values are set, then open the modal
+    setmodal_edit(true);
+    console.log("Values set successfully, modal opened");
+  } catch (err) {
+    console.log("Error:", err);
+  }
+};
+
+
+
+useEffect(() => {
+  console.log("Values setting:", values);
+}, [values]);
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -445,7 +453,7 @@ formdata.append("IsActive", values.IsActive);
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/HallBook`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/HallBook`,
         {
           skip: skip,
           per_page: perPage,
@@ -499,7 +507,7 @@ formdata.append("IsActive", values.IsActive);
     setFilter(e.target.checked);
   };
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -681,8 +689,8 @@ formdata.append("IsActive", values.IsActive);
                   placeholder="Enter Name "
                   required
                   name="Name"
-                  value={Name}
-                  onChange={handleChange1}
+                  value={values.Name}
+                  onChange={handleChange}
                 />
                 <Label>
                   Name<span className="text-danger">*</span>{" "}
@@ -707,7 +715,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayCapacity}
                   placeholder="Enter HalfDay Capacity"
                   required
@@ -725,7 +733,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayBasicValue}
                   placeholder="Enter HalfDay Basic Value"
                   required
@@ -743,7 +751,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayCentralGST}
                   placeholder="Enter HalfDay Central GST"
                   required
@@ -761,7 +769,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayStateGST}
                   placeholder="Enter HalfDay State GST"
                   required
@@ -779,7 +787,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayTotal}
                   placeholder="Enter HalfDay Total"
                   required
@@ -797,7 +805,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayCapacity}
                   placeholder="Enter FullDay Capacity"
                   required
@@ -815,7 +823,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayBasicValue}
                   placeholder="Enter FullDay Basic Value"
                   required
@@ -833,7 +841,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayCentralGST}
                   placeholder="Enter FullDay Central GST"
                   required
@@ -851,7 +859,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayStateGST}
                   placeholder="Enter FullDay State GST"
                   required
@@ -869,7 +877,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayTotal}
                   placeholder="Enter FullDay Total"
                   required
@@ -976,6 +984,8 @@ formdata.append("IsActive", values.IsActive);
           handleTog_edit();
         }}
         centered
+        size="xl"
+        
       >
         <ModalHeader
           className="bg-light p-3"
@@ -995,9 +1005,10 @@ formdata.append("IsActive", values.IsActive);
                   className={validClassName}
                   placeholder="Enter Name "
                   required
+                  
                   name="Name"
-                  value={Name}
-                  onChange={handleChange1}
+                  value={values.Name}
+                  onChange={handleChange}
                 />
                 <Label>
                   Name<span className="text-danger">*</span>{" "}
@@ -1021,7 +1032,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayCapacity}
                   placeholder="Enter HalfDay Capacity"
                   required
@@ -1039,7 +1050,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayBasicValue}
                   placeholder="Enter HalfDay Basic Value"
                   required
@@ -1057,7 +1068,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayCentralGST}
                   placeholder="Enter HalfDay Central GST"
                   required
@@ -1075,7 +1086,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3 col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayStateGST}
                   placeholder="Enter HalfDay State GST"
                   required
@@ -1093,7 +1104,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassHalfDayTotal}
                   placeholder="Enter HalfDay Total"
                   required
@@ -1111,7 +1122,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayCapacity}
                   placeholder="Enter FullDay Capacity"
                   required
@@ -1129,7 +1140,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayBasicValue}
                   placeholder="Enter FullDay Basic Value"
                   required
@@ -1147,7 +1158,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayCentralGST}
                   placeholder="Enter FullDay Central GST"
                   required
@@ -1165,7 +1176,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayStateGST}
                   placeholder="Enter FullDay State GST"
                   required
@@ -1183,7 +1194,7 @@ formdata.append("IsActive", values.IsActive);
 
               <div className="form-floating mb-3  col-md-6">
                 <input
-                  type="number"
+                  type="Text"
                   className={validClassFullDayTotal}
                   placeholder="Enter FullDay Total"
                   required

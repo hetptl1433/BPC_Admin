@@ -106,7 +106,7 @@ const [IsActive, setIsActive] = useState(false);
     getCoursesFun(_id)
       .then((res) => {
         console.log(res);
-        setName(res.Title);
+        setName(res.Name);
         setDuration(res.Duration);
         setTiming(res.Timing);
         setEligibility(res.Eligibility);
@@ -382,7 +382,7 @@ const [IsActive, setIsActive] = useState(false);
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/CoursesFun`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/CoursesFun`,
         {
           skip: skip,
           per_page: perPage,

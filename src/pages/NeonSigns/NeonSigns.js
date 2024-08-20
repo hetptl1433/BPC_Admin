@@ -134,7 +134,7 @@ const NeonSigns = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/neonsigns-details`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/neonsigns-details`,
         {
           skip: skip,
           per_page: perPage,

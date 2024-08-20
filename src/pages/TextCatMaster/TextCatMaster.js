@@ -28,6 +28,7 @@ const TestCatMaster = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
   const [_id, set_Id] = useState("");
+  const [hetid, sethetid] = useState("");
 
 
 
@@ -39,10 +40,7 @@ const initialState = {
   TotalTime: "",
   productImage: "",
   IsHabit: false,
-  Desc: "",
-  HindiDesc: "",
-  GujDesc: "",
-  EngDesc: "",
+ 
   IsActive: false,
 };
 
@@ -51,10 +49,16 @@ const initialState = {
 
   //search and pagination state
   const [query, setQuery] = useState("");
+  const [counter, setCounter] = useState(0);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [values, setValues] = useState(initialState);
+  const [values, setValues] = useState(initialState); 
+  const [Desc, setDesc] = useState("");
+  const [HindiDesc, setHindiDesc] = useState("");
+  const [GujDesc, setGujDesc] = useState("");
+  const [EngDesc, setEngDesc] = useState("");
+
 
   const {
   category,
@@ -63,10 +67,7 @@ const initialState = {
   TotalTime,
   productImage,
   IsHabit,
-  Desc,   
-  HindiDesc,
-  GujDesc,
-  EngDesc,
+
   IsActive,
 } = values;
 
@@ -82,22 +83,28 @@ const initialState = {
   const [data, setData] = useState([]);
 
   const columns = [
-   
     {
-      name: "Name",
+      name: "Test Category",
+      selector: (row) => row.category.categoryName,
+      sortable: true,
+      sortField: "TestCatgeory",
+      minWidth: "150px",
+    },
+    {
+      name: "Test Name",
       selector: (row) => row.TestName,
       sortable: true,
       sortField: "TestName",
       minWidth: "150px",
     },
     {
-        name: "Image",
-        selector: (row) =>  renderImage(row.productImage),
-        sortable: false,
-        sortField: "productImage",
-        minWidth: "150px",
-      },
-    
+      name: "Image",
+      selector: (row) => renderImage(row.productImage),
+      sortable: false,
+      sortField: "productImage",
+      minWidth: "150px",
+    },
+
     {
       name: "Action",
       selector: (row) => {
@@ -134,7 +141,7 @@ const initialState = {
     },
   ];
   const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_COFFEE}/${uploadimage}`;
+    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
 
     return (
       <img
@@ -158,7 +165,7 @@ const initialState = {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_COFFEE}/api/auth/list-by-params/TestCatMaster-details`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/TestCatMaster-details`,
         {
           skip: skip,
           per_page: perPage,
@@ -354,10 +361,10 @@ const [errEDesc, setErrEDesc] = useState(false);
       formdata.append("TotalQues", values.TotalQues);
       formdata.append("TotalTime", values.TotalTime);
       formdata.append("IsHabit", values.IsHabit);
-      formdata.append("Desc", values.Desc);
-      formdata.append("HindiDesc", values.HindiDesc);
-      formdata.append("GujDesc", values.GujDesc);
-      formdata.append("EngDesc", values.EngDesc);
+      formdata.append("Desc", Desc);
+      formdata.append("HindiDesc", HindiDesc);
+      formdata.append("GujDesc",GujDesc);
+      formdata.append("EngDesc",EngDesc);
       formdata.append("IsActive", values.IsActive);
 
 
@@ -410,10 +417,10 @@ formdata.append("TestName", values.TestName);
 formdata.append("TotalQues", values.TotalQues);
 formdata.append("TotalTime", values.TotalTime);
 formdata.append("IsHabit", values.IsHabit);
-formdata.append("Desc", values.Desc);
-formdata.append("HindiDesc", values.HindiDesc);
-formdata.append("GujDesc", values.GujDesc);
-formdata.append("EngDesc", values.EngDesc);
+ formdata.append("Desc", Desc);
+ formdata.append("HindiDesc", HindiDesc);
+ formdata.append("GujDesc", GujDesc);
+ formdata.append("EngDesc", EngDesc);
 formdata.append("IsActive", values.IsActive);
 
     updateTestCatMasterDetails(_id, formdata)
@@ -441,6 +448,10 @@ formdata.append("IsActive", values.IsActive);
     setShowForm(false);
     setUpdateForm(false);
     setValues(initialState);
+    setDesc("");
+    setHindiDesc("");
+    setGujDesc("");
+    setEngDesc("");
   };
 
   const handleUpdateCancel = (e) => {
@@ -452,18 +463,30 @@ formdata.append("IsActive", values.IsActive);
 
     setCheckImagePhoto(false);
     setValues(initialState);
+       setDesc("");
+       setHindiDesc("");
+       setGujDesc("");
+       setEngDesc("");
   };
 
+ 
   const handleTog_edit = (_id) => {
     // setmodal_edit(!modal_edit);
     setIsSubmit(false);
     setUpdateForm(true);
 
     set_Id(_id);
+    sethetid(_id);
     console.log(_id);
     setFormErrors(false);
     getTestCatMasterDetails(_id)
       .then((res) => {
+        setCounter((prevCounter) => {
+          const newCounter = prevCounter + 1;
+          console.log(`Function has run ${newCounter} times`); // Log the counter
+          return newCounter;
+        });
+        console.log(res, "first time");
         setValues({
           ...values,
           category: res.category,
@@ -472,18 +495,23 @@ formdata.append("IsActive", values.IsActive);
           TotalTime: res.TotalTime,
           productImage: res.productImage,
           IsHabit: res.IsHabit,
-          Desc: res.Desc,
-          HindiDesc: res.HindiDesc,
-          GujDesc: res.GujDesc,
-          EngDesc: res.EngDesc,
+         
           IsActive: res.IsActive,
         });
+        console.log(res.Desc);
+        setDesc(res.Desc);
+        setGujDesc(res.GujDesc);
+        setHindiDesc(res.HindiDesc);
+        setEngDesc(res.EngDesc);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  useEffect(() => {
+    // This will run after values is updated
+    console.log(values);
+  }, [values]);
   const handleSort = (column, sortDirection) => {
     setcolumn(column.sortField);
     setsortDirection(sortDirection);
@@ -532,8 +560,8 @@ formdata.append("IsActive", values.IsActive);
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="LED Board Details"
-            title="LED Board Details"
+            maintitle="Test Catgeory Details"
+            title="Test Catgeory Details"
             pageTitle="CMS"
           />
 
@@ -585,7 +613,7 @@ formdata.append("IsActive", values.IsActive);
                                     className="add-btn me-1"
                                     onClick={() => {
                                       setShowForm(!showForm);
-                                      setValues(initialState);
+                                      // setValues(initialState);
                                       // setFileId(Math.random() * 100000);
                                     }}
                                     // onClick={() => tog_list()}
@@ -807,10 +835,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.Desc}
+                                          data={Desc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleDesc(data);
+                                            setDesc(data);
                                           }}
                                           key={`Desc_${_id}`}
                                         />
@@ -833,10 +861,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.HindiDesc}
+                                          data={HindiDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleHindiDesc(data);
+                                            setHindiDesc(data);
                                           }}
                                           key={`HindiDesc_${_id}`}
                                         />
@@ -859,10 +887,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.GujDesc}
+                                          data={GujDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleGujDesc(data);
+                                            setGujDesc(data);
                                           }}
                                           key={`GujDesc_${_id}`}
                                         />
@@ -885,10 +913,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.EngDesc}
+                                          data={EngDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleEngDesc(data);
+                                            setEngDesc(data);
                                           }}
                                           key={`EngDesc_${_id}`}
                                         />
@@ -1135,10 +1163,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.Desc}
+                                          data={Desc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleDesc(data);
+                                            setDesc(data);
                                           }}
                                           key={`Desc_${_id}`}
                                         />
@@ -1161,10 +1189,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.HindiDesc}
+                                          data={HindiDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleHindiDesc(data);
+                                          setHindiDesc(data);
                                           }}
                                           key={`HindiDesc_${_id}`}
                                         />
@@ -1187,10 +1215,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.GujDesc}
+                                          data={GujDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleGujDesc(data);
+                                            setGujDesc(data);
                                           }}
                                           key={`GujDesc_${_id}`}
                                         />
@@ -1213,10 +1241,10 @@ formdata.append("IsActive", values.IsActive);
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.EngDesc}
+                                          data={EngDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            handleEngDesc(data);
+                                            setEngDesc(data);
                                           }}
                                           key={`EngDesc_${_id}`}
                                         />
@@ -1256,7 +1284,7 @@ formdata.append("IsActive", values.IsActive);
                                         src={
                                           checkImagePhoto
                                             ? photoAdd
-                                            : `${process.env.REACT_APP_API_URL_COFFEE}/${values.productImage}`
+                                            : `${process.env.REACT_APP_API_URL_BPC}/${values.productImage}`
                                         }
                                         width="180"
                                         height="200"

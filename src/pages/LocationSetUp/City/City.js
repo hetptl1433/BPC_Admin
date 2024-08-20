@@ -275,7 +275,7 @@ const City = () => {
     }
 
     await axios
-      .post(`${process.env.REACT_APP_API_URL_COFFEE}/api/auth/location/cities`, {
+      .post(`${process.env.REACT_APP_API_URL_BPC}/api/auth/location/cities`, {
         skip: skip,
         per_page: perPage,
         sorton: column,
