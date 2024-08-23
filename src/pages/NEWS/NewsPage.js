@@ -451,6 +451,7 @@ const [IsActive, setIsActive] = useState(false);
           tog_list();
         }}
         centered
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -546,6 +547,7 @@ const [IsActive, setIsActive] = useState(false);
           handleTog_edit();
         }}
         centered
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"

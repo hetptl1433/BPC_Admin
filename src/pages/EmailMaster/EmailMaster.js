@@ -22,23 +22,30 @@ import DataTable from "react-data-table-component";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { createContent, getContent, removeContent, updateContent } from "../../functions/Content/Content";
+import { createEmailMaster, getEmailMaster, removeEmailMaster, updateEmailMaster } from "../../functions/EmailFun/EmailFun";
 import TextArea from "antd/es/input/TextArea";
 
 const initialState = {
-    Title: "",
-    subTitle: "",
-    Desc: "",
+  MailerName: "",
+  Email: "",
+  Password: "",
+  OutgoingServer: "",
+  outgoingPort: "",
+  SSLTYpe: false,
   IsActive: false,
 };
 
-const Content = () => {
+const EmailPage = () => {
   const [values, setValues] = useState(initialState);
 //   const { Title, subTitle, Desc, ytLink, IsActive } = values;
-const [Title, setTitle] = useState("");
-const [subTitle, setsubTitle] = useState("");
-const [Desc, setDesc] = useState("");
+const [MailerName, setMailerName] = useState("");
+const [Email, setEmail] = useState("");
+const [Password, setPassword] = useState("");
+const [OutgoingServer, setOutgoingServer] = useState("");
+const [outgoingPort, setOutgoingPort] = useState("");
+const [SSLTYpe, setSSLTYpe] = useState(false);
 const [IsActive, setIsActive] = useState(false);
+
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -70,9 +77,12 @@ const [IsActive, setIsActive] = useState(false);
     setmodal_list(!modal_list);
     setValues(initialState);
     setIsSubmit(false);
-    setTitle("");
-    setsubTitle("");
-    setDesc("");
+  setMailerName("");
+  setEmail("");
+  setPassword("");
+  setOutgoingServer("");
+  setOutgoingPort("");
+  setSSLTYpe(false);
     setIsActive(false);
   };
 
@@ -87,12 +97,17 @@ const [IsActive, setIsActive] = useState(false);
     setmodal_edit(!modal_edit);
     setIsSubmit(false);
     set_Id(_id);
-    getContent(_id)
+    getEmailMaster(_id)
       .then((res) => {
         console.log(res);
-        setTitle(res.Title);
-        setDesc(res.Desc);
-        setsubTitle(res.subTitle);
+      setMailerName(res.MailerName);
+      setEmail(res.Email);
+      setPassword(res.Password);
+      setOutgoingServer(res.OutgoingServer);
+      setOutgoingPort(res.outgoingPort);
+      setSSLTYpe(res.SSLTYpe);
+      setIsActive(res.IsActive);
+
         setIsActive(res.IsActive)
         
       })
@@ -114,7 +129,14 @@ const [IsActive, setIsActive] = useState(false);
     e.preventDefault();
     setFormErrors({});
     console.log("country", values);
-    let errors = validate(Title, subTitle, Desc);
+    let errors = validate(
+      MailerName,
+      Email,
+      Password,
+      OutgoingServer,
+      outgoingPort,
+    
+    );
     setFormErrors(errors);
     setIsSubmit(true);
 
@@ -122,16 +144,21 @@ const [IsActive, setIsActive] = useState(false);
         // setLoadingOption(true);
       const formdata = new FormData();
 
-      formdata.append("Title", Title);
-      formdata.append("subTitle", subTitle);
-      formdata.append("Desc", Desc);
-      formdata.append("IsActive", IsActive);
-      createContent(formdata)
+     formdata.append("MailerName", MailerName);
+     formdata.append("Email", Email);
+     formdata.append("Password", Password);
+     formdata.append("OutgoingServer", OutgoingServer);
+     formdata.append("outgoingPort", outgoingPort);
+     formdata.append("SSLTYpe", SSLTYpe);
+     formdata.append("IsActive", IsActive);
+      createEmailMaster(formdata)
       .then((res) => {
         console.log(res);
-        setTitle("");
-        setsubTitle("");
-        setDesc("");
+       setMailerName("");
+       setEmail("");
+       setPassword("");
+       setOutgoingServer("");
+       setOutgoingPort("");
         setIsActive(false);
         fetchCategories();
         setmodal_list(!modal_list);
@@ -141,7 +168,7 @@ const [IsActive, setIsActive] = useState(false);
       });
     }
 
-    // createContent(values)
+    // createEmailMaster(values)
     //   .then((res) => {
     //     setmodal_list(!modal_list);
     //     setValues(initialState);
@@ -166,11 +193,13 @@ const [IsActive, setIsActive] = useState(false);
 
   const handleDelete = (e) => {
     e.preventDefault();
-    removeContent(remove_id)
+    removeEmailMaster(remove_id)
       .then((res) => {
-        setTitle("");
-        setsubTitle("");
-        setDesc("");
+       setMailerName("");
+       setEmail("");
+       setPassword("");
+       setOutgoingServer("");
+       setOutgoingPort("");
         setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
@@ -182,7 +211,13 @@ const [IsActive, setIsActive] = useState(false);
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    let erros = validate(Title, subTitle, Desc);
+    let erros = validate(
+      MailerName,
+      Email,
+      Password,
+      OutgoingServer,
+      outgoingPort,
+    );
     setFormErrors(erros);
     setIsSubmit(true);
 
@@ -190,11 +225,14 @@ const [IsActive, setIsActive] = useState(false);
 
         const formdata = new FormData();
 
-        formdata.append("Title", Title);
-        formdata.append("subTitle", subTitle);
-        formdata.append("Desc", Desc);
-        formdata.append("IsActive", IsActive);
-      updateContent(_id, formdata)
+          formdata.append("MailerName", MailerName);
+          formdata.append("Email", Email);
+          formdata.append("Password", Password);
+          formdata.append("OutgoingServer", OutgoingServer);
+          formdata.append("outgoingPort", outgoingPort);
+          formdata.append("SSLTYpe", SSLTYpe);
+          formdata.append("IsActive", IsActive);
+      updateEmailMaster(_id, formdata)
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
@@ -205,7 +243,7 @@ const [IsActive, setIsActive] = useState(false);
     }
   };
 
-  const validate = (Title, subTitle, Desc, ytLink) => {
+  const validate = (Title, Email) => {
     const errors = {};
 
     if (Title === "") {
@@ -215,21 +253,14 @@ const [IsActive, setIsActive] = useState(false);
     if (Title !== "") {
       setErrTI(false);
     }
-    if (subTitle === "") {
-      errors.subTitle = "URL is required!";
+    if (Email === "") {
+      errors.subTitle = "Email is required!";
       setErrSTI(true);
     }
-    if (subTitle !== "") {
+    if (Email !== "") {
       setErrSTI(false);
     }
-    if (Desc === "") {
-      errors.Desc = "Description is required!";
-      setErrDS(true);
-    }
-    if (Desc !== "") {
-      setErrDS(false);
-    }
-  
+   
 
     return errors;
   };
@@ -240,6 +271,8 @@ const [IsActive, setIsActive] = useState(false);
     errSTI && isSubmit ? "form-control is-invalid" : "form-control";
   const validClassDesc =
     errDS && isSubmit ? "form-control is-invalid" : "form-control";
+  const validClassYTLink = 
+    errYT && isSubmit ? "form-control is-invalid" : "form-control";
   
 
   const [loading, setLoading] = useState(false);
@@ -271,7 +304,7 @@ const [IsActive, setIsActive] = useState(false);
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/Content`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/EmailMaster`,
         {
           skip: skip,
           per_page: perPage,
@@ -316,20 +349,13 @@ const [IsActive, setIsActive] = useState(false);
       maxWidth: "150px",
     },
     {
-        name: "URL",
-        selector: (row) => row.subTitle,
+        name: "Email",
+        selector: (row) => row.Email,
         sortable: true,
-        sortField: "URL",
+        sortField: "Email",
         maxWidth: "150px",
       },
-      {
-        name: "Description",
-        selector: (row) => row.Desc,
-        sortable: true,
-        sortField: "Description",
-        maxWidth: "250px",
-      },
-   
+     
     {
       name: "Status",
       selector: (row) => {
@@ -374,15 +400,15 @@ const [IsActive, setIsActive] = useState(false);
     },
   ];
 
-  document.title = "Content | BPC india";
+  document.title = "Email | Neon11";
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Home- Content"
-            title="Home- Content"
+            maintitle="Home- Email"
+            title="Home- Email"
             pageTitle="CMS "
           />
           <Row>
@@ -391,7 +417,7 @@ const [IsActive, setIsActive] = useState(false);
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Home- Content</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Home- Email</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -477,7 +503,7 @@ const [IsActive, setIsActive] = useState(false);
             setIsSubmit(false);
           }}
         >
-          Add Content
+          Add Description
         </ModalHeader>
         <form>
           <ModalBody>
@@ -485,14 +511,14 @@ const [IsActive, setIsActive] = useState(false);
               <Input
                 type="text"
                 className={validClassTitle}
-                placeholder="Enter Name"
+                placeholder="Enter Title"
                 required
                 name="Title"
                 value={Title}
                 onChange={(e)=>{setTitle(e.target.value)}}
               />
               <Label>
-              Name <span className="text-danger">*</span>
+              Title <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.Title}</p>
@@ -505,36 +531,16 @@ const [IsActive, setIsActive] = useState(false);
                 placeholder="Enter SubTitle"
                 required
                 name="subTitle"
-                value={subTitle}
-                onChange={(e)=>{setsubTitle(e.target.value)}}
+                value={Email}
+                onChange={(e)=>{setEmail(e.target.value)}}
               />
               <Label>
                 {" "}
-                URL Name<span className="text-danger">*</span>
+                SubTitle <span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.subTitle}</p>}
+              {isSubmit && <p className="text-danger">{formErrors.Email}</p>}
             </div>
-            <div className="mb-3">
-            <Label>
-                Description <span className="text-danger">*</span>
-              </Label>
-            <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
-
-                                            setDesc(data);
-                                          }}
-                                        />
-              
-              {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
-             
-            </div>
-            
-           
+        
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -595,14 +601,14 @@ const [IsActive, setIsActive] = useState(false);
               <Input
                 type="text"
                 className={validClassTitle}
-                placeholder="Enter Name"
+                placeholder="Enter Title"
                 required
                 name="Title"
                 value={Title}
                 onChange={(e)=>{setTitle(e.target.value)}}
               />
               <Label>
-              Name <span className="text-danger">*</span>
+              Title <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.Title}</p>
@@ -612,58 +618,19 @@ const [IsActive, setIsActive] = useState(false);
               <Input
                 type="text"
                 className={validClassSubTitle}
-                placeholder="Enter URL Name"
+                placeholder="Enter SubTitle"
                 required
-                name="subTitle"
-                value={subTitle}
-                onChange={(e)=>{setsubTitle(e.target.value)}}
+                name="Email"
+                value={Email}
+                onChange={(e)=>{setEmail(e.target.value)}}
               />
               <Label>
                 {" "}
-                URL Name <span className="text-danger">*</span>
+                SubTitle <span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.subTitle}</p>}
+              {isSubmit && <p className="text-danger">{formErrors.Email}</p>}
             </div>
-            <div className="mb-3">
-              {/* <TextArea
-                type="text"
-                className={validClassDesc}
-                placeholder="Enter Description"
-                required
-                name="Desc"
-                value={Desc}
-                rows={15}
-                onChange={(e)=>{setDesc(e.target.value)}}
-              /> */}
-              <Label>
-                Description <span className="text-danger">*</span>
-              </Label>
-              <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
-
-                                            setDesc(data);
-                                          }}
-                                        />
-              
-              {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
-            </div>
-        
-            <div className="form-check mb-2">
-              <Input
-                type="checkbox"
-                className="form-check-input"
-                name="IsActive"
-                value={IsActive}
-                checked={IsActive}
-                onChange={handleCheck}
-              />
-              <Label className="form-check-label">Is Active</Label>
-            </div>
+           
           </ModalBody>
 
           <ModalFooter>
@@ -752,4 +719,4 @@ const [IsActive, setIsActive] = useState(false);
   );
 };
 
-export default Content;
+export default EmailPage;

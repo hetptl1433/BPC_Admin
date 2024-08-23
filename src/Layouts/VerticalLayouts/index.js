@@ -405,6 +405,11 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">About Us</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/news" className="nav-link">
+                News
+              </Link>
+            </li>
 
             <li className="nav-item">
               <Link to="/ledboard-details" className="nav-link">
@@ -450,6 +455,7 @@ const VerticalLayout = (props) => {
                       Contact
                     </Link>
                   </li>
+
                   <li className="nav-item">
                     <Link to="/download" className="nav-link">
                       Download

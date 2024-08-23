@@ -6,6 +6,7 @@ import City from "../pages/LocationSetUp/City/City";
 import State from "../pages/LocationSetUp/State/State";
 import CompanyLocation from "../pages/LocationSetUp/CompanyLocation";
 import Login from "../pages/Authentication/Login";
+
 import CategoryMaster from "../pages/Category/CategoryMaster";
 import Blogs from "../pages/Blogs/Blogs";
 import PromocodeMaster from "../pages/Subscription/PromocodeMaster";
@@ -58,6 +59,8 @@ import MediaFiles from "../pages/Media/Media";
 import ContentContact from "../pages/ContentContact/ContentContact";
 import DownloadFiles from "../pages/Download/Download";
 import ServeFiles from "../pages/Serve/Serve";
+import IndustryUser from "../pages/Authentication/ExamUser";
+import ExamUser from "../pages/Authentication/ExamUser";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -128,6 +131,8 @@ const authProtectedRoutes = [
 const publicRoutes = [
   // { path: "/dashboard", component: <DashboardCrm /> },
   { path: "/", component: <Login /> },
+  { path: "examlogin", component: <ExamUser/>}
+
 ];
 
 export { authProtectedRoutes, publicRoutes };
