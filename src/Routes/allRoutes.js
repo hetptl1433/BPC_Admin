@@ -61,6 +61,10 @@ import DownloadFiles from "../pages/Download/Download";
 import ServeFiles from "../pages/Serve/Serve";
 import IndustryUser from "../pages/Authentication/ExamUser";
 import ExamUser from "../pages/Authentication/ExamUser";
+import EmailMaster from "../pages/EmailMaster/EmailMaster";
+import EmailForm from "../pages/EmailForm/EmailForm";
+import EmailTemplete from "../pages/EmailTemplete/EmailTemplete";
+import ContactForm from "../pages/ContactForm/ContactForm";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -119,6 +123,10 @@ const authProtectedRoutes = [
   { path: "/ContentContact", component: <ContentContact/>},
   { path: "/download", component: <DownloadFiles/>},
   { path: "/serve", component: <ServeFiles/>},
+  { path: "/EmailMaster", component: <EmailMaster/>},
+  { path: "/EmailForm", component: <EmailForm/>},
+  { path: "/EmailTemplete", component: <EmailTemplete/>},
+  { path: "/ContactForm", component: <ContactForm/>},
 
   {
     path: "/",

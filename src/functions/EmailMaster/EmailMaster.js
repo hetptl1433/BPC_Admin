@@ -18,11 +18,11 @@ export const removeEmailMaster = async (_id) => {
   );
 };
 
-//   export const listContact = async () => {
-//     return await axios.get(
-//       `${process.env.REACT_APP_API_URL_BPC}/api/auth/list/company-locations`
-//     );
-//   };
+  export const listEmailMaster = async () => {
+    return await axios.get(
+      `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-active/EmailMaster`
+    );
+  };
 
 export const updateEmailMaster = async (_id, values) => {
   return await axios.put(

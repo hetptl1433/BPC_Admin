@@ -22,10 +22,13 @@ const VerticalLayout = (props) => {
   const [inquiry, setInquiry] = useState(false);
   const [policy, setPolicy] = useState(false);
   const [neonsigns, setNeonSigns] = useState(false);
+  const [Email, setEmail] = useState(false);
   const [cms, setCMS] = useState(false);
   const [locationBar, setLocationBar] = useState(false);
   const [testbar, setTestbar]= useState(false);
   const [industrybar, setIndustrybar]= useState(false);
+  const [forms, setForms] = useState(false);
+
   const [contentBar, setContentBar]= useState(false);
 
   const navData = navdata().props.children;
@@ -352,11 +355,7 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">Hall Booking</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link menu-link" to="/email">
-                <span data-key="t-apps">Email</span>
-              </Link>
-            </li>
+
             {/* <li className="nav-item">
               <Link className="nav-link menu-link" to="/blogs">
                 <span data-key="t-apps">Blogs </span>
@@ -383,17 +382,6 @@ const VerticalLayout = (props) => {
                 <span data-key="t-apps">Extra Booking </span>
               </Link>
             </li>
-
-            {/* <li className="nav-item">
-              <Link className="nav-link menu-link" to="/newproject">
-                <span data-key="t-apps">New Project </span>
-              </Link>
-            </li> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link menu-link" to="/review">
-                <span data-key="t-apps">User Review </span>
-              </Link>
-            </li> */}
 
             <li className="nav-item">
               <Link className="nav-link menu-link" to="/socialmedia">
@@ -470,7 +458,39 @@ const VerticalLayout = (props) => {
                 <ul className="nav nav-sm flex-column test"></ul>
               </Collapse>
             </li>
-
+            <li className="nav-item">
+              <Link
+                className="nav-link menu-link"
+                to="#"
+                data-bs-toggle="collapse"
+                onClick={() => {
+                  setEmail(!Email);
+                }}
+              >
+                <span data-key="t-apps"> Email</span>
+              </Link>
+              <Collapse className="menu-dropdown" isOpen={Email}>
+                <ul className="nav nav-sm flex-column test"></ul>
+                <ul className="nav nav-sm flex-column test">
+                  <li className="nav-item">
+                    <Link to="/EmailMaster" className="nav-link">
+                      Email Master
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/EmailForm" className="nav-link">
+                      Email Form master
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/EmailTemplete" className="nav-link">
+                      Email templete
+                    </Link>
+                  </li>
+                </ul>
+                <ul className="nav nav-sm flex-column test"></ul>
+              </Collapse>
+            </li>
             <li className="nav-item">
               <Link
                 className="nav-link menu-link"
@@ -653,6 +673,39 @@ const VerticalLayout = (props) => {
             <li className="nav-item">
               <Link to="/IndustryUserMaster" className="nav-link">
                 User Master
+              </Link>
+            </li>
+          </ul>
+        </Collapse>
+      </li>
+      <li>
+        <Link
+          className="nav-link menu-link"
+          to="#"
+          data-bs-toggle="collapse"
+          onClick={() => {
+            setForms(!forms);
+          }}
+        >
+          <span data-key="t-apps"> Forms </span>
+        </Link>
+        <Collapse className="menu-dropdown" isOpen={forms}>
+          <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link to="/ContactForm" className="nav-link">
+               Contact Us Form
+
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to="/UserGroups" className="nav-link">
+                d
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/IndustryUserMaster" className="nav-link">
+               dw
               </Link>
             </li>
           </ul>
