@@ -65,6 +65,7 @@ import EmailMaster from "../pages/EmailMaster/EmailMaster";
 import EmailForm from "../pages/EmailForm/EmailForm";
 import EmailTemplete from "../pages/EmailTemplete/EmailTemplete";
 import ContactForm from "../pages/ContactForm/ContactForm";
+import CourseForm from "../pages/CourseForm/CourseForm";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -127,6 +128,7 @@ const authProtectedRoutes = [
   { path: "/EmailForm", component: <EmailForm/>},
   { path: "/EmailTemplete", component: <EmailTemplete/>},
   { path: "/ContactForm", component: <ContactForm/>},
+  { path: "/CoursesForm", component: <CourseForm/>},
 
   {
     path: "/",
