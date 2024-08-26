@@ -465,34 +465,37 @@ const Gallery = () => {
         </ModalHeader>
         <form>
           <ModalBody>
-            
-           <div className="form-floating mb-3">
-  <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
-
-    
-</select>
-  <label>
-    Title<span className="text-danger">*</span>{" "}
-  </label>
-</div>
-          <div className="form-floating mb-3 col-md-6">
+            <div className="form-floating mb-3">
+              <select
+                className={`form-control ${validClassSR}`}
+                required
+                name="title"
+                value={title}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select a title
+                </option>
+                <option value="Infrastructure">Infrastructure</option>
+                <option value="EventRoom">EventRoom</option>
+                <option value="digital_transTrainingProgram">
+                  digital_transTrainingProgram
+                </option>
+                <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
+                <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
+                <option value="AwardGH15">
+                  Award Ceremony GHKC-Gre Env 2015
+                </option>
+                <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">
+                  digital_transAwardCeremonyGHKC-GreEnv2016-17
+                </option>
+                <option value="AwardCeremony">Award Ceremony </option>
+              </select>
+              <label>
+                Title<span className="text-danger">*</span>{" "}
+              </label>
+            </div>
+            <div className="form-floating mb-3 col-md-6">
               <Input
                 type="number"
                 className={validClassSR}
@@ -520,9 +523,7 @@ const Gallery = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.image}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -593,37 +594,41 @@ const Gallery = () => {
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
-               <select
-    className={`form-control ${validClassSR}`}
-    required
-    name="title"
-    value={title}
-    onChange={handleChange}
-  >
-    <option value="" disabled>
-      Select a title
-    </option>
-    <option value="Infrastructure">Infrastructure</option>
-    <option value="EventRoom">EventRoom</option>
-    <option value="digital_transTrainingProgram">digital_transTrainingProgram</option>
-    <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
-    <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
-    <option value="AwardGH15">Award Ceremony GHKC-Gre Env 2015</option>
-    <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">digital_transAwardCeremonyGHKC-GreEnv2016-17</option>
-    <option value="AwardCeremony">Award Ceremony </option>
+            <div className="form-floating mb-3">
+              <select
+                className={`form-control ${validClassSR}`}
+                required
+                name="title"
+                value={title}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select a title
+                </option>
+                <option value="Infrastructure">Infrastructure</option>
+                <option value="EventRoom">EventRoom</option>
+                <option value="digital_transTrainingProgram">
+                  digital_transTrainingProgram
+                </option>
+                <option value="Award13">Award Ceremony BPAIKC 2013-14</option>
+                <option value="Award15">Award Ceremony BPAIKC 2015-16</option>
+                <option value="AwardGH15">
+                  Award Ceremony GHKC-Gre Env 2015
+                </option>
+                <option value="digital_transAwardCeremonyGHKC-GreEnv2016-17">
+                  digital_transAwardCeremonyGHKC-GreEnv2016-17
+                </option>
+                <option value="AwardCeremony">Award Ceremony </option>
 
-    
-
-    {/* Add more options as needed */}
-  </select>
+                {/* Add more options as needed */}
+              </select>
               <Label>
                 title<span className="text-danger">*</span>{" "}
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.title}</p>}
             </div>
 
-            <Col lg={6}>
+            {/* <Col lg={6}>
               <label>
                 Image <span className="text-danger">*</span>
               </label>
@@ -649,10 +654,40 @@ const Gallery = () => {
                   height="200"
                 />
               ) : null}
+            </Col> */}
+            <Col lg={6}>
+              <label>
+                Image <span className="text-danger">*</span>
+              </label>
+              <input
+                key={"productImage" + _id}
+                type="file"
+                name="productImage"
+                className={validClassBI}
+                // accept="images/*"
+                accept=".jpg, .jpeg, .png"
+                onChange={PhotoUpload}
+              />
+              {isSubmit && (
+                <p className="text-danger">{formErrors.Image}</p>
+              )}
+
+              {Image || photoAdd ? (
+                <img
+                  // key={photoAdd}
+                  className="m-2"
+                  src={
+                    checkImagePhoto
+                      ? photoAdd
+                      : `${process.env.REACT_APP_API_URL_BPC}/${image}`
+                  }
+                  width="180"
+                  height="200"
+                />
+              ) : null}
             </Col>
 
-         
-         <div className="form-floating mb-3 mt-3 col-md-6">
+            <div className="form-floating mb-3 mt-3 col-md-6">
               <Input
                 type="number"
                 className={validClassSR}

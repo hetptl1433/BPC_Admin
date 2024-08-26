@@ -556,8 +556,8 @@ const AboutUs = () => {
         <form>
           <ModalBody>
             <div className="mb-3">
-            <Label>
-              Tagline<span className="text-danger">*</span>{" "}
+              <Label>
+                Tagline<span className="text-danger">*</span>{" "}
               </Label>
               <TextArea
                 type="text"
@@ -568,7 +568,7 @@ const AboutUs = () => {
                 value={Tagline}
                 onChange={handleChange}
               />
-              
+
               {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
             </div>
 
@@ -645,7 +645,9 @@ const AboutUs = () => {
               <Label>
                 Description<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.description}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.description}</p>
+              )}
             </div>
 
             <Col lg={6}>
@@ -661,9 +663,7 @@ const AboutUs = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.abtImage}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -734,9 +734,9 @@ const AboutUs = () => {
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="mb-3">
-          <Label>
-              Tagline<span className="text-danger">*</span>{" "}
+            <div className="mb-3">
+              <Label>
+                Tagline<span className="text-danger">*</span>{" "}
               </Label>
               <TextArea
                 type="text"
@@ -748,7 +748,7 @@ const AboutUs = () => {
                 onChange={handleChange}
                 rows={3}
               />
-              
+
               {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
             </div>
 
@@ -825,9 +825,11 @@ const AboutUs = () => {
               <Label>
                 Description<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.description}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.description}</p>
+              )}
             </div>
-            <Col lg={6}>
+            {/* <Col lg={6}>
               <label>
                 Image <span className="text-danger">*</span>
               </label>
@@ -850,6 +852,35 @@ const AboutUs = () => {
                   src={photoAdd}
                   alt="Profile"
                   width="300"
+                  height="200"
+                />
+              ) : null}
+            </Col> */}
+            <Col lg={6}>
+              <label>
+                Image <span className="text-danger">*</span>
+              </label>
+              <input
+                key={"abtImage" + _id}
+                type="file"
+                name="abtImage"
+                className={validClassBI}
+                // accept="images/*"
+                accept=".jpg, .jpeg, .png"
+                onChange={PhotoUpload}
+              />
+              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
+
+              {values.abtImage || photoAdd ? (
+                <img
+                  // key={photoAdd}
+                  className="m-2"
+                  src={
+                    checkImagePhoto
+                      ? photoAdd
+                      : `${process.env.REACT_APP_API_URL_BPC}/${abtImage}`
+                  }
+                  width="180"
                   height="200"
                 />
               ) : null}

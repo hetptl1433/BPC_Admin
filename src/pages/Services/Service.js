@@ -496,7 +496,6 @@ const HandleShortDesc = (e) => {
         }}
         centered
         fullscreen
-        
       >
         <ModalHeader
           className="bg-light p-3"
@@ -730,7 +729,7 @@ const HandleShortDesc = (e) => {
               {isSubmit && <p className="text-danger">{formErrors.title}</p>}
             </div>
 
-            <Col lg={6}>
+            {/* <Col lg={6}>
               <label>
                 Image <span className="text-danger">*</span>
               </label>
@@ -754,8 +753,38 @@ const HandleShortDesc = (e) => {
                   height="200"
                 />
               ) : null}
-            </Col>
+            </Col> */}
+            <Col lg={6}>
+              <label>
+                Imagee <span className="text-danger">*</span>
+              </label>
+              <input
+                key={"image" + _id}
+                type="file"
+                name="image"
+                className={validClassBI}
+                // accept="images/*"
+                accept=".jpg, .jpeg, .png"
+                onChange={PhotoUpload}
+              />
+              {isSubmit && (
+                <p className="text-danger">{formErrors.image}</p>
+              )}
 
+              {values.image || photoAdd ? (
+                <img
+                  // key={photoAdd}
+                  className="m-2"
+                  src={
+                    checkImagePhoto
+                      ? photoAdd
+                      : `${process.env.REACT_APP_API_URL_BPC}/${image}`
+                  }
+                  width="180"
+                  height="200"
+                />
+              ) : null}
+            </Col>
             <div className="form-check mb-2">
               <Input
                 type="checkbox"

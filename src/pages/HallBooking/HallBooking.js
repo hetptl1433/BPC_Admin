@@ -985,7 +985,6 @@ formdata.append("IsActive", values.IsActive);
         }}
         centered
         size="xl"
-        
       >
         <ModalHeader
           className="bg-light p-3"
@@ -1005,7 +1004,6 @@ formdata.append("IsActive", values.IsActive);
                   className={validClassName}
                   placeholder="Enter Name "
                   required
-                  
                   name="Name"
                   value={values.Name}
                   onChange={handleChange}
@@ -1232,23 +1230,29 @@ formdata.append("IsActive", values.IsActive);
                 <label>
                   Icon <span className="text-danger">*</span>
                 </label>
-
                 <input
+                  key={"Icon" + _id}
                   type="file"
-                  name="Icon"
+                  name="productImage"
                   className={validClassIcon}
                   // accept="images/*"
                   accept=".jpg, .jpeg, .png"
                   onChange={PhotoUpload}
                 />
-                {isSubmit && <p className="text-danger">{formErrors.Icon}</p>}
-                {checkImagePhoto ? (
+                {isSubmit && (
+                  <p className="text-danger">{formErrors.Icon}</p>
+                )}
+
+                {values.Icon || photoAdd ? (
                   <img
-                    //   src={image ?? myImage}
+                    // key={photoAdd}
                     className="m-2"
-                    src={photoAdd}
-                    alt="Icon"
-                    width="300"
+                    src={
+                      checkImagePhoto
+                        ? photoAdd
+                        : `${process.env.REACT_APP_API_URL_BPC}/${values.Icon}`
+                    }
+                    width="180"
                     height="200"
                   />
                 ) : null}
@@ -1259,7 +1263,7 @@ formdata.append("IsActive", values.IsActive);
                   type="checkbox"
                   className="form-check-input"
                   name="IsActive"
-                  value={IsActive}
+                  checked={values.IsActive}
                   onChange={handleCheck}
                 />
                 <Label className="form-check-label">Is Active</Label>
