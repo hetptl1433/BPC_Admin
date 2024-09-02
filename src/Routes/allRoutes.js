@@ -66,6 +66,8 @@ import EmailForm from "../pages/EmailForm/EmailForm";
 import EmailTemplete from "../pages/EmailTemplete/EmailTemplete";
 import ContactForm from "../pages/ContactForm/ContactForm";
 import CourseForm from "../pages/CourseForm/CourseForm";
+import RoutineActvity from "../pages/RoutineActivity/RoutinActivity";
+import BookingDetails from "../pages/BookingDetails/BookingDetails";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -116,19 +118,21 @@ const authProtectedRoutes = [
   { path: "/TestQuestion", component: <TestQuestionMaster /> },
   { path: "/Area", component: <Area /> },
   { path: "/industry", component: <Industry /> },
-  { path: "/UserGroups", component: <UserGroup/>},
-  { path: "/IndustryUserMaster", component: <IndustryUserMaster/>},
-  { path: "/BannerImage", component: <BannerImages/>},
-  { path: "/CompanyProfile", component: <CompanyProfile/>},
-  { path: "/media", component: <MediaFiles/>},
-  { path: "/ContentContact", component: <ContentContact/>},
-  { path: "/download", component: <DownloadFiles/>},
-  { path: "/serve", component: <ServeFiles/>},
-  { path: "/EmailMaster", component: <EmailMaster/>},
-  { path: "/EmailForm", component: <EmailForm/>},
-  { path: "/EmailTemplete", component: <EmailTemplete/>},
-  { path: "/ContactForm", component: <ContactForm/>},
-  { path: "/CoursesForm", component: <CourseForm/>},
+  { path: "/UserGroups", component: <UserGroup /> },
+  { path: "/IndustryUserMaster", component: <IndustryUserMaster /> },
+  { path: "/BannerImage", component: <BannerImages /> },
+  { path: "/CompanyProfile", component: <CompanyProfile /> },
+  { path: "/media", component: <MediaFiles /> },
+  { path: "/ContentContact", component: <ContentContact /> },
+  { path: "/download", component: <DownloadFiles /> },
+  { path: "/serve", component: <ServeFiles /> },
+  { path: "/EmailMaster", component: <EmailMaster /> },
+  { path: "/EmailForm", component: <EmailForm /> },
+  { path: "/EmailTemplete", component: <EmailTemplete /> },
+  { path: "/ContactForm", component: <ContactForm /> },
+  { path: "/CoursesForm", component: <CourseForm /> },
+  { path: "/RoutineActivity", component: <RoutineActvity /> },
+  { path: "/BookingDetails", component: <BookingDetails /> },
 
   {
     path: "/",
