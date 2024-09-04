@@ -239,28 +239,28 @@ const [errEDesc, setErrEDesc] = useState(false);
       setErrPI(false);
     }
 
-    if (values.Desc === "") {
+    if (Desc === "") {
       errors.Desc = "Description is required";
       setErrDesc(true);
     } else {
       setErrDesc(false);
     }
 
-    if (values.HindiDesc === "") {
+    if (HindiDesc === "") {
       errors.HindiDesc = "Hindi Description is required";
       setErrHDesc(true);
     } else {
       setErrHDesc(false);
     }
 
-    if (values.GujDesc === "") {
+    if (GujDesc === "") {
       errors.GujDesc = "Gujarati Description is required";
       setErrGDesc(true);
     } else {
       setErrGDesc(false);
     }
 
-    if (values.EngDesc === "") {
+    if (EngDesc === "") {
       errors.EngDesc = "English Description is required";
       setErrEDesc(true);
     } else {
@@ -644,6 +644,10 @@ formdata.append("IsActive", values.IsActive);
                                     setValues(initialState);
                                     setShowForm(false);
                                     setUpdateForm(false);
+                                    setDesc("");
+                                    setHindiDesc("");
+                                    setEngDesc("");
+                                    setGujDesc("");
                                     // setFileId(Math.random() * 100000);
                                   }}
                                 >
@@ -1063,7 +1067,7 @@ formdata.append("IsActive", values.IsActive);
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Test Category name"
                                           required
                                           name="TestName"
                                           value={values.TestName}
@@ -1073,7 +1077,7 @@ formdata.append("IsActive", values.IsActive);
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                          Test Catgegory Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (

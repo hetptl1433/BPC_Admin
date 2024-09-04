@@ -68,6 +68,8 @@ import ContactForm from "../pages/ContactForm/ContactForm";
 import CourseForm from "../pages/CourseForm/CourseForm";
 import RoutineActvity from "../pages/RoutineActivity/RoutinActivity";
 import BookingDetails from "../pages/BookingDetails/BookingDetails";
+import Result from "../pages/Result/Result";
+import ResultPage from "../pages/ResultPage/ResultPage";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -133,6 +135,8 @@ const authProtectedRoutes = [
   { path: "/CoursesForm", component: <CourseForm /> },
   { path: "/RoutineActivity", component: <RoutineActvity /> },
   { path: "/BookingDetails", component: <BookingDetails /> },
+  { path: "/Result", component: <Result /> },
+  { path: "/Result/:_id", component: <ResultPage /> },
 
   {
     path: "/",

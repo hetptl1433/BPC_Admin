@@ -11,6 +11,7 @@ import withRouter from "../../Components/Common/withRouter";
 
 const VerticalLayout = (props) => {
   const [locationSetup, setLocationSetup] = useState(false);
+  const [result, setResult] = useState(false);
   const [setup, setSetup] = useState(false);
   const [params, setParams] = useState(false);
 
@@ -603,6 +604,30 @@ const VerticalLayout = (props) => {
         </Collapse>
       </li>
 
+      <li className="nav-item">
+        <Link
+          className="nav-link menu-link"
+          to="#"
+          data-bs-toggle="collapse"
+          onClick={() => {
+            setResult(!result);
+          }}
+        >
+          <span data-key="t-apps"> Result </span>
+        </Link>
+
+        <Collapse className="menu-dropdown" isOpen={result}>
+          <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link to="/Result" className="nav-link">
+                Result
+              </Link>
+            </li>
+
+           
+          </ul>
+        </Collapse>
+      </li>
       <li className="nav-item">
         <Link
           className="nav-link menu-link"

@@ -70,6 +70,7 @@ const initialState = {
 
 
 const TestQuestionMaster = () => {
+  const [extra, setExtra] = useState("");
   const [values, setValues] = useState(initialState);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -376,28 +377,28 @@ const handleCKEditorChange = (name, data) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
+    console.log("value",values);
     // Combine useState values with the values object
     const combinedValues = {
       ...values, // Existing values object
       EngQues,
       HinQues,
       GujQues,
-      EngAnsA,
-      HinAnsA,
-      GujAnsA,
-      EngAnsB,
-      HinAnsB,
-      GujAnsB,
-      EngAnsC,
-      HinAnsC,
-      GujAnsC,
-      EngAnsD,
-      HinAnsD,
-      GujAnsD,
-      EngAnsE,
-      HinAnsE,
-      GujAnsE,
+      ...(EngAnsA && { EngAnsA }),
+      ...(HinAnsA && { HinAnsA }),
+      ...(GujAnsA && { GujAnsA }),
+      ...(EngAnsB && { EngAnsB }),
+      ...(HinAnsB && { HinAnsB }),
+      ...(GujAnsB && { GujAnsB }),
+      ...(EngAnsC && { EngAnsC }),
+      ...(HinAnsC && { HinAnsC }),
+      ...(GujAnsC && { GujAnsC }),
+      ...(EngAnsD && { EngAnsD }),
+      ...(HinAnsD && { HinAnsD }),
+      ...(GujAnsD && { GujAnsD }),
+      ...(EngAnsE && { EngAnsE }),
+      ...(HinAnsE && { HinAnsE }),
+      ...(GujAnsE && { GujAnsE }),
     };
 
     console.log(combinedValues);
@@ -441,6 +442,7 @@ const handleCKEditorChange = (name, data) => {
             setIsSubmit(false);
             setFormErrors({});
             fetchTestQuestionMaster();
+            
           } else {
             if (res.field === 1) {
               setErrCiN(true);
@@ -523,183 +525,9 @@ const handleCKEditorChange = (name, data) => {
       setErrGujQues(false);
     }
 
-    if (values.EngAnsA === "") {
-      errors.EngAnsA = "English Answer A is required!";
-      setErrEngAnsA(true);
-    } else {
-      setErrEngAnsA(false);
-    }
-
-    if (values.HinAnsA === "") {
-      errors.HinAnsA = "Hindi Answer A is required!";
-      setErrHinAnsA(true);
-    } else {
-      setErrHinAnsA(false);
-    }
-
-    if (values.GujAnsA === "") {
-      errors.GujAnsA = "Gujarati Answer A is required!";
-      setErrGujAnsA(true);
-    } else {
-      setErrGujAnsA(false);
-    }
-
-    if (values.EngAnsB === "") {
-      errors.EngAnsB = "English Answer B is required!";
-      setErrEngAnsB(true);
-    } else {
-      setErrEngAnsB(false);
-    }
-
-    if (values.HinAnsB === "") {
-      errors.HinAnsB = "Hindi Answer B is required!";
-      setErrHinAnsB(true);
-    } else {
-      setErrHinAnsB(false);
-    }
-
-    if (values.GujAnsB === "") {
-      errors.GujAnsB = "Gujarati Answer B is required!";
-      setErrGujAnsB(true);
-    } else {
-      setErrGujAnsB(false);
-    }
-
-    if (values.EngAnsC === "") {
-      errors.EngAnsC = "English Answer C is required!";
-      setErrEngAnsC(true);
-    } else {
-      setErrEngAnsC(false);
-    }
-
-    if (values.HinAnsC === "") {
-      errors.HinAnsC = "Hindi Answer C is required!";
-      setErrHinAnsC(true);
-    } else {
-      setErrHinAnsC(false);
-    }
-
-    if (values.GujAnsC === "") {
-      errors.GujAnsC = "Gujarati Answer C is required!";
-      setErrGujAnsC(true);
-    } else {
-      setErrGujAnsC(false);
-    }
-
-    if (values.EngAnsD === "") {
-      errors.EngAnsD = "English Answer D is required!";
-      setErrEngAnsD(true);
-    } else {
-      setErrEngAnsD(false);
-    }
-
-    if (values.HinAnsD === "") {
-      errors.HinAnsD = "Hindi Answer D is required!";
-      setErrHinAnsD(true);
-    } else {
-      setErrHinAnsD(false);
-    }
-
-    if (values.GujAnsD === "") {
-      errors.GujAnsD = "Gujarati Answer D is required!";
-      setErrGujAnsD(true);
-    } else {
-      setErrGujAnsD(false);
-    }
-
-    if (values.EngAnsE === "") {
-      errors.EngAnsE = "English Answer E is required!";
-      setErrEngAnsE(true);
-    } else {
-      setErrEngAnsE(false);
-    }
-
-    if (values.HinAnsE === "") {
-      errors.HinAnsE = "Hindi Answer E is required!";
-      setErrHinAnsE(true);
-    } else {
-      setErrHinAnsE(false);
-    }
-
-    if (values.GujAnsE === "") {
-      errors.GujAnsE = "Gujarati Answer E is required!";
-      setErrGujAnsE(true);
-    } else {
-      setErrGujAnsE(false);
-    }
-
-    if (values.PointCatIDA === "") {
-      errors.PointCatIDA = "Select Point Category A!";
-      setErrPointCatIDA(true);
-    } else {
-      setErrPointCatIDA(false);
-    }
-
-    if (values.PointSelIDA === "") {
-      errors.PointSelIDA = "Select Point Selection A!";
-      setErrPointSelIDA(true);
-    } else {
-      setErrPointSelIDA(false);
-    }
-
-    if (values.PointCatIDB === "") {
-      errors.PointCatIDB = "Select Point Category B!";
-      setErrPointCatIDB(true);
-    } else {
-      setErrPointCatIDB(false);
-    }
-
-    if (values.PointSelIDB === "") {
-      errors.PointSelIDB = "Select Point Selection B!";
-      setErrPointSelIDB(true);
-    } else {
-      setErrPointSelIDB(false);
-    }
-
-    if (values.PointCatIDC === "") {
-      errors.PointCatIDC = "Select Point Category C!";
-      setErrPointCatIDC(true);
-    } else {
-      setErrPointCatIDC(false);
-    }
-
-    if (values.PointSelIDC === "") {
-      errors.PointSelIDC = "Select Point Selection C!";
-      setErrPointSelIDC(true);
-    } else {
-      setErrPointSelIDC(false);
-    }
-
-    if (values.PointCatIDD === "") {
-      errors.PointCatIDD = "Select Point Category D!";
-      setErrPointCatIDD(true);
-    } else {
-      setErrPointCatIDD(false);
-    }
-
-    if (values.PointSelIDD === "") {
-      errors.PointSelIDD = "Select Point Selection D!";
-      setErrPointSelIDD(true);
-    } else {
-      setErrPointSelIDD(false);
-    }
-
-    if (values.PointCatIDE === "") {
-      errors.PointCatIDE = "Select Point Category E!";
-      setErrPointCatIDE(true);
-    } else {
-      setErrPointCatIDE(false);
-    }
-
-    if (values.PointSelIDE === "") {
-      errors.PointSelIDE = "Select Point Selection E!";
-      setErrPointSelIDE(true);
-    } else {
-      setErrPointSelIDE(false);
-    }
 
     if (values.setErrPointSortOrder === "") {
-      errors.setErrPointSortOrder = "Select Point Selection E!";
+      errors.SortOrder = "Select Sort Order!";
       setErrPointSortOrder(true);
     } else {
       setErrPointSortOrder(false);
@@ -885,18 +713,7 @@ const handleCKEditorChange = (name, data) => {
       sortable: true,
       sortField: "TestMaster",
     },
-    {
-      name: "Question",
-      selector: (row) => (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: row.EngQues || "N/A",
-          }}
-        />
-      ),
-      sortable: true,
-      sortField: "TestMaster",
-    },
+ 
     {
       name: "SortOrder",
       selector: (row) => row.SortOrder || "N/A",
@@ -1265,9 +1082,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer A */}
             <div className="mb-3">
-              <Label>
-                English Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1286,9 +1101,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer A */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1307,9 +1120,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer A */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1328,9 +1139,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer B */}
             <div className="mb-3">
-              <Label>
-                English Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1349,9 +1158,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer B */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1370,9 +1177,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer B */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1391,9 +1196,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer C */}
             <div className="mb-3">
-              <Label>
-                English Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1412,9 +1215,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer C */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1433,9 +1234,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer C */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1454,9 +1253,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer D */}
             <div className="mb-3">
-              <Label>
-                English Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1475,9 +1272,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer D */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1496,9 +1291,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer D */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1517,9 +1310,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer E */}
             <div className="mb-3">
-              <Label>
-                English Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1538,9 +1329,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer E */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1559,9 +1348,7 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer E */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
@@ -1580,10 +1367,7 @@ const handleCKEditorChange = (name, data) => {
 
             <div className="row">
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option A <span className="text-danger">*</span>
-                </Label>
+                <Label> Option A</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDA"
@@ -1601,10 +1385,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDA}</p>
                   )}
@@ -1622,17 +1403,14 @@ const handleCKEditorChange = (name, data) => {
                         s.isActive &&
                         PointCatIDA === s.PointID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDA}</p>
                   )}
@@ -1640,10 +1418,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option B <span className="text-danger">*</span>
-                </Label>
+                <Label> Option B</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDB"
@@ -1661,10 +1436,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDB}</p>
                   )}
@@ -1689,10 +1461,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDB}</p>
                   )}
@@ -1700,10 +1469,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option C <span className="text-danger">*</span>
-                </Label>
+                <Label> Option C</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDC"
@@ -1721,10 +1487,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDC}</p>
                   )}
@@ -1749,10 +1512,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDC}</p>
                   )}
@@ -1760,10 +1520,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option D <span className="text-danger">*</span>
-                </Label>
+                <Label> Option D</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDD"
@@ -1781,10 +1538,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDD}</p>
                   )}
@@ -1809,10 +1563,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDD}</p>
                   )}
@@ -1820,10 +1571,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option E <span className="text-danger">*</span>
-                </Label>
+                <Label> Option E</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDE"
@@ -1841,10 +1589,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDE}</p>
                   )}
@@ -1869,10 +1614,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDE}</p>
                   )}
@@ -1893,7 +1635,7 @@ const handleCKEditorChange = (name, data) => {
                   <Label>
                     Sort Order <span className="text-danger">*</span>
                   </Label>
-                  {isSubmit && (
+                  {isSubmit && formErrors.SortOrder && (
                     <p className="text-danger">{formErrors.SortOrder}</p>
                   )}
                 </div>
@@ -2121,7 +1863,7 @@ const handleCKEditorChange = (name, data) => {
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngQues}
+                  data={EngQues || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngQues(data);
@@ -2142,7 +1884,7 @@ const handleCKEditorChange = (name, data) => {
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinQues}
+                  data={HinQues || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinQues(data);
@@ -2163,7 +1905,7 @@ const handleCKEditorChange = (name, data) => {
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujQues}
+                  data={GujQues || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujQues(data);
@@ -2178,13 +1920,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer A */}
             <div className="mb-3">
-              <Label>
-                English Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngAnsA}
+                  data={EngAnsA || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngAnsA(data);
@@ -2199,13 +1939,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer A */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinAnsA}
+                  data={HinAnsA || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinAnsA(data);
@@ -2220,13 +1958,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer A */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer A <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer A</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujAnsA}
+                  data={GujAnsA || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujAnsA(data);
@@ -2241,13 +1977,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer B */}
             <div className="mb-3">
-              <Label>
-                English Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngAnsB}
+                  data={EngAnsB || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngAnsB(data);
@@ -2262,13 +1996,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer B */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinAnsB}
+                  data={HinAnsB || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinAnsB(data);
@@ -2283,13 +2015,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer B */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer B <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer B</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujAnsB}
+                  data={GujAnsB || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujAnsB(data);
@@ -2304,13 +2034,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer C */}
             <div className="mb-3">
-              <Label>
-                English Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngAnsC}
+                  data={EngAnsC || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngAnsC(data);
@@ -2325,13 +2053,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer C */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinAnsC}
+                  data={HinAnsC || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinAnsC(data);
@@ -2346,13 +2072,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer C */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer C <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer C</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujAnsC}
+                  data={GujAnsC || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujAnsC(data);
@@ -2367,13 +2091,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer D */}
             <div className="mb-3">
-              <Label>
-                English Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngAnsD}
+                  data={EngAnsD || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngAnsD(data);
@@ -2388,13 +2110,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer D */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinAnsD}
+                  data={HinAnsD || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinAnsD(data);
@@ -2409,13 +2129,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer D */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer D <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer D</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujAnsD}
+                  data={GujAnsD || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujAnsD(data);
@@ -2430,13 +2148,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* English Answer E */}
             <div className="mb-3">
-              <Label>
-                English Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>English Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={EngAnsE}
+                  data={EngAnsE || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setEngAnsE(data);
@@ -2451,13 +2167,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Hindi Answer E */}
             <div className="mb-3">
-              <Label>
-                Hindi Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>Hindi Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={HinAnsE}
+                  data={HinAnsE || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setHinAnsE(data);
@@ -2472,13 +2186,11 @@ const handleCKEditorChange = (name, data) => {
 
             {/* Gujarati Answer E */}
             <div className="mb-3">
-              <Label>
-                Gujarati Answer E <span className="text-danger">*</span>
-              </Label>
+              <Label>Gujarati Answer E</Label>
               <div className="form-floating">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={GujAnsE}
+                  data={GujAnsE || extra}
                   onChange={(event, editor) => {
                     const data = editor.getData();
                     setGujAnsE(data);
@@ -2493,10 +2205,7 @@ const handleCKEditorChange = (name, data) => {
 
             <div className="row">
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option A <span className="text-danger">*</span>
-                </Label>
+                <Label> Option A</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDA"
@@ -2516,10 +2225,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDA}</p>
                   )}
@@ -2539,17 +2245,14 @@ const handleCKEditorChange = (name, data) => {
                         s.isActive &&
                         PointCatIDA === s.PointID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDA}</p>
                   )}
@@ -2557,10 +2260,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option B <span className="text-danger">*</span>
-                </Label>
+                <Label> Option B</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDB"
@@ -2574,16 +2274,15 @@ const handleCKEditorChange = (name, data) => {
                       return (
                         <React.Fragment key={c._id}>
                           {c.IsActive && (
-                            <option value={c._id}>{c.PointName}</option>
+                            <option value={c._id}>
+                              {c.PointName} {c.PointMasterPoints}
+                            </option>
                           )}
                         </React.Fragment>
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDB}</p>
                   )}
@@ -2604,16 +2303,14 @@ const handleCKEditorChange = (name, data) => {
                         PointCatIDB === s.PointID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName}
+                            {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDB}</p>
                   )}
@@ -2621,10 +2318,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option C <span className="text-danger">*</span>
-                </Label>
+                <Label> Option C</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDC"
@@ -2644,10 +2338,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDC}</p>
                   )}
@@ -2667,17 +2358,14 @@ const handleCKEditorChange = (name, data) => {
                         s.isActive &&
                         PointCatIDC === s.PointID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDC}</p>
                   )}
@@ -2685,10 +2373,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option D <span className="text-danger">*</span>
-                </Label>
+                <Label> Option D</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDD"
@@ -2708,10 +2393,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDD}</p>
                   )}
@@ -2731,17 +2413,14 @@ const handleCKEditorChange = (name, data) => {
                         s.isActive &&
                         PointCatIDD === s.PointID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDD}</p>
                   )}
@@ -2749,10 +2428,7 @@ const handleCKEditorChange = (name, data) => {
               </div>
 
               <div className="col-md-6">
-                <Label>
-                  {" "}
-                  Option E <span className="text-danger">*</span>
-                </Label>
+                <Label> Option E</Label>
                 <div className="form-floating mb-3">
                   <select
                     name="PointCatIDE"
@@ -2772,10 +2448,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label>
-                    {" "}
-                    Point Name<span className="text-danger">*</span>
-                  </Label>
+                  <Label> Point Name</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDE}</p>
                   )}
@@ -2795,17 +2468,14 @@ const handleCKEditorChange = (name, data) => {
                         s.isActive &&
                         PointCatIDE === s.PointID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label>
-                    {" "}
-                    Test Question Master <span className="text-danger">*</span>
-                  </Label>
+                  <Label> Test Question Master</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDE}</p>
                   )}

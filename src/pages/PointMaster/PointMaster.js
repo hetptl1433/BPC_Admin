@@ -68,7 +68,7 @@ const PointMaster = () => {
   const [errPNN, setErrPNN] = useState(false);
   const [errPMN, setErrPMN] = useState(false);
   const [errPT, setErrPT] = useState(false);
-
+  
 
 
 
@@ -233,12 +233,7 @@ const loadPoints = () => {
             setIsSubmit(false);
             setFormErrors({});
             fetchPointMaster();
-          } else {
-            if (res.field === 1) {
-              setErrCiN(true);
-              setFormErrors({ PointMasterName: "Point Master with this name is exists!" });
-            }
-          }
+          } 
         })
         .catch((err) => {
           console.log(err);
@@ -263,15 +258,28 @@ const loadPoints = () => {
   const validate = (values) => {
     const errors = {};
     if (values.PointMasterName == "") {
-      errors.CityName = "Point Master name is required!";
-      setErrCiN(true);
+      errors.PointMasterName = "Point Master name is required!";
+      setErrPN(true);
     }
     if (values.PointMasterName !== "") {
-      setErrCiN(false);
+      setErrPN(false);
     }
-
+    if (values.PointMasterTitle == "") {
+      errors.PointMasterTitle = "Point Master Test   is required!";
+      setErrPT(true);
+    }
+    if (values.PointMasterName !== "") {
+      setErrPT(false);
+    }
+if (values.PointMasterPoints == "") {
+  errors.PointMasterPoints = "Point   is required!";
+  setErrPNN(true);
+}
+if (values.PointMasterPoints !== "") {
+  setErrPNN(false);
+}
     if (values.TestCategoryID == "") {
-      errors.CountryID = "Select Test Category name!";
+      errors.TestCategoryID = "Select Test Category name!";
       setErrCN(true);
     }
     if (values.TestCategoryID !== "") {
@@ -680,7 +688,7 @@ const loadPoints = () => {
               </Label>
               {isSubmit && (
                 <p className="text-danger">
-                  {formErrors.validClassPointMasterPointName}
+                  {formErrors.PointMasterPoints}
                 </p>
               )}
             </div>

@@ -28,7 +28,7 @@ import { createpoint, getpoint, removepoint, updatepoint } from "../../functions
 
 const initialState = {
   PointName: "",
-  IsActive: false,
+  IsActive: true,
 };
 
 const Points = () => {
@@ -310,7 +310,9 @@ const Points = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Point Category</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        Point Category
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -409,7 +411,9 @@ const Points = () => {
                 value={PointName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+                Category Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.PointName}</p>
               )}
@@ -421,6 +425,7 @@ const Points = () => {
                 className="form-check-input"
                 name="IsActive"
                 value={IsActive}
+                checked={IsActive}
                 onChange={handleCheck}
               />
               <Label className="form-check-label">Is Active</Label>
@@ -481,7 +486,9 @@ const Points = () => {
                 value={PointName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+                Category Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.PointName}</p>
               )}
