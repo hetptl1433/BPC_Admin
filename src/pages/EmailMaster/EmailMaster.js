@@ -457,8 +457,8 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Home- Email"
-            title="Home- Email"
+            maintitle="Email"
+            title="Email"
             pageTitle="CMS "
           />
           <Row>
@@ -468,7 +468,7 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                        Home- Email Master
+                        Email Master
                       </h2>
                     </Col>
 

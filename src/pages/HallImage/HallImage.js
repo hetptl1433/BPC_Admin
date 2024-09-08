@@ -21,7 +21,7 @@ import axios from "axios";
 import { listHalleActiveCategory } from "../../functions/Category/HallBookingMaster";
 import { createHalleBoardDetails, getHalleBoardDetails, removeHalleBoardDetails, updateHalleBoardDetails } from "../../functions/HallImage/HallImage";
 
-const HalleBoard = () => {
+const HalleImage = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
@@ -63,7 +63,7 @@ const HalleBoard = () => {
 
   const columns = [
     {
-      name: "Halle Board Category",
+      name: "Halle Image Category",
       selector: (row) => row.category.categoryName,
       sortable: true,
       sortField: "category",
@@ -188,7 +188,7 @@ const HalleBoard = () => {
     }
 
     if (values.SortOrder === "") {
-      errors.SortOrder = "Product Name is required";
+      errors.SortOrder = "Name is required";
       setErrPN(true);
     }
 
@@ -197,7 +197,7 @@ const HalleBoard = () => {
     }
 
     if (values.productImage === "") {
-      errors.productImage = "Product Image is required";
+      errors.productImage = "Image is required";
       setErrPI(true);
     }
 
@@ -419,15 +419,15 @@ const HalleBoard = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  document.title = "Halle Board Details | Neon11";
+  document.title = "Halle Image Details | BPC";
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Halle Board Details"
-            title="Halle Board Details"
+            maintitle="Halle Image Details"
+            title="Halle Image Details"
             pageTitle="CMS"
           />
 
@@ -438,7 +438,7 @@ const HalleBoard = () => {
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" lg={4} md={6} sm={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                      Halle Board Details
+                      Halle Image Details
                       </h2>
                     </Col>
                     <Col lg={4} md={6} sm={6}>
@@ -551,7 +551,7 @@ const HalleBoard = () => {
                     <React.Fragment>
                       <Col xxl={12}>
                         <Card className="">
-                          {/* <PreviewCardHeader title="Billing Product Form" /> */}
+                          {/* <PreviewCardHeader title="Billing Form" /> */}
                           <CardBody>
                             <div className="live-preview">
                               <Form>
@@ -581,7 +581,7 @@ const HalleBoard = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Halle Board Category{" "}
+                                          Halle Image Category{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -596,7 +596,7 @@ const HalleBoard = () => {
                                         <input
                                           type="number"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Sort Order"
                                           required
                                           name="SortOrder"
                                           value={values.SortOrder}           
@@ -606,7 +606,7 @@ const HalleBoard = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                         Sort Order
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -738,7 +738,7 @@ const HalleBoard = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Product Category{" "}
+                                          Category{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -753,7 +753,7 @@ const HalleBoard = () => {
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter name"
                                           required
                                           name="SortOrder"
                                           value={values.SortOrder}
@@ -763,7 +763,7 @@ const HalleBoard = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                          Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -780,7 +780,7 @@ const HalleBoard = () => {
 
                                   <Col lg={6}>
                                     <label>
-                                      Product Image{" "}
+                                      Image{" "}
                                       <span className="text-danger">*</span>
                                     </label>
                                     <input
@@ -969,4 +969,4 @@ const HalleBoard = () => {
   );
 };
 
-export default HalleBoard;
+export default HalleImage;

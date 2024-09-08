@@ -101,18 +101,27 @@ const ServeFiles = () => {
   const [errTT, setErrTT] = useState(false);
   const [errKW, setErrKW] = useState(false);
   const [errBI, setErrBI] = useState(false);
+  const [errSO, setErrSO] = useState(false);
+
+  
 
   const validate = (values) => {
     const errors = {};
 
     if (values.Title === "") {
-      errors.Title = "Title is required!";
+      errors.Title = "Name is required!";
       setErrTT(true);
     }
     if (values.Title !== "") {
       setErrTT(false);
     }
-
+ if (values.SortOrder === "") {
+   errors.SortOrder = "Sort Order is required!";
+   setErrSO(true);
+ }
+ if (values.SortOrder !== "") {
+   setErrTT(false);
+ }
   
 
     if (values.ServeFile === "") {
@@ -134,6 +143,8 @@ const ServeFiles = () => {
 
   const validClassBI =
     errBI && isSubmit ? "form-control is-invalid" : "form-control";
+      const validClassSO =
+        errSO && isSubmit ? "form-control is-invalid" : "form-control";
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -494,7 +505,7 @@ const ServeFiles = () => {
             <div className="form-floating mb-3">
               <Input
                 type="number"
-                className={validClassKW}
+                className={validClassSO}
                 placeholder="Enter SortOrder "
                 required
                 name="SortOrder"

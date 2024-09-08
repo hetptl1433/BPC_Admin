@@ -136,7 +136,7 @@ const authProtectedRoutes = [
   { path: "/RoutineActivity", component: <RoutineActvity /> },
   { path: "/BookingDetails", component: <BookingDetails /> },
   { path: "/Result", component: <Result /> },
-  { path: "/Result/:_id", component: <ResultPage /> },
+  { path: "/Result/:tid", component: <ResultPage /> },
 
   {
     path: "/",

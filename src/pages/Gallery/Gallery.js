@@ -494,6 +494,7 @@ const Gallery = () => {
               <label>
                 Title<span className="text-danger">*</span>{" "}
               </label>
+              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
             </div>
             <div className="form-floating mb-3 col-md-6">
               <Input
@@ -508,7 +509,9 @@ const Gallery = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.sortOrder}</p>
+              )}
             </div>
             <Col lg={6}>
               <label>
@@ -668,9 +671,7 @@ const Gallery = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Image}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Image}</p>}
 
               {Image || photoAdd ? (
                 <img

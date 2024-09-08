@@ -133,7 +133,6 @@ const [IsActive, setIsActive] = useState(false);
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
     let errors = validate(
       Name,
       Duration,
@@ -186,27 +185,7 @@ const [IsActive, setIsActive] = useState(false);
       });
     }
 
-    // createCoursesFun(values)
-    //   .then((res) => {
-    //     setmodal_list(!modal_list);
-    //     setValues(initialState);
-    //     fetchCategories();
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+
   };
 
   const handleDelete = (e) => {
@@ -280,7 +259,7 @@ const [IsActive, setIsActive] = useState(false);
     const errors = {};
 
     if (Name === "") {
-      errors.Title = "Title is required!";
+      errors.Name = "Name is required!";
       setErrTI(true);
     }
     if (Name !== "") {
@@ -302,7 +281,7 @@ const [IsActive, setIsActive] = useState(false);
             }
             
     if (Eligibility === "") {
-      errors.subTitle = "Eligibility is required!";
+      errors.Eligibility = "Eligibility is required!";
       setErrEL(true);
     }
     if (Eligibility !== "") {
@@ -497,20 +476,14 @@ const [IsActive, setIsActive] = useState(false);
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb
-            maintitle="Home- Courses"
-            title="Home- Courses"
-            pageTitle="CMS "
-          />
+          <BreadCrumb maintitle="Courses" title="Courses" pageTitle="CMS " />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">
-                        Home- Courses
-                      </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Courses</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -847,7 +820,7 @@ const [IsActive, setIsActive] = useState(false);
                 name="Eligibility"
                 value={Eligibility}
                 onChange={(e) => {
-                  Eligibility(e.target.value);
+                  setEligibility(e.target.value);
                 }}
               />
               <Label>

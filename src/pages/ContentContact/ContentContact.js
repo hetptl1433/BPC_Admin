@@ -177,15 +177,19 @@ const ContentContact = () => {
     if (values.Name !== "") {
         setErrVI(false);
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (values.Email === "") {
-      errors.Email = "Email content is required!";
+      errors.Email = "Email is required!";
       setErrMI(true);
-    }
-    if (values.Email !== "") {
-        setErrMI(false);
+    } else if (!emailRegex.test(values.Email)) {
+      errors.Email = "Invalid email format!";
+      setErrMI(true);
+    } else {
+      setErrMI(false);
     }
     if (values.Designation === "") {
-      errors.Designation = "Designation content is required!";
+      errors.Designation = "Designation  is required!";
       setErrVA(true);
     }
     if (values.value !== "") {

@@ -18,24 +18,95 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { listLEDActiveCategory } from "../../functions/TestCat/TestCat";
-import { createTestCatMasterDetails, getTestCatMasterDetails, removeTestCatMasterDetails, updateTestCatMasterDetails } from "../../functions/TextCategoryMaster/TextCatMaster";
-import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
+import { listLEDActiveCategory } from "../../functions/TestCat/TestCat";
+import { createTestCatMasterDetails, getTestCatMasterDetails, listTestCatMasterDetails, removeTestCatMasterDetails, updateTestCatMasterDetails } from "../../functions/TextCategoryMaster/TextCatMaster";
+import { useNavigate } from "react-router-dom";
+import { listIndustry } from "../../functions/Industry/Industry";
+import { excelResultData } from "../../functions/ResultPage/ResultPage";
+import { saveAs } from "file-saver"; 
 const Result = () => {
   const navigate = useNavigate();
+   const [testCategories, setTestCategories] = useState([]);
+  const [testCategory, setTestCategory] = useState("");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [industries, setIndustries] = useState([]);
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
   const [_id, set_Id] = useState("");
   const [hetid, sethetid] = useState("");
+const handleChangeIndustry = (e) => {
+  setSelectedIndustry(e.target.value);
+};
+const handleChangeTest = (e) => {
+  setTestCategory(e.target.value);
+};
+const handleStartDate = (e) => {
+  setStartDate(e.target.value);
+};
+const handleEndDate = (e) => {
+  setEndDate(e.target.value);
+};
 
+ const loadIndustry = () => {
+   listIndustry().then((res) => setIndustries(res));
+ };
+ const loadTestCategory = () => {
+   listTestCatMasterDetails().then((res) => setTestCategories(res));
+ };
+const ExportExcel = async () => {
+  const requestData = {
+    testCategory: testCategory, // Assumes testCategory is defined
+    industry: selectedIndustry, // Assumes selectedIndustry is defined
+    startDate: startDate, // Assumes startDate is defined
+    endDate: endDate, // Assumes endDate is defined
+  };
 
+  try {
+    // Make POST request with responseType 'blob' to handle binary data
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL_BPC}/api/auth/get/ResultExcel`,
+      requestData,
+      {
+        headers: { "Content-Type": "application/json" },
+        responseType: "blob", // Important for downloading the file
+      }
+    );
+const blob = new Blob([response], {
+  type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+});
 
+// Create a link element for download
+const link = document.createElement("a");
+link.href = window.URL.createObjectURL(blob);
+link.download = "ResultData.xlsx"; // Name of the file
 
+// Append the link to the body (necessary for Firefox)
+document.body.appendChild(link);
+link.click(); // Trigger download
+
+// Remove the link after the download
+document.body.removeChild(link);
+window.URL.revokeObjectURL(link.href);
+    // Check if the response is valid
+  
+  } catch (error) {
+    console.error(
+      "Error exporting Excel data:",
+      error.response?.data || error.message || error
+    );
+  }
+};
+
+ useEffect(() => {
+   loadIndustry();
+   loadTestCategory();
+ }, []);
 
 
 
@@ -308,7 +379,19 @@ const [errEDesc, setErrEDesc] = useState(false);
                             display: showForm || updateForm ? "none" : "",
                           }}
                         >
-                      
+                          <div className="d-flex justify-content-sm-end">
+                            <div>
+                              <Button
+                                color="primary"
+                                className="add-btn me-1"
+                                onClick={() => {
+                                  setShowForm(!showForm);
+                                }}
+                              >
+                                Export to Excel
+                              </Button>
+                            </div>
+                          </div>
                         </div>
 
                         {/* update list btn */}
@@ -326,7 +409,7 @@ const [errEDesc, setErrEDesc] = useState(false);
                                   onClick={() => {
                                     setShowForm(false);
                                     setUpdateForm(false);
-                                    
+
                                     // setFileId(Math.random() * 100000);
                                   }}
                                 >
@@ -358,8 +441,148 @@ const [errEDesc, setErrEDesc] = useState(false);
                   </Row>
                 </CardHeader>
 
-                {/* ADD FORM  */}
-               
+                {/* Excel FORM  */}
+                <div
+                  style={{
+                    display: showForm && !updateForm ? "block" : "none",
+                  }}
+                >
+                  <CardBody>
+                    <React.Fragment>
+                      <Col xxl={12}>
+                        <Card className="">
+                          {/* <PreviewCardHeader title="Billing Product Form" /> */}
+                          <CardBody>
+                            <div className="live-preview">
+                              <Row>
+                                <Col lg={6}>
+                                  <div className="form-floating mb-3">
+                                    <Input
+                                      type="date"
+                                      className="form-control"
+                                      placeholder="Enter Point Name"
+                                      id="PointMasterName"
+                                      name="PointMasterName"
+                                      value={startDate}
+                                      onChange={handleStartDate}
+                                    />
+                                    <Label>
+                                      Start Date{" "}
+                                      <span className="text-danger">*</span>
+                                    </Label>
+                                    {isSubmit && (
+                                      <p className="text-danger">
+                                        {formErrors.PointMasterName}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Col>
+                                <Col lg={6}>
+                                  <div className="form-floating mb-3">
+                                    <Input
+                                      type="date"
+                                      className="form-control"
+                                      placeholder="Enter Point Name"
+                                      id="PointMasterName"
+                                      name="PointMasterName"
+                                      value={endDate}
+                                      onChange={handleEndDate}
+                                    />
+                                    <Label>
+                                      End Date{" "}
+                                      <span className="text-danger">*</span>
+                                    </Label>
+                                    {isSubmit && (
+                                      <p className="text-danger">
+                                        {formErrors.PointMasterName}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Col>
+                                <Col lg={6}>
+                                  <div className="form-floating mb-3">
+                                    <select
+                                      name="IndustryCategory"
+                                      className="form-control"
+                                      onChange={handleChangeIndustry}
+                                      value={selectedIndustry} // Ensure this matches the state variable
+                                    >
+                                      <option value="">Select Industry</option>
+                                      {industries.map((c) => {
+                                        return (
+                                          <React.Fragment key={c._id}>
+                                            {c.IsActive && (
+                                              <option value={c._id}>
+                                                {c.Name}
+                                              </option>
+                                            )}
+                                          </React.Fragment>
+                                        );
+                                      })}
+                                    </select>
+                                    <Label>
+                                      Industries{" "}
+                                      <span className="text-danger">*</span>
+                                    </Label>
+                                    {isSubmit && (
+                                      <p className="text-danger">
+                                        {formErrors.IndustryCategory}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Col>
+                                <Col lg={6}>
+                                  <div className="form-floating mb-3">
+                                    <select
+                                      name="IndustryCategory"
+                                      className="form-control"
+                                      onChange={handleChangeTest}
+                                      value={testCategory} // Ensure this matches the state variable
+                                    >
+                                      <option value="">Select Category</option>
+                                      {testCategories.map((c) => {
+                                        return (
+                                          <React.Fragment key={c._id}>
+                                            {c.IsActive && (
+                                              <option value={c._id}>
+                                                {c.TestName}
+                                              </option>
+                                            )}
+                                          </React.Fragment>
+                                        );
+                                      })}
+                                    </select>
+                                    <Label>
+                                      Test Name{" "}
+                                      <span className="text-danger">*</span>
+                                    </Label>
+                                    {isSubmit && (
+                                      <p className="text-danger">
+                                        {formErrors.IndustryCategory}
+                                      </p>
+                                    )}
+                                  </div>
+                                </Col>
+                                <Col lg={12}>
+                                  <div className="text-end">
+                                    <button
+                                      className=" btn btn-primary m-1"
+                                      id="add-btn"
+                                      onClick={ExportExcel}
+                                    >
+                                      Export to Excel
+                                    </button>
+                                    
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          </CardBody>{" "}
+                        </Card>
+                      </Col>
+                    </React.Fragment>
+                  </CardBody>
+                </div>
 
                 {/* UPDATE FORM  */}
                 <div
@@ -371,9 +594,7 @@ const [errEDesc, setErrEDesc] = useState(false);
                     <React.Fragment>
                       <Col xxl={12}>
                         <Card className="">
-                          <CardBody>
-                            
-                          </CardBody>
+                          <CardBody></CardBody>
                         </Card>
                       </Col>
                     </React.Fragment>

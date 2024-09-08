@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Input,
   Label,
@@ -20,13 +20,35 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 import { listLEDActiveCategory } from "../../functions/Category/LEDCategoryMaster";
 import { createLEDBoardDetails, getLEDBoardDetails, removeLEDBoardDetails, updateLEDBoardDetails } from "../../functions/LEDBoard/LEDBoard";
-import { getResultAns, getResultData } from "../../functions/ResultPage/ResultPage";
+import { getPointMaster, getResultAns, getResultData } from "../../functions/ResultPage/ResultPage";
+import { Route, useParams } from "react-router-dom";
+import { Select } from "antd";
+import { listIndustry } from "../../functions/Industry/Industry";
+import { getTestCategory, listTestCategory } from "../../functions/TestCat/TestCat";
+import { listTestCatMasterDetails } from "../../functions/TextCategoryMaster/TextCatMaster";
 
-const LEDBoard = () => {
+
+const ResultPage = () => {
+   const [industries, setIndustries] = useState([]);
+   const [testCategories, setTestCategories] = useState([]);
+   const [values, setValues]= useState("");
+   const {tid}= useParams();
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+   
+
+
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
   const [_id, set_Id] = useState("");
+  const [PointData, setPointData] = useState([]);
+  const [allPoint, setAllPoint] = useState([]);
+  const [resultPoint, setResultPoint] = useState(0);
+    const printRef = useRef();
 
   const initialState = {
     UserRegCode: "",
@@ -43,6 +65,8 @@ const LEDBoard = () => {
   
   };
 
+  
+
   const [remove_id, setRemove_id] = useState("");
 
   //search and pagination state
@@ -50,14 +74,12 @@ const LEDBoard = () => {
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [values, setValues] = useState(initialState);
 
-  const {
-    category,
-    productName,
-    productImage,
-    IsActive,
-  } = values;
+  const [IndustryCategory, setIndustryCategories] = useState([]);
+  
+
+    const { category, productName, productImage, IsActive } = values;
+
 
   const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
@@ -74,6 +96,13 @@ const LEDBoard = () => {
     {
       name: "TestName",
       selector: (row) => row.testDetails.TestName,
+      sortable: true,
+      sortField: "TestName",
+      minWidth: "150px",
+    },
+    {
+      name: "TestName",
+      selector: (row) => row.industryDetails.Name,
       sortable: true,
       sortField: "TestName",
       minWidth: "150px",
@@ -136,17 +165,36 @@ const LEDBoard = () => {
       minWidth: "180px",
     },
   ];
-  const renderImage = (uploadimage) => {
-    const imageUrl = `${process.env.REACT_APP_API_URL_BPC}/${uploadimage}`;
+ const aggregatePoints = (data) => {
+   const aggregated = {};
 
-    return (
-      <img
-        src={imageUrl}
-        alt="Image"
-        style={{ width: "75px", height: "75px", padding: "5px" }}
-      />
-    );
-  };
+   data.forEach((item) => {
+     const id = item.pointMasterId.PointID;
+     if (!aggregated[id]) {
+       aggregated[id] = {
+         name: item.pointMasterId.PointMasterName,
+         totalPoints: 0,
+       };
+     }
+     aggregated[id].totalPoints += parseInt(
+       item.pointMasterId.PointMasterPoints,
+       10
+     );
+   });
+
+   return Object.values(aggregated);
+ };
+  const aggregatedData = aggregatePoints(PointData);
+
+   useEffect(() => {
+     // Calculate the total points
+     const totalPoints = aggregatedData.reduce(
+       (acc, item) => acc + item.totalPoints,
+       0
+     );
+     // Update the resultPoint state
+     setResultPoint(totalPoints);
+   }, [aggregatedData]);
 
   useEffect(() => {
     fetchProducts();
@@ -161,7 +209,7 @@ const LEDBoard = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/ResultData`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/ResultData/${tid}`,
         {
           skip: skip,
           per_page: perPage,
@@ -218,10 +266,7 @@ const LEDBoard = () => {
 
   const [modal_edit, setmodal_edit] = useState(false);
 
-  const handlecheck = (e) => {
-    console.log(e.target.checked);
-    setValues({ ...values, IsActive: e.target.checked });
-  };
+
 
   const [modal_list, setModalList] = useState(false);
 
@@ -231,9 +276,7 @@ const LEDBoard = () => {
     }
   }, [formErrors, isSubmit]);
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+
 
 
  
@@ -309,25 +352,43 @@ const LEDBoard = () => {
      const res = await getResultData(_id);
 
      // Set the initial form values
-     setValues({
-       ...values,
-       UserRegCode: res.userId._id,
-       ExamName: res.id.TestName,
-       TotalTime: res.id.TotalTime,
-       TotalQues: res.id.TotalQues,
-       Name: res.userId.Name,
-       Email: res.userId.Email,
-       Mobile: res.userId.Mobile,
-       UserName: res.userId.UserName,
-     });
+   
+     
+     const examDate = new Date(res.ExamDate);
 
+     const day = examDate.getDate().toString().padStart(2, "0");
+     const month = (examDate.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+     const year = examDate.getFullYear();
+
+     const formattedDate = `${day}-${month}-${year}`;
+       setValues({
+         ...values,
+         UserRegCode: res.userId._id,
+         ExamName: res.id.TestName,
+         TotalTime: res.id.TotalTime,
+         TotalQues: res.id.TotalQues,
+         ExamDate: formattedDate,
+         Name: res.userId.Name,
+         Email: res.userId.Email,
+         Mobile: res.userId.Mobile,
+         UserName: res.userId.UserName,
+       });
      // Second API call with additional parameters (if needed)
      const detailedRes = await getResultAns(res.userId._id, res.id._id);
-     console.log(detailedRes);
+     setPointData(detailedRes);
+
+
+     const TotalpointCategory= await getPointMaster(res.id._id);
+     setAllPoint(TotalpointCategory);
+
+
    } catch (err) {
      console.log(err);
    }
  };
+
+ 
+ 
 
   useEffect(()=>{
     console.log(values)
@@ -345,26 +406,7 @@ const LEDBoard = () => {
   const [photoAdd, setPhotoAdd] = useState();
   const [checkImagePhoto, setCheckImagePhoto] = useState(false);
 
-  const PhotoUpload = (e) => {
-    if (e.target.files.length > 0) {
-      const image = new Image();
-
-      let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
-
-      image.onload = () => {
-        const width = image.width;
-        const height = image.height;
-
-        // Now, you have the image width and height available.
-        // You can use this information when sending the image to the backend.
-      };
-
-      setPhotoAdd(imageurl);
-      setValues({ ...values, productImage: e.target.files[0] });
-      setCheckImagePhoto(true);
-    }
-  };
+ 
 
   const handlePerRowsChange = async (newPerPage, page) => {
     // setPageNo(page);
@@ -425,24 +467,7 @@ const LEDBoard = () => {
                         >
                           <Row>
                             <Col lg={12}>
-                              <div className="d-flex justify-content-sm-end">
-                                <div>
-                                  <Button
-                                    color="success"
-                                    className="add-btn me-1"
-                                    onClick={() => {
-                                      setShowForm(!showForm);
-                                      setValues(initialState);
-                                      // setFileId(Math.random() * 100000);
-                                    }}
-                                    // onClick={() => tog_list()}
-                                    // id="create-btn"
-                                  >
-                                    <i className="ri-add-line align-bottom me-1"></i>
-                                    Add
-                                  </Button>
-                                </div>
-                              </div>
+                            
                             </Col>
                           </Row>
                         </div>
@@ -494,8 +519,8 @@ const LEDBoard = () => {
                   </Row>
                 </CardHeader>
 
-                {/* ADD FORM  */}
-
+                {/* Excel FORM  */}
+               
                 {/* UPDATE FORM  */}
                 <div
                   style={{
@@ -510,35 +535,320 @@ const LEDBoard = () => {
                             <div className="live-preview">
                               <Form>
                                 <Row>
-                                  <Row>
-                                    <Col lg={4}>
-                                      <div className="form-floating mb-3">
-                                        <input
-                                          type="text"
-                                          className={validClassPN}
-                                          placeholder="Enter product name"
-                                          required
-                                          name="productName"
-                                          readOnly
-                                          value={values.ExamName}
-                                          onChange={handleChange}
-                                        />
-                                        <label
-                                          htmlFor="role-field"
-                                          className="form-label"
-                                        >
-                                          TestName
-                                          <span className="text-danger">*</span>
-                                        </label>
-                                        {isSubmit && (
-                                          <p className="text-danger">
-                                            {formErrors.productName}
-                                          </p>
-                                        )}
+                                  <Col xxl={8}>
+                                    <Row>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.ExamName}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Test Name
+                                          </label>
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.UserRegCode}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            UserRegisteration
+                                          </label>
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.ExamDate}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Exam Date
+                                          </label>
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.UserName}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            User Name
+                                          </label>
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.TotalTime}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Total Time(seconds)
+                                          </label>
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.Email}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Email
+                                          </label>
+                                        </div>
+                                      </Col>{" "}
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={resultPoint}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Total Point
+                                          </label>
+                                        </div>
+                                      </Col>{" "}
+                                      <Col lg={6}>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className={validClassPN}
+                                            required
+                                            readOnly
+                                            value={values.Mobile}
+                                          />
+                                          <label
+                                            htmlFor="role-field"
+                                            className="form-label"
+                                          >
+                                            Mobile
+                                          </label>
+                                        </div>
+                                      </Col>
+                                    </Row>
+                                  </Col>
+                                  <Col xxl={4}>
+                                    <div className="text-end">
+                                      <button
+                                        type="button"
+                                        className="btn btn-outline-success m-1"
+                                        onClick={() => {
+                                          window.print();
+                                        }}
+                                      >
+                                        Print
+                                      </button>
+                                    </div>
+                                  </Col>
+
+                                  <Row className="mt-5">
+                                    <Col lg={6}>
+                                      <div className="result-page">
+                                        <table>
+                                          <thead>
+                                            <tr>
+                                              <th>Answer Selected</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {PointData.map((entry, index) => (
+                                              <div
+                                                className="table-row pp"
+                                                key={index}
+                                              >
+                                                <div className="answer-selected m-1">
+                                                  {index + 1}
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      value="A"
+                                                      checked={
+                                                        entry.selectedOption ===
+                                                        "A"
+                                                      }
+                                                      readOnly
+                                                    />{" "}
+                                                    A
+                                                  </label>
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      value="B"
+                                                      checked={
+                                                        entry.selectedOption ===
+                                                        "B"
+                                                      }
+                                                      readOnly
+                                                    />{" "}
+                                                    B
+                                                  </label>
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      value="C"
+                                                      checked={
+                                                        entry.selectedOption ===
+                                                        "C"
+                                                      }
+                                                      readOnly
+                                                    />{" "}
+                                                    C
+                                                  </label>
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      value="D"
+                                                      checked={
+                                                        entry.selectedOption ===
+                                                        "D"
+                                                      }
+                                                      readOnly
+                                                    />{" "}
+                                                    D
+                                                  </label>
+                                                </div>
+                                                <div className="points-table">
+                                                  {/* This represents any other data that relates to points */}
+                                                  {/* {
+                                                    entry.pointMasterId
+                                                      .PointMasterTitle
+                                                  } */}
+                                                </div>
+                                                <div className="points-gain">
+                                                  {/* Displaying the points */}
+                                                  {/* {
+                                                    entry.pointMasterId
+                                                      .PointMasterName
+                                                  }
+                                                  :{" "}
+                                                  {
+                                                    entry.pointMasterId
+                                                      .PointMasterPoints
+                                                  } */}
+                                                </div>
+                                              </div>
+                                            ))}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </Col>
+                                    <Col lg={6}>
+                                      <div className="result-page">
+                                        <Row>
+                                          <Col lg={6}>
+                                            <div>
+                                              <h2>Points Table</h2>
+                                              <table
+                                                border="1"
+                                                cellPadding="10"
+                                                cellSpacing="0"
+                                              >
+                                                <tbody>
+                                                  {allPoint
+                                                    .slice() // Create a shallow copy of the array to avoid mutating the original array
+                                                    .sort(
+                                                      (a, b) =>
+                                                        b.PointMasterPoints -
+                                                        a.PointMasterPoints
+                                                    ) // Sort in descending order
+                                                    .map((item) => (
+                                                      <tr key={item._id}>
+                                                        <td>
+                                                          {
+                                                            item.PointMasterTitle
+                                                          }
+                                                        </td>
+                                                        <td>
+                                                          {
+                                                            item.PointMasterPoints
+                                                          }
+                                                        </td>
+                                                      </tr>
+                                                    ))}
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </Col>
+                                          <Col lg={6}>
+                                            <div>
+                                              <h2>Points Gain</h2>
+                                              <table
+                                                border="1"
+                                                cellPadding="10"
+                                              >
+                                                <thead>
+                                                  <tr>
+                                                    <th>Points Gain</th>
+                                                    <th>Score</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {aggregatedData.map(
+                                                    (item, index) => (
+                                                      <tr key={index}>
+                                                        <td>{item.name}</td>
+                                                        <td>
+                                                          {item.totalPoints}
+                                                        </td>
+                                                      </tr>
+                                                    )
+                                                  )}
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </Col>
+                                        </Row>
                                       </div>
                                     </Col>
                                   </Row>
-
                                   <Col lg={12}>
                                     <div className="text-end">
                                       <button
@@ -667,4 +977,4 @@ const LEDBoard = () => {
   );
 };
 
-export default LEDBoard;
+export default ResultPage;

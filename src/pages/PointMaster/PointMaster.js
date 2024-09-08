@@ -23,16 +23,7 @@ import {
   Input,
 } from "reactstrap";
 
-// import {
-//   listCity,
-//   createCity,
-//   removeAndUpdateCity,
-//   removeCity,
-//   listState,
-//   listCountry,
-//   getCity,
-//   updateCity,
-// } from "../../../functions/PointMaster/";
+
 
 import { getPointMaster, updatePointMaster,listPointMaster,createPointMaster, removeAndUpdatePointMaster,removePointMaster, } from "../../functions/PointMaster/PointMaster";
 import { getpoint, listpoint } from "../../functions/Points/Point";
@@ -316,7 +307,8 @@ if (values.PointMasterPoints !== "") {
                 errPT && isSubmit ? "form-control is-invalid" : "form-control";
   // const validClassCityCode =
   //   errCC && isSubmit ? "form-control is-invalid" : "form-control";
-  const validClassPointMasterName =
+  const 
+  validClassPointMasterName =
     errCiN && isSubmit ? "form-control is-invalid" : "form-control";
   const validClassTestMasterName =
     errSN && isSubmit ? "form-control is-invalid" : "form-control";
@@ -642,7 +634,7 @@ if (values.PointMasterPoints !== "") {
             <div className="form-floating mb-3">
               <Input
                 type="text"
-                className={validClassPointName}
+                className={validClassPointMasterName}
                 placeholder="Enter Point Name"
                 id="PointMasterName"
                 name="PointMasterName"
@@ -676,8 +668,8 @@ if (values.PointMasterPoints !== "") {
             <div className="form-floating mb-3">
               <Input
                 type="text"
-                className={validClassPointMasterPointName}
-                placeholder="Enter Point Title"
+                className={validClassPointMasterTitle}
+                placeholder="Enter Point value"
                 id="PointMasterPointTitle"
                 name="PointMasterPoints"
                 value={PointMasterPoints}
@@ -923,7 +915,7 @@ if (values.PointMasterPoints !== "") {
             setmodal_delete(false);
           }}
         >
-          Remove City
+          Remove point
         </ModalHeader>
         <form>
           <ModalBody>

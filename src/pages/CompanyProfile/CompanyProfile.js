@@ -214,29 +214,47 @@ const CompanyProfile = () => {
      setErrCN(false);
    }
 
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+   // Email validation
    if (values.Email === "") {
      errors.Email = "Email is required";
+     setErrEmail(true);
+   } else if (!emailRegex.test(values.Email)) {
+     errors.Email = "Invalid email format";
      setErrEmail(true);
    } else {
      setErrEmail(false);
    }
 
+   // Sales Email validation
    if (values.SalesEmail === "") {
      errors.SalesEmail = "Sales Email is required";
+     setErrSalesEmail(true);
+   } else if (!emailRegex.test(values.SalesEmail)) {
+     errors.SalesEmail = "Invalid Sales Email format";
      setErrSalesEmail(true);
    } else {
      setErrSalesEmail(false);
    }
 
+   // Support Email validation
    if (values.SupportEmail === "") {
      errors.SupportEmail = "Support Email is required";
+     setErrSupportEmail(true);
+   } else if (!emailRegex.test(values.SupportEmail)) {
+     errors.SupportEmail = "Invalid Support Email format";
      setErrSupportEmail(true);
    } else {
      setErrSupportEmail(false);
    }
 
+   // Partner Email validation
    if (values.PartnerEmail === "") {
      errors.PartnerEmail = "Partner Email is required";
+     setErrPartnerEmail(true);
+   } else if (!emailRegex.test(values.PartnerEmail)) {
+     errors.PartnerEmail = "Invalid Partner Email format";
      setErrPartnerEmail(true);
    } else {
      setErrPartnerEmail(false);
@@ -249,33 +267,51 @@ const CompanyProfile = () => {
      setErrAddress(false);
    }
 
-   if (values.PhoneOff1 === "") {
-     errors.PhoneOff1 = "Phone Office 1 is required";
-     setErrPhoneOff1(true);
-   } else {
-     setErrPhoneOff1(false);
-   }
+  const phoneRegex = /^\d{10}$/;
 
-   if (values.PhoneOff2 === "") {
-     errors.PhoneOff2 = "Phone Office 2 is required";
-     setErrPhoneOff2(true);
-   } else {
-     setErrPhoneOff2(false);
-   }
+  // Phone Office 1 validation
+  if (values.PhoneOff1 === "") {
+    errors.PhoneOff1 = "Phone Office 1 is required";
+    setErrPhoneOff1(true);
+  } else if (!phoneRegex.test(values.PhoneOff1)) {
+    errors.PhoneOff1 = "Phone Office 1 must be a 10-digit number";
+    setErrPhoneOff1(true);
+  } else {
+    setErrPhoneOff1(false);
+  }
 
-   if (values.MobileOne1 === "") {
-     errors.MobileOne1 = "Mobile One 1 is required";
-     setErrMobileOne1(true);
-   } else {
-     setErrMobileOne1(false);
-   }
+  // Phone Office 2 validation
+  if (values.PhoneOff2 === "") {
+    errors.PhoneOff2 = "Phone Office 2 is required";
+    setErrPhoneOff2(true);
+  } else if (!phoneRegex.test(values.PhoneOff2)) {
+    errors.PhoneOff2 = "Phone Office 2 must be a 10-digit number";
+    setErrPhoneOff2(true);
+  } else {
+    setErrPhoneOff2(false);
+  }
 
-   if (values.MobileOne2 === "") {
-     errors.MobileOne2 = "Mobile One 2 is required";
-     setErrMobileOne2(true);
-   } else {
-     setErrMobileOne2(false);
-   }
+  // Mobile One 1 validation
+  if (values.MobileOne1 === "") {
+    errors.MobileOne1 = "Mobile One 1 is required";
+    setErrMobileOne1(true);
+  } else if (!phoneRegex.test(values.MobileOne1)) {
+    errors.MobileOne1 = "Mobile One 1 must be a 10-digit number";
+    setErrMobileOne1(true);
+  } else {
+    setErrMobileOne1(false);
+  }
+
+  // Mobile One 2 validation
+  if (values.MobileOne2 === "") {
+    errors.MobileOne2 = "Mobile One 2 is required";
+    setErrMobileOne2(true);
+  } else if (!phoneRegex.test(values.MobileOne2)) {
+    errors.MobileOne2 = "Mobile One 2 must be a 10-digit number";
+    setErrMobileOne2(true);
+  } else {
+    setErrMobileOne2(false);
+  }
 
    if (values.productImage === "") {
      errors.productImage = "Product Image is required";

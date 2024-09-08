@@ -299,7 +299,7 @@ const TestCategory = () => {
         <Container fluid>
           <BreadCrumb
             maintitle="Category"
-            title="LED Category"
+            title="Test Category"
             pageTitle="Category"
           />
           <Row>

@@ -322,13 +322,7 @@ const [IsActive, setIsActive] = useState(false);
         sortField: "URL",
         maxWidth: "150px",
       },
-      {
-        name: "Description",
-        selector: (row) => row.Desc,
-        sortable: true,
-        sortField: "Description",
-        maxWidth: "250px",
-      },
+    
    
     {
       name: "Status",
@@ -381,8 +375,8 @@ const [IsActive, setIsActive] = useState(false);
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Home- Content"
-            title="Home- Content"
+            maintitle="Content"
+            title="Content"
             pageTitle="CMS "
           />
           <Row>
@@ -391,7 +385,7 @@ const [IsActive, setIsActive] = useState(false);
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Home- Content</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Content</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>

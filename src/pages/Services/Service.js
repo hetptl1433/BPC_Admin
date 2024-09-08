@@ -114,59 +114,85 @@ const HandleShortDesc = (e) => {
 
   const [errSR, setErrSR] = useState(false);
   const [errBI, setErrBI] = useState(false);
+  const [errName, setErrName] = useState(false);
+  const [errDesc, setErrDesc] = useState(false);
+  const [errShortDesc, setErrShortDesc] = useState(false);
+  const [errSortOrder, setErrSortOrder] = useState(false);
+  const [errImage, setErrImage] = useState(false);
 //   const [errB1, setErrB1] = useState(false);
 //   const [errB2, setErrB2] = useState(false);
 //   const [errB3, setErrB3] = useState(false);
 //   const [errB4, setErrB4] = useState(false);
 //   const [errDS, setErrDS] = useState(false);
 
-  const validate = (values) => {
-    const errors = {};
+    const validate = (values) => {
+      const errors = {};
 
-    if (values.title === "") {
-      errors.title = "title is required!";
-      setErrSR(true);
-    }
-    if (values.title !== "") {
-      setErrSR(false);
-    }
-      if (values.desc === "") {
-      errors.title = "Description is required!";
-      setErrSR(true);
-    }
-    if (values.desc !== "") {
-      setErrSR(false);
-    }
-  if (values.shortdesc === "") {
-      errors.title = "short Description is required!";
-      setErrSR(true);
-    }
-    if (values.shortdesc !== "") {
-      setErrSR(false);
-    }
-  if (values.sortOrder === "") {
-      errors.title = "short order is required!";
-      setErrSR(true);
-    }
-    if (values.sortOrder !== "") {
-      setErrSR(false);
-    }
-    if (values.image === "") {
-      errors.image = "Image is required!";
-      setErrBI(true);
-    }
-    if (values.image !== "") {
-      setErrBI(false);
-    }
+      // Validate title
+       if (values.name === "") {
+         errors.name = "Name is required!";
+         setErrSR(true);
+       }
+       if (values.name !== "") {
+         setErrSR(false);
+       }
 
-    return errors;
-  };
+      // Validate description
+      if (!values.desc || values.desc.trim() === "") {
+        errors.desc = "Description is required!";
+        setErrDesc(true);
+      } else {
+        setErrDesc(false);
+      }
 
-  const validClassSR =
-    errSR && isSubmit ? "form-control is-invalid" : "form-control";
+      // Validate short description
+      if (!values.shortdesc ) {
+        errors.shortdesc = "Short description is required!";
+        setErrShortDesc(true);
+      } else {
+        setErrShortDesc(false);
+      }
 
-  const validClassBI =
-    errBI && isSubmit ? "form-control is-invalid" : "form-control";
+      // Validate sort order
+      if (!values.sortOrder ) {
+        errors.sortOrder = "Sort order is required!";
+        setErrSortOrder(true);
+      } else {
+        setErrSortOrder(false);
+      }
+
+      // Validate image
+      if (!values.image ) {
+        errors.image = "Image is required!";
+        setErrImage(true);
+      } else {
+        setErrImage(false);
+      }
+
+      return errors;
+    };
+
+     const validClassSR =
+       errSR && isSubmit ? "form-control is-invalid" : "form-control";
+
+     const validClassBI =
+       errBI && isSubmit ? "form-control is-invalid" : "form-control";
+
+ const validClassName =
+   errName && isSubmit ? "form-control is-invalid" : "form-control";
+
+ const validClassDesc =
+   errDesc && isSubmit ? "form-control is-invalid" : "form-control";
+
+ const validClassShortDesc =
+   errShortDesc && isSubmit ? "form-control is-invalid" : "form-control";
+
+ const validClassSortOrder =
+   errSortOrder && isSubmit ? "form-control is-invalid" : "form-control";
+
+ const validClassImage =
+   errImage && isSubmit ? "form-control is-invalid" : "form-control";
+    
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -495,7 +521,7 @@ const HandleShortDesc = (e) => {
           tog_list();
         }}
         centered
-        fullscreen
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -511,7 +537,7 @@ const HandleShortDesc = (e) => {
             <div className="form-floating mb-3">
               <input
                 type="text"
-                className={`form-control ${validClassSR}`}
+                className={`form-control ${validClassName}`}
                 required
                 name="name"
                 value={name}
@@ -717,7 +743,7 @@ const HandleShortDesc = (e) => {
               <Input
                 type="number"
                 className={validClassSR}
-                placeholder="Enter title "
+                placeholder="Enter sort Order "
                 required
                 name="sortOrder"
                 value={sortOrder}
@@ -726,7 +752,9 @@ const HandleShortDesc = (e) => {
               <Label>
                 Sort Order<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.title}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.sortOrder}</p>
+              )}
             </div>
 
             {/* <Col lg={6}>
@@ -767,9 +795,7 @@ const HandleShortDesc = (e) => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.image}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.image}</p>}
 
               {values.image || photoAdd ? (
                 <img
