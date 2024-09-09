@@ -174,13 +174,16 @@ const Industry = () => {
     if (values.Name !== "") {
         setErrVI(false);
     }
-    if (values.Email === "") {
-      errors.Email = "Email content is required!";
-      setErrMI(true);
-    }
-    if (values.Email !== "") {
-        setErrMI(false);
-    }
+   if (values.Email === "") {
+     errors.Email = "Email content is required!";
+     setErrMI(true);
+   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.Email)) {
+     errors.Email = "Invalid email address!";
+     setErrMI(true);
+   } else {
+     setErrMI(false);
+   }
+
     if (values.Address === "") {
       errors.Address = "Address content is required!";
       setErrVA(true);

@@ -335,7 +335,7 @@ const Visionmission = () => {
     },
   ];
 
-  document.title = "Vision Mission Value | Neon11";
+  document.title = "Vision Mission Value | BPC India;
 
   return (
     <React.Fragment>

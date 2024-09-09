@@ -21,7 +21,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 
 
-import { createNeonSignsCategory, getNeonSignsCategory, removeNeonSignsCategory, updateNeonSignsCategory } from "../../functions/Category/NeonSignsCategory";
+
 import { createHalleCategory, getHalleCategory, removeHalleCategory, updateHalleCategory } from "../../functions/Category/HallBookingMaster";
 
 const initialState = {
@@ -291,7 +291,7 @@ const HallImageMaster = () => {
     },
   ];
 
-  document.title = "Halle Category | Neon 11";
+  document.title = "Halle Category | BPC India";
 
   return (
     <React.Fragment>

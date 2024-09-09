@@ -21,7 +21,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 
 
-import { createNeonSignsCategory, getNeonSignsCategory, removeNeonSignsCategory, updateNeonSignsCategory } from "../../functions/Category/NeonSignsCategory";
+
 import { createTestCategory, getTestCategory, removeTestCategory, updateTestCategory } from "../../functions/TestCat/TestCat";
 
 const initialState = {

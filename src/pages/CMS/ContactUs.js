@@ -348,7 +348,7 @@ const ContactUs = () => {
     },
   ];
 
-  document.title = "Contact Us | Neon11";
+  document.title = "Contact Us | BPC India";
 
   return (
     <React.Fragment>

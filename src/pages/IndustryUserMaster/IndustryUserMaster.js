@@ -219,21 +219,26 @@ const {
     }
 
     // Validate Email
-    if (values.Email === "") {
-      errors.Email = "Email is required";
-      setErrEmail(true);
-    } else {
-      setErrEmail(false);
-    }
+   if (values.Email === "") {
+     errors.Email = "Email is required";
+     setErrEmail(true);
+   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.Email)) {
+     errors.Email = "Invalid email address!";
+     setErrEmail(true);
+   } else {
+     setErrEmail(false);
+   }
 
-    // Validate Mobile
-    if (values.Mobile === "") {
-      errors.Mobile = "Mobile is required";
-      setErrMobile(true);
-    } else {
-      setErrMobile(false);
-    }
-
+   // Validate Mobile (should be exactly 10 digits)
+   if (values.Mobile === "") {
+     errors.Mobile = "Mobile is required";
+     setErrMobile(true);
+   } else if (!/^\d{10}$/.test(values.Mobile)) {
+     errors.Mobile = "Mobile number should be exactly 10 digits";
+     setErrMobile(true);
+   } else {
+     setErrMobile(false);
+   }
     // Validate landLine
     if (values.landLine === "") {
       errors.landLine = "Land Line is required";
@@ -818,7 +823,7 @@ const validClassAddress =
                                     <Col lg={4}>
                                       <div className="form-floating mb-3">
                                         <input
-                                          type="text"
+                                          type="number"
                                           className={validClassMobile}
                                           placeholder="Enter Mobile"
                                           required
@@ -1127,7 +1132,7 @@ const validClassAddress =
                                     <Col lg={4}>
                                       <div className="form-floating mb-3">
                                         <input
-                                          type="text"
+                                          type="number"
                                           className={validClassMobile}
                                           placeholder="Enter Mobile"
                                           required

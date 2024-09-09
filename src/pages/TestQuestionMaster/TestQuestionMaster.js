@@ -35,7 +35,7 @@ import {
 //   updateCity,
 // } from "../../../functions/TestQuestionMaster/";
 
-import { getTestQuestionMaster, updateTestQuestionMaster,listTestQuestionMaster,createTestQuestionMaster, removeAndUpdateTestQuestionMaster,removeTestQuestionMaster, } from "../../functions/TestQuestionMaster/TestQuestionMaster";
+import { getTestQuestionMaster, updateTestQuestionMaster,listTestQuestionMaster,createTestQuestionMaster, removeAndUpdateTestQuestionMaster,removeTestQuestionMaster, uploadImage, } from "../../functions/TestQuestionMaster/TestQuestionMaster";
 import { getpoint, listpoint } from "../../functions/Points/Point";
 import { getpointMaster, listPointMaster } from "../../functions/PointMaster/PointMaster";
 import {
@@ -70,6 +70,34 @@ const initialState = {
 
 
 const TestQuestionMaster = () => {
+   function uploadPlugin(editor) {
+     editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
+       return uploadAdapter(loader);
+     };
+   }
+    function uploadAdapter(loader) {
+      return {
+        upload: () => {
+          return new Promise((resolve, reject) => {
+            const body = new FormData();
+            loader.file
+              .then((file) => {
+                body.append("uploadImg", file);
+                uploadImage(body)
+                  .then((res) => {
+                    console.log("res", res.url);
+                    resolve({
+                      default: `${process.env.REACT_APP_API_URL_BPC}/uploads/TestQuestionMaster/${res.url}`,
+                    });
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => reject(err));
+          });
+        },
+      };
+    }
+
   const [extra, setExtra] = useState("");
   const [values, setValues] = useState(initialState);
   const [formErrors, setFormErrors] = useState({});
@@ -303,12 +331,12 @@ const TestQuestionMaster = () => {
     loadPointMasters();
   }, []);
 
-  const loadPoint = () => {
-    listTestQuestionMaster().then((res) => {
-      setPointss(res);
-      console.log(res);
-    });
-  };
+  // const loadPoint = () => {
+  //   listTestQuestionMaster().then((res) => {
+  //     setPointss(res);
+  //     console.log(res);
+  //   });
+  // };
   const loadTestCategories = () => {
     setLoading(true);
     listTestCategory()
@@ -1030,7 +1058,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngQues(data);
                   }}
-                  config={{ placeholder: "Enter English Question" }}
+                  config={{
+                    placeholder: "Enter English Question",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngQues && (
@@ -1051,7 +1082,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinQues(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Question" }}
+                  config={{
+                    placeholder: "Enter Hindi Question",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinQues && (
@@ -1072,7 +1106,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujQues(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Question" }}
+                  config={{
+                    placeholder: "Enter Gujarati Question",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujQues && (
@@ -1091,7 +1128,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngAnsA(data);
                   }}
-                  config={{ placeholder: "Enter English Answer A" }}
+                  config={{
+                    placeholder: "Enter English Answer A",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngAnsA && (
@@ -1110,7 +1150,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinAnsA(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Answer A" }}
+                  config={{
+                    placeholder: "Enter Hindi Answer A",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinAnsA && (
@@ -1129,7 +1172,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujAnsA(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Answer A" }}
+                  config={{
+                    placeholder: "Enter Gujarati Answer A",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujAnsA && (
@@ -1148,7 +1194,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngAnsB(data);
                   }}
-                  config={{ placeholder: "Enter English Answer B" }}
+                  config={{
+                    placeholder: "Enter English Answer B",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngAnsB && (
@@ -1167,7 +1216,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinAnsB(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Answer B" }}
+                  config={{
+                    placeholder: "Enter Hindi Answer B",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinAnsB && (
@@ -1186,7 +1238,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujAnsB(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Answer B" }}
+                  config={{
+                    placeholder: "Enter Gujarati Answer B",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujAnsB && (
@@ -1205,7 +1260,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngAnsC(data);
                   }}
-                  config={{ placeholder: "Enter English Answer C" }}
+                  config={{
+                    placeholder: "Enter English Answer C",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngAnsC && (
@@ -1224,7 +1282,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinAnsC(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Answer C" }}
+                  config={{
+                    placeholder: "Enter Hindi Answer C",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinAnsC && (
@@ -1243,7 +1304,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujAnsC(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Answer C" }}
+                  config={{
+                    placeholder: "Enter Gujarati Answer C",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujAnsC && (
@@ -1262,7 +1326,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngAnsD(data);
                   }}
-                  config={{ placeholder: "Enter English Answer D" }}
+                  config={{
+                    placeholder: "Enter English Answer D",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngAnsD && (
@@ -1281,7 +1348,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinAnsD(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Answer D" }}
+                  config={{
+                    placeholder: "Enter Hindi Answer D",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinAnsD && (
@@ -1300,7 +1370,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujAnsD(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Answer D" }}
+                  config={{
+                    placeholder: "Enter Gujarati Answer D",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujAnsD && (
@@ -1319,7 +1392,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setEngAnsE(data);
                   }}
-                  config={{ placeholder: "Enter English Answer E" }}
+                  config={{
+                    placeholder: "Enter English Answer E",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.EngAnsE && (
@@ -1338,7 +1414,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setHinAnsE(data);
                   }}
-                  config={{ placeholder: "Enter Hindi Answer E" }}
+                  config={{
+                    placeholder: "Enter Hindi Answer E",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.HinAnsE && (
@@ -1357,7 +1436,10 @@ const handleCKEditorChange = (name, data) => {
                     const data = editor.getData();
                     setGujAnsE(data);
                   }}
-                  config={{ placeholder: "Enter Gujarati Answer E" }}
+                  config={{
+                    placeholder: "Enter Gujarati Answer E",
+                    extraPlugins: [uploadPlugin],
+                  }}
                 />
               </div>
               {isSubmit && formErrors.GujAnsE && (
@@ -1648,6 +1730,7 @@ const handleCKEditorChange = (name, data) => {
                 className="form-check-input"
                 name="isActive"
                 value={isActive}
+                checked={isActive}
                 onChange={handleCheck}
               />
               <Label className="form-check-label ms-1">Is Active</Label>
@@ -2509,6 +2592,7 @@ const handleCKEditorChange = (name, data) => {
                 className="form-check-input"
                 name="isActive"
                 value={isActive}
+                checked={isActive}
                 onChange={handleCheck}
               />
               <Label className="form-check-label ms-1">Is Active</Label>
@@ -2532,6 +2616,30 @@ const handleCKEditorChange = (name, data) => {
                   setmodal_edit(false);
                   setIsSubmit(false);
                   setFormErrors({});
+                  setValues(initialState);
+                  setEngQues("");
+                  setHinQues("");
+                  setGujQues("");
+
+                  setEngAnsA("");
+                  setHinAnsA("");
+                  setGujAnsA("");
+
+                  setEngAnsB("");
+                  setHinAnsB("");
+                  setGujAnsB("");
+
+                  setEngAnsC("");
+                  setHinAnsC("");
+                  setGujAnsC("");
+
+                  setEngAnsD("");
+                  setHinAnsD("");
+                  setGujAnsD("");
+
+                  setEngAnsE("");
+                  setHinAnsE("");
+                  setGujAnsE("");
                 }}
               >
                 Cancel

@@ -340,7 +340,7 @@ const LocationNumUs = () => {
     },
   ];
 
-  document.title = "LocationNum Us | Neon11";
+  document.title = "LocationNum Us | BPC India;
 
   return (
     <React.Fragment>

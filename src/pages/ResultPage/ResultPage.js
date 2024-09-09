@@ -18,9 +18,8 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { listLEDActiveCategory } from "../../functions/Category/LEDCategoryMaster";
-import { createLEDBoardDetails, getLEDBoardDetails, removeLEDBoardDetails, updateLEDBoardDetails } from "../../functions/LEDBoard/LEDBoard";
-import { getPointMaster, getResultAns, getResultData } from "../../functions/ResultPage/ResultPage";
+
+import { getPointMaster, getResultAns, getResultData , removeResultData} from "../../functions/ResultPage/ResultPage";
 import { Route, useParams } from "react-router-dom";
 import { Select } from "antd";
 import { listIndustry } from "../../functions/Industry/Industry";
@@ -29,15 +28,10 @@ import { listTestCatMasterDetails } from "../../functions/TextCategoryMaster/Tex
 
 
 const ResultPage = () => {
-   const [industries, setIndustries] = useState([]);
-   const [testCategories, setTestCategories] = useState([]);
    const [values, setValues]= useState("");
    const {tid}= useParams();
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
+ 
    
 
 
@@ -48,7 +42,6 @@ const ResultPage = () => {
   const [PointData, setPointData] = useState([]);
   const [allPoint, setAllPoint] = useState([]);
   const [resultPoint, setResultPoint] = useState(0);
-    const printRef = useRef();
 
   const initialState = {
     UserRegCode: "",
@@ -290,7 +283,7 @@ const ResultPage = () => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    removeLEDBoardDetails(remove_id)
+    removeResultData(remove_id)
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
@@ -300,32 +293,32 @@ const ResultPage = () => {
       });
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
+  // const handleUpdate = (e) => {
+  //   e.preventDefault();
 
-    setIsSubmit(true);
+  //   setIsSubmit(true);
    
-    const formdata = new FormData();
+  //   const formdata = new FormData();
 
-    formdata.append("myFile", values.productImage);
-      formdata.append("category", values.category);
-      formdata.append("productName", values.productName);
-      formdata.append("IsActive", values.IsActive);
-    updateLEDBoardDetails(_id, formdata)
-      .then((res) => {
-        // setmodal_edit(!modal_edit);
-        setPhotoAdd("");
-        setUpdateForm(false);
+  //   formdata.append("myFile", values.productImage);
+  //     formdata.append("category", values.category);
+  //     formdata.append("productName", values.productName);
+  //     formdata.append("IsActive", values.IsActive);
+  //   updateresultdata(_id, formdata)
+  //     .then((res) => {
+  //       // setmodal_edit(!modal_edit);
+  //       setPhotoAdd("");
+  //       setUpdateForm(false);
 
-        fetchProducts();
-        setCheckImagePhoto(false);
-        setValues(initialState);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  //       fetchProducts();
+  //       setCheckImagePhoto(false);
+  //       setValues(initialState);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
     
-  };
+  // };
 
 
 

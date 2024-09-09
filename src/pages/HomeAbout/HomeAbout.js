@@ -430,7 +430,7 @@ const HomeAbout = () => {
     },
   ];
 
-  document.title = "Home About Section | Neon11";
+  document.title = "Home About Section | BPC India;
 
   return (
     <React.Fragment>

@@ -18,9 +18,7 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { listLEDActiveCategory } from "../../functions/Category/LEDCategoryMaster";
-import { createLEDBoardDetails, getLEDBoardDetails, removeLEDBoardDetails, updateLEDBoardDetails } from "../../functions/LEDBoard/LEDBoard";
-import { createNeonProds, getNeonProds, removeNeonProds, updateNeonProds } from "../../functions/NeonGoProducts/NeonGoProducts";
+
 import { createControllerProds, getControllerProds, removeControllerProds, updateControllerProds } from "../../functions/ControllerProducts/ControllerProducts";
 
 const ControllerProducts = () => {
@@ -446,7 +444,7 @@ const ControllerProducts = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  document.title = "Controller Products | Neon11";
+  document.title = "Controller Products | BPC India;
 
   return (
     <React.Fragment>

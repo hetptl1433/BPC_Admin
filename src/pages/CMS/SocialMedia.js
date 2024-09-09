@@ -332,7 +332,7 @@ const SocialMedia = () => {
     },
   ];
 
-  document.title = "Social Media | Neon11";
+  document.title = "Social Media | BPC India;
 
   return (
     <React.Fragment>

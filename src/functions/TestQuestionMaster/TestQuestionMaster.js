@@ -49,3 +49,11 @@ export const updateTestQuestionMaster = async (_id, values) => {
     values
   );
 };
+
+
+export const uploadImage = async (body) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API_URL_BPC}/api/auth/TestQuestionMaster/image-upload`,
+    body
+  );
+};

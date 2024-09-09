@@ -453,7 +453,7 @@ const AboutUs = () => {
     },
   ];
 
-  document.title = "About Us | Neon11";
+  document.title = "About Us | BPC";
 
   return (
     <React.Fragment>

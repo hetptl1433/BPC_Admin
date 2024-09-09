@@ -375,7 +375,7 @@ const BannerImage = () => {
     },
   ];
 
-  document.title = "Banner | Neon11";
+  document.title = "Banner | BPC";
 
   return (
     <React.Fragment>
