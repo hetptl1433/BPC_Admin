@@ -355,7 +355,7 @@ const [IsActive, setIsActive] = useState(false);
     },
   ];
 
-  document.title = "Email | BPC India;
+  document.title = "Email | BPC India";
 
   return (
     <React.Fragment>

@@ -341,7 +341,7 @@ const ContentContact = () => {
     },
   ];
 
-  document.title = "Contact | BPC India;
+  document.title = "Contact | BPC India";
 
   return (
     <React.Fragment>

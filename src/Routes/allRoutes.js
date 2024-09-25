@@ -12,8 +12,6 @@ import UserProfile from "../pages/Authentication/user-profile";
 import Banner from "../pages/CMS/Banner";
 import AdminUser from "../pages/Auth/AdminUser";
 import ContactUs from "../pages/CMS/ContactUs";
-import Review from "../pages/CMS/Review";
-import NewProject from "../pages/CMS/NewProject";
 import SocialMedia from "../pages/CMS/SocialMedia";
 import HomeAbout from "../pages/HomeAbout/HomeAbout";
 import Visionmission from "../pages/CMS/Visionmission";
@@ -59,6 +57,8 @@ import RoutineActvity from "../pages/RoutineActivity/RoutinActivity";
 import BookingDetails from "../pages/BookingDetails/BookingDetails";
 import Result from "../pages/Result/Result";
 import ResultPage from "../pages/ResultPage/ResultPage";
+import LegacyResult from "../pages/LegacyResult/LegacyResult";
+import LegacyResultPage from "../pages/LegacyResultPage/LegacyResultPage";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -76,10 +76,8 @@ const authProtectedRoutes = [
   { path: "/galleryimg", component: <Gallery /> },
   { path: "/home-about", component: <HomeAbout /> },
   { path: "/vision-mission", component: <Visionmission /> },
-  { path: "/review", component: <Review /> },
   { path: "/blogs", component: <Blogs /> },
   { path: "/banner", component: <Banner /> },
-  { path: "/newproject", component: <NewProject /> },
   { path: "/controller-products", component: <ControllerProducts /> },
   { path: "/service", component: <Service /> },
   { path: "/news", component: <NewsPage></NewsPage> },
@@ -115,6 +113,8 @@ const authProtectedRoutes = [
   { path: "/BookingDetails", component: <BookingDetails /> },
   { path: "/Result", component: <Result /> },
   { path: "/Result/:tid", component: <ResultPage /> },
+  { path: "/LegacyResult", component: <LegacyResult /> },
+  { path: "/LegacyResult/:tid", component: <LegacyResultPage /> },
 
   {
     path: "/",

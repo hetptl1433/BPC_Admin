@@ -576,7 +576,7 @@ formdata.append("IsActive", values.IsActive);
     },
   ];
 
-  document.title = "Hall Booking | BPC India;
+  document.title = "Hall Booking | BPC India";
 
   return (
     <React.Fragment>

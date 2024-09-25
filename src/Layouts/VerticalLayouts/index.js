@@ -230,24 +230,6 @@ const VerticalLayout = (props) => {
               <Collapse className="menu-dropdown" isOpen={category}>
                 <ul className="nav nav-sm flex-column test">
                   <li className="nav-item">
-                    <Link className="nav-link menu-link" to="/category">
-                      <span data-key="t-apps">Products Category </span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link menu-link"
-                      to="/neonsigns-category"
-                    >
-                      <span data-key="t-apps">BPC Signs Category </span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link menu-link" to="/led-category">
-                      <span data-key="t-apps">LED Category </span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
                     <Link className="nav-link menu-link" to="/HallImage">
                       <span data-key="t-apps">Hall Image Category </span>
                     </Link>
@@ -258,66 +240,6 @@ const VerticalLayout = (props) => {
           </ul>
         </Collapse>
       </li>
-
-      <li className="nav-item">
-        <Link
-          className="nav-link menu-link"
-          to="#"
-          data-bs-toggle="collapse"
-          onClick={() => {
-            setproduct(!product);
-          }}
-        >
-          <span data-key="t-apps"> Product Master </span>
-        </Link>
-        <Collapse
-          className="menu-dropdown"
-          isOpen={product}
-          //   id="sidebarApps"
-        >
-          <ul className="nav nav-sm flex-column test">
-            {/* <li className="nav-item">
-              <Link to="/product-details" className="nav-link">
-                Product Details
-              </Link>
-            </li> */}
-            <li className="nav-item">
-              <Link to="/neongo-products" className="nav-link">
-                NeonGo Products
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/controller-products" className="nav-link">
-                Controller Products
-              </Link>
-            </li>
-          </ul>
-        </Collapse>
-      </li>
-
-      {/* <li className="nav-item">
-        <Link
-          className="nav-link menu-link"
-          to="#"
-          data-bs-toggle="collapse"
-          onClick={() => {
-            setPolicy(!policy);
-          }}
-        >
-          <span data-key="t-apps"> Policy and Promos</span>
-        </Link>
-        <Collapse className="menu-dropdown" isOpen={policy}>
-          <ul className="nav nav-sm flex-column test"></ul>
-          <ul className="nav nav-sm flex-column test">
-            <li className="nav-item">
-              <Link to="/promocode-master" className="nav-link">
-                Promocode Master
-              </Link>
-            </li>
-          </ul>
-          <ul className="nav nav-sm flex-column test"></ul>
-        </Collapse>
-      </li> */}
 
       <li className="nav-item">
         <Link
@@ -489,6 +411,13 @@ const VerticalLayout = (props) => {
             <li className="nav-item">
               <Link to="/Result" className="nav-link">
                 Result
+              </Link>
+            </li>
+          </ul>
+          <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link to="/LegacyResult" className="nav-link">
+                Result(Legacy)
               </Link>
             </li>
           </ul>

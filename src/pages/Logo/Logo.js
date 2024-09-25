@@ -325,7 +325,7 @@ const Logo = () => {
     },
   ];
 
-  document.title = "Logo | BPC India;
+  document.title = "Logo | BPC India";
 
   return (
     <React.Fragment>

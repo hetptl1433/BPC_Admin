@@ -444,7 +444,7 @@ const ControllerProducts = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  document.title = "Controller Products | BPC India;
+  document.title = "Controller Products | BPC India";
 
   return (
     <React.Fragment>

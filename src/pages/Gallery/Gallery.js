@@ -363,7 +363,7 @@ const Gallery = () => {
     },
   ];
 
-  document.title = "Gallery | BPC India;
+  document.title = "Gallery | BPC India";
 
   return (
     <React.Fragment>
