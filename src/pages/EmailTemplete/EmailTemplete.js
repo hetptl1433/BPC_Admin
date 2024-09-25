@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -37,6 +39,9 @@ const EmailTemplete = () => {
   };
 
   const [remove_id, setRemove_id] = useState("");
+  const [formDesc, setFormDesc] = useState("");
+
+
 
   //search and pagination state
   const [query, setQuery] = useState("");
@@ -175,7 +180,7 @@ const EmailTemplete = () => {
     }
 
     if (values.FormTitle === "") {
-      errors.FormTitle = "Product Name is required";
+      errors.FormTitle = "Form Title is required";
       setErrPN(true);
     }
 
@@ -184,7 +189,7 @@ const EmailTemplete = () => {
     }
 
     if (values.FormDesc === "") {
-      errors.FormTitle = "Product Name is required";
+      errors.FormDesc = "Description is required";
       setErrDesc(true);
     }
 
@@ -269,6 +274,7 @@ const EmailTemplete = () => {
           setIsSubmit(false);
           setFormErrors({});
           fetchProducts();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -287,6 +293,7 @@ const EmailTemplete = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -313,6 +320,7 @@ const EmailTemplete = () => {
 
         fetchProducts();
         setValues(initialState);
+        toast.success("Data edited successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -352,14 +360,17 @@ const EmailTemplete = () => {
           ...values,
           category: res.category,
           FormTitle: res.FormTitle,
-          FormDesc: res.FormDesc,
+          // FormDesc: res.FormDesc,
           IsActive: res.IsActive,
         });
+        setFormDesc(res.FormDesc);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  
 
   const handleSort = (column, sortDirection) => {
     setcolumn(column.sortField);
@@ -384,6 +395,7 @@ const EmailTemplete = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -557,7 +569,7 @@ const EmailTemplete = () => {
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Form Title"
                                           required
                                           name="FormTitle"
                                           value={values.FormTitle}
@@ -567,7 +579,7 @@ const EmailTemplete = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Title
+                                          Form Title
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -711,7 +723,7 @@ const EmailTemplete = () => {
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Form Title"
                                           required
                                           name="FormTitle"
                                           value={values.FormTitle}
@@ -721,7 +733,7 @@ const EmailTemplete = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Title
+                                          Form Title
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -743,13 +755,14 @@ const EmailTemplete = () => {
                                       <div className="form-floating mb-3">
                                         <CKEditor
                                           editor={ClassicEditor}
-                                          data={values.FormDesc}
+                                          data={formDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
                                             setValues({
                                               ...values,
                                               FormDesc: data,
                                             });
+                                            setFormDesc(data);
                                           }}
                                         />
 
@@ -865,7 +878,7 @@ const EmailTemplete = () => {
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Form</span>
           {/* <Button
             type="button"
             onClick={() => {

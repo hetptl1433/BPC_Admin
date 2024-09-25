@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import UiContent from "../../Components/Common/UiContent";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -273,49 +275,79 @@ const TestQuestionMaster = () => {
   };
 
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    console.log("TestQuestionMaster update", values);
-    let erros = validate(values);
-    setFormErrors(erros);
-    setIsSubmit(true);
+ const handleUpdate = (e) => {
+   e.preventDefault();
+   console.log("TestQuestionMaster update", values);
 
-    if (Object.keys(erros).length === 0) {
-      updateTestQuestionMaster(_id, values)
-        .then((res) => {
-          console.log("updated TestQuestionMaster form", res);
-          setmodal_edit(!modal_edit);
-          fetchTestQuestionMaster();
-          setValues(initialState);
-          setEngQues("");
-          setHinQues("");
-          setGujQues("");
+   // Combine useState values with the values object (similar to submit function)
+   const combinedValues = {
+     ...values, // Existing values object
+     EngQues,
+     HinQues,
+     GujQues,
+     ...(EngAnsA && { EngAnsA }),
+     ...(HinAnsA && { HinAnsA }),
+     ...(GujAnsA && { GujAnsA }),
+     ...(EngAnsB && { EngAnsB }),
+     ...(HinAnsB && { HinAnsB }),
+     ...(GujAnsB && { GujAnsB }),
+     ...(EngAnsC && { EngAnsC }),
+     ...(HinAnsC && { HinAnsC }),
+     ...(GujAnsC && { GujAnsC }),
+     ...(EngAnsD && { EngAnsD }),
+     ...(HinAnsD && { HinAnsD }),
+     ...(GujAnsD && { GujAnsD }),
+     ...(EngAnsE && { EngAnsE }),
+     ...(HinAnsE && { HinAnsE }),
+     ...(GujAnsE && { GujAnsE }),
+   };
 
-          setEngAnsA("");
-          setHinAnsA("");
-          setGujAnsA("");
+   console.log(combinedValues);
 
-          setEngAnsB("");
-          setHinAnsB("");
-          setGujAnsB("");
+   // Validate the combined values
+   let errors = validate(combinedValues);
+   setFormErrors(errors);
+   setIsSubmit(true);
 
-          setEngAnsC("");
-          setHinAnsC("");
-          setGujAnsC("");
+   if (Object.keys(errors).length === 0) {
+     updateTestQuestionMaster(_id, combinedValues)
+       .then((res) => {
+         console.log("updated TestQuestionMaster form", res);
+         toast.success("Data updated successfully");
+         setmodal_edit(!modal_edit);
+         fetchTestQuestionMaster();
 
-          setEngAnsD("");
-          setHinAnsD("");
-          setGujAnsD("");
+         // Reset all state values after successful update
+         setValues(initialState);
+         setEngQues("");
+         setHinQues("");
+         setGujQues("");
 
-          setEngAnsE("");
-          setHinAnsE("");
-          setGujAnsE("");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+         setEngAnsA("");
+         setHinAnsA("");
+         setGujAnsA("");
+
+         setEngAnsB("");
+         setHinAnsB("");
+         setGujAnsB("");
+
+         setEngAnsC("");
+         setHinAnsC("");
+         setGujAnsC("");
+
+         setEngAnsD("");
+         setHinAnsD("");
+         setGujAnsD("");
+
+         setEngAnsE("");
+         setHinAnsE("");
+         setGujAnsE("");
+       })
+       .catch((err) => {
+         console.log(err);
+       });
+   }
+ };
 
   const [TestQuestionMasters, setTestQuestionMasters] = useState([]);
   const [TestCategories, setTestCategories] = useState([]);
@@ -441,6 +473,7 @@ const handleCKEditorChange = (name, data) => {
       createTestQuestionMaster(combinedValues)
         .then((res) => {
           if (res.isOk) {
+            toast.success("Data submitted successfully");
             console.log(res);
             setmodal_list(!modal_list);
             setValues(initialState);
@@ -496,6 +529,7 @@ const handleCKEditorChange = (name, data) => {
         console.log("deleted", res);
         setmodal_delete(false);
         fetchTestQuestionMaster();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -505,7 +539,7 @@ const handleCKEditorChange = (name, data) => {
   const validate = (values) => {
     const errors = {};
     if (values.TestCategoryID === "") {
-      errors.TestCategoryID = "Select Test Category!";
+      errors.TestCategoryID = "Select Test group!";
       setErrCN(true);
     } else {
       setErrCN(false);
@@ -730,18 +764,28 @@ const handleCKEditorChange = (name, data) => {
 
   const col = [
     {
-      name: "Test Category",
+      name: "Test Group",
       selector: (row) => row.TestCategoryDetails.categoryName || "N/A",
       sortable: true,
       sortField: "TestCategory",
     },
     {
-      name: "Test Master",
+      name: "Test Category",
       selector: (row) => row.TestMasterDetails.TestName || "N/A",
       sortable: true,
       sortField: "TestMaster",
     },
- 
+    {
+      name: "Test Questions",
+      selector: (row) => row.EngQues || "N/A",
+      sortable: true,
+      sortField: "TestMaster",
+      minWidth: "400px",
+      cell: (row) => (
+        <div dangerouslySetInnerHTML={{ __html: row.EngQues || "N/A" }} />
+      ),
+    },
+
     {
       name: "SortOrder",
       selector: (row) => row.SortOrder || "N/A",
@@ -794,11 +838,12 @@ const handleCKEditorChange = (name, data) => {
   return (
     <React.Fragment>
       <UiContent />
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
             maintitle="Location Setup"
-            title="City"
+            title="Test Question Master"
             pageTitle="Location SetUp"
           />
           <Row>
@@ -1467,7 +1512,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDA}</p>
                   )}
@@ -1483,7 +1528,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing sela:", s);
                       return (
                         s.isActive &&
-                        PointCatIDA === s.PointID && (
+                        PointCatIDA === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName} {s.PointMasterPoints}
                           </option>
@@ -1492,7 +1538,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDA}</p>
                   )}
@@ -1518,7 +1564,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDB}</p>
                   )}
@@ -1534,16 +1580,17 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing TestMaster:", s);
                       return (
                         s.isActive &&
-                        PointCatIDB === s.PointID && (
+                        PointCatIDB === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDB}</p>
                   )}
@@ -1569,7 +1616,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDC}</p>
                   )}
@@ -1585,16 +1632,17 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing selc:", s);
                       return (
                         s.isActive &&
-                        PointCatIDC === s.PointID && (
+                        PointCatIDC === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDC}</p>
                   )}
@@ -1620,7 +1668,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDD}</p>
                   )}
@@ -1636,16 +1684,17 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing seld:", s);
                       return (
                         s.isActive &&
-                        PointCatIDD === s.PointID && (
+                        PointCatIDD === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDD}</p>
                   )}
@@ -1671,7 +1720,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDE}</p>
                   )}
@@ -1687,16 +1736,17 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointsele:", s);
                       return (
                         s.isActive &&
-                        PointCatIDE === s.PointID && (
+                        PointCatIDE === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
-                            {s.PointMasterName}
+                            {s.PointMasterName} {s.PointMasterPoints}
                           </option>
                         )
                       );
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDE}</p>
                   )}
@@ -2301,14 +2351,17 @@ const handleCKEditorChange = (name, data) => {
                     {Pointss.map((c) => {
                       return (
                         <React.Fragment key={c._id}>
-                          {c.IsActive && (
-                            <option value={c._id}>{c.PointName}</option>
-                          )}
+                          {c.IsActive &&
+                             (
+                              <option value={c._id}>
+                                {c.PointName} {c.PointMasterPoints}
+                              </option>
+                            )}
                         </React.Fragment>
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDA}</p>
                   )}
@@ -2326,7 +2379,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointsela:", s);
                       return (
                         s.isActive &&
-                        PointCatIDA === s.PointID && (
+                        PointCatIDA === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName} {s.PointMasterPoints}
                           </option>
@@ -2335,7 +2389,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDA}</p>
                   )}
@@ -2356,7 +2410,7 @@ const handleCKEditorChange = (name, data) => {
                     {Pointss.map((c) => {
                       return (
                         <React.Fragment key={c._id}>
-                          {c.IsActive && (
+                          {c.IsActive &&  (
                             <option value={c._id}>
                               {c.PointName} {c.PointMasterPoints}
                             </option>
@@ -2365,7 +2419,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDB}</p>
                   )}
@@ -2383,7 +2437,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointseb:", s);
                       return (
                         s.isActive &&
-                        PointCatIDB === s.PointID && (
+                        PointCatIDB === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName}
                             {s.PointMasterPoints}
@@ -2393,7 +2448,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDB}</p>
                   )}
@@ -2421,7 +2476,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDC}</p>
                   )}
@@ -2439,7 +2494,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointsec:", s);
                       return (
                         s.isActive &&
-                        PointCatIDC === s.PointID && (
+                        PointCatIDC === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName} {s.PointMasterPoints}
                           </option>
@@ -2448,7 +2504,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDC}</p>
                   )}
@@ -2476,7 +2532,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDD}</p>
                   )}
@@ -2494,7 +2550,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointsed:", s);
                       return (
                         s.isActive &&
-                        PointCatIDD === s.PointID && (
+                        PointCatIDD === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName} {s.PointMasterPoints}
                           </option>
@@ -2503,7 +2560,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDD}</p>
                   )}
@@ -2531,7 +2588,7 @@ const handleCKEditorChange = (name, data) => {
                       );
                     })}
                   </select>
-                  <Label> Point Name</Label>
+                  <Label> Point Category</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointCatIDE}</p>
                   )}
@@ -2549,7 +2606,8 @@ const handleCKEditorChange = (name, data) => {
                       console.log("Processing  pointsee:", s);
                       return (
                         s.isActive &&
-                        PointCatIDE === s.PointID && (
+                        PointCatIDE === s.PointID &&
+                        TestMasterID === s.TestMasterID && (
                           <option key={s._id} value={s._id}>
                             {s.PointMasterName} {s.PointMasterPoints}
                           </option>
@@ -2558,7 +2616,7 @@ const handleCKEditorChange = (name, data) => {
                     })}
                   </select>
 
-                  <Label> Test Question Master</Label>
+                  <Label> Select Point</Label>
                   {isSubmit && (
                     <p className="text-danger">{formErrors.PointSelIDE}</p>
                   )}
@@ -2663,7 +2721,7 @@ const handleCKEditorChange = (name, data) => {
             setmodal_delete(false);
           }}
         >
-          Remove City
+          Remove Test Question Master
         </ModalHeader>
         <form>
           <ModalBody>

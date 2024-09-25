@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -18,30 +20,24 @@ import {
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
-import DataTable from "react-data-table-component";
+import DataTable, { SortOrder } from "react-data-table-component";
 import {
-  createBannerImages,
-  getBannerImages,
-  removeBannerImages,
-  updateBannerImages,
-} from "../../functions/CMS/Banner";
-import { createHomeAbout, getHomeAbout, removeHomeAbout, updateHomeAbout } from "../../functions/HomeAbout/HomeAbout";
-import { createAboutUs, getAboutUs, removeAboutUs, updateAboutUs } from "../../functions/AboutUs/AboutUs";
-import TextArea from "antd/es/input/TextArea";
+  createPopUpFile,
+  getPopUpFile,
+  removePopUpFile,
+  updatePopUpFile,
+} from "../../functions/PopUp/PopUp";
 const initialState = {
-  Tagline: "",
-  box1: "",
-  box2: "",
-  box3:"",
-  box4:"",
-  abtImage: "",
-  description:"",
+  Title: "",
+ 
+  PopUpFile: "",
+  SortOrder: "",
   IsActive: false,
 };
 
-const AboutUs = () => {
+const PopUpFile = () => {
   const [values, setValues] = useState(initialState);
-  const { Tagline, box1, box2, box3, box4, abtImage, description, IsActive } = values;
+  const { Title, PopUpFile,SortOrder, IsActive } = values;
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [filter, setFilter] = useState(true);
@@ -78,21 +74,18 @@ const AboutUs = () => {
     setmodal_edit(!modal_edit);
     setIsSubmit(false);
     set_Id(_id);
-    getAboutUs(_id)
+    getPopUpFile(_id)
       .then((res) => {
         console.log(res);
         setValues({
           ...values,
-          Tagline: res.Tagline,
-          box1: res.box1,
-          box2: res.box2,
-          box3: res.box3,
-          box4: res.box4,
-          abtImage: res.abtImage,
-          description: res.description,
+          Title: res.Title,
+          
+          SortOrder: res.SortOrder,
+          PopUpFile: res.PopUpFile,
           IsActive: res.IsActive,
         });
-        console.log("res", values.Tagline);
+        console.log("res", values.Title);
       })
       .catch((err) => {
         console.log(err);
@@ -107,88 +100,39 @@ const AboutUs = () => {
     setValues({ ...values, IsActive: e.target.checked });
   };
 
-  const [errTG, setErrTG] = useState(false);
-  const [errB1, setErrB1] = useState(false);
-  const [errB2, setErrB2] = useState(false);
-  const [errB3, setErrB3] = useState(false);
-  const [errB4, setErrB4] = useState(false);
+  const [errTT, setErrTT] = useState(false);
+  const [errKW, setErrKW] = useState(false);
   const [errBI, setErrBI] = useState(false);
-  const [errDS, setErrDS] = useState(false);
 
   const validate = (values) => {
     const errors = {};
 
-    if (values.Tagline === "") {
-      errors.Tagline = "Tagline is required!";
-      setErrTG(true);
+    if (values.Title === "") {
+      errors.Title = "Title is required!";
+      setErrTT(true);
     }
-    if (values.Tagline !== "") {
-      setErrTG(false);
+    if (values.Title !== "") {
+      setErrTT(false);
     }
 
-    if (values.box1 === "") {
-      errors.box1 = "Content for box1 is required!";
-      setErrB1(true);
-    }
-    if (values.box1 !== "") {
-        setErrB1(false);
-    }
-    if (values.box2 === "") {
-        errors.box2 = "Content for box2 is required!";
-        setErrB2(true);
-      }
-      if (values.box2 !== "") {
-          setErrB2(false);
-      }
-      if (values.box3 === "") {
-          errors.box3 = "Content for box3 is required!";
-          setErrB3(true);
-        }
-        if (values.box3 !== "") {
-            setErrB3(false);
-        }
+  
 
-        if (values.box4 === "") {
-            errors.box4 = "Content for box4 is required!";
-            setErrB4(true);
-          }
-          if (values.box4 !== "") {
-              setErrB4(false);
-          }
-          if (values.description === "") {
-            errors.description = "Content for box4 is required!";
-            setErrDS(true);
-          }
-          if (values.description !== "") {
-              setErrDS(false);
-          }
-    if (values.abtImage === "") {
-      errors.abtImage = "Image is required!";
+    if (values.PopUpFile === "") {
+      errors.PopUpFile = "PopUpFile File is required!";
       setErrBI(true);
     }
-    if (values.abtImage !== "") {
+    if (values.PopUpFile !== "") {
       setErrBI(false);
     }
 
     return errors;
   };
 
-  const validClassTG =
-    errTG && isSubmit ? "form-control is-invalid" : "form-control";
+  const validClassTT =
+    errTT && isSubmit ? "form-control is-invalid" : "form-control";
 
-  const validClassB1 =
-    errB1 && isSubmit ? "form-control is-invalid" : "form-control";
-
-  const validClassB2 =
-    errB2 && isSubmit ? "form-control is-invalid" : "form-control";
-
-  const validClassB3 =
-    errB3 && isSubmit ? "form-control is-invalid" : "form-control";
-
-  const validClassB4 =
-    errB4 && isSubmit ? "form-control is-invalid" : "form-control";  
-    const validClassDS =
-    errDS && isSubmit ? "form-control is-invalid" : "form-control";  
+  const validClassKW =
+    errKW && isSubmit ? "form-control is-invalid" : "form-control";
 
   const validClassBI =
     errBI && isSubmit ? "form-control is-invalid" : "form-control";
@@ -196,23 +140,20 @@ const AboutUs = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    let errors = validate(values);
-    setFormErrors(errors);
+    let erros = validate(values);
+    setFormErrors(erros);
     setIsSubmit(true);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(erros).length === 0) {
       const formdata = new FormData();
 
-      formdata.append("myFile", values.abtImage);
-      formdata.append("Tagline", values.Tagline);
-      formdata.append("box1", values.box1);
-      formdata.append("box2", values.box2);
-      formdata.append("box3", values.box3);
-      formdata.append("box4", values.box4);
-      formdata.append("description", values.description);
+      formdata.append("myFile", values.PopUpFile);
+     
       formdata.append("IsActive", values.IsActive);
+      formdata.append("Title", values.Title);
+      formdata.append("SortOrder", values.SortOrder);
 
-      createAboutUs(formdata)
+      createPopUpFile(formdata)
         .then((res) => {
           setmodal_list(!modal_list);
           setValues(initialState);
@@ -222,6 +163,7 @@ const AboutUs = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -231,10 +173,11 @@ const AboutUs = () => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    removeAboutUs(remove_id)
+    removePopUpFile(remove_id)
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -243,29 +186,28 @@ const AboutUs = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    let errors = validate(values);
-    setFormErrors(errors);
+    let erros = validate(values);
+    setFormErrors(erros);
     setIsSubmit(true);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(erros).length === 0) {
       const formdata = new FormData();
 
-      formdata.append("myFile", values.abtImage);
-      formdata.append("Tagline", values.Tagline);
-      formdata.append("box1", values.box1);
-      formdata.append("box2", values.box2);
-      formdata.append("box3", values.box3);
-      formdata.append("box4", values.box4);
-      formdata.append("description", values.description);
+      formdata.append("myFile", values.PopUpFile);
+     
+ 
       formdata.append("IsActive", values.IsActive);
+      formdata.append("Title", values.Title);
+      formdata.append("SortOrder", values.SortOrder);
 
-      updateAboutUs(_id, formdata)
+      updatePopUpFile(_id, formdata)
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -302,7 +244,7 @@ const AboutUs = () => {
 
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/aboutus`,
+        `${process.env.REACT_APP_API_URL_BPC}/api/auth/list-by-params/PopUpFile`,
         {
           skip: skip,
           per_page: perPage,
@@ -340,10 +282,9 @@ const AboutUs = () => {
 
       let imageurl = URL.createObjectURL(e.target.files[0]);
       console.log("img", e.target.files[0]);
-    //   abtImage=imageurl;
+
       setPhotoAdd(imageurl);
-      
-      setValues({ ...values, abtImage: e.target.files[0] });
+      setValues({ ...values, PopUpFile: e.target.files[0] });
       setCheckImagePhoto(true);
     }
   };
@@ -369,54 +310,30 @@ const AboutUs = () => {
 
   const col = [
     {
-      name: "Tagline",
-      selector: (row) => row.Tagline,
+      name: "Name",
+      selector: (row) => row.Title,
       sortable: true,
-      sortField: "Tagline",
-      maxWidth: "150px",
+      sortField: "Title",
+      minWidth: "150px",
     },
+
     {
-      name: "box1",
-      selector: (row) => row.box1,
+      name: "Status",
+      selector: (row) => {
+        return <p>{row.IsActive ? "Active" : "InActive"}</p>;
+      },
       sortable: false,
-      sortField: "box1",
-      maxWidth: "150px",
+      sortField: "Status",
     },
+   
     {
-        name: "box2",
-        selector: (row) => row.box2,
-        sortable: false,
-        sortField: "box2",
-        maxWidth: "150px",
-      },
-      {
-        name: "box3",
-        selector: (row) => row.box3,
-        sortable: false,
-        sortField: "box3",
-        maxWidth: "150px",
-      },
-      {
-        name: "box4",
-        selector: (row) => row.box4,
-        sortable: false,
-        sortField: "box4",
-        maxWidth: "150px",
-      },
-      {
-        name: "description",
-        selector: (row) => row.description,
-        sortable: false,
-        sortField: "description",
-        maxWidth: "150px",
-      },
-    {
-      name:"Image",
-      selector: (row) => renderImage(row.abtImage),
+      name: "SortOrder",
+      selector: (row) => row.SortOrder,
       sortable: false,
-      sortField: "Image",
-      minwidth: "150px"
+      sortField: "SortOrder",
+      minwidth: "150px",
     },
+
     {
       name: "Action",
       selector: (row) => {
@@ -453,20 +370,23 @@ const AboutUs = () => {
     },
   ];
 
-  document.title = "About Us | BPC";
+  document.title = "PopUpFile | BPC";
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="About Us" pageTitle="CMS" />
+          <BreadCrumb maintitle="CMS" title="PopUpFile" pageTitle="CMS" />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">About Us </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        PopUpFile Files
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -551,119 +471,60 @@ const AboutUs = () => {
             setIsSubmit(false);
           }}
         >
-          Add Home About Components
+          Add PopUpFile
         </ModalHeader>
         <form>
           <ModalBody>
-            <div className="mb-3">
-              <Label>
-                Tagline<span className="text-danger">*</span>{" "}
-              </Label>
-              <TextArea
+            <div className="form-floating mb-3">
+              <Input
                 type="text"
-                className={validClassTG}
-                placeholder="Enter Tagline "
+                className={validClassTT}
+                placeholder="Enter Title "
                 required
-                name="Tagline"
-                value={Tagline}
+                name="Title"
+                value={Title}
                 onChange={handleChange}
               />
-
-              {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
+              <Label>
+                Name<span className="text-danger">*</span>{" "}
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
 
             <div className="form-floating mb-3">
               <Input
-                type="text"
-                className={validClassB1}
-                placeholder="Enter content "
+                type="number"
+                className={validClassKW}
+                placeholder="Enter SortOrder "
                 required
-                name="box1"
-                value={box1}
+                name="SortOrder"
+                value={SortOrder}
                 onChange={handleChange}
               />
               <Label>
-                Box 1<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box1}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassB2}
-                placeholder="Enter content "
-                required
-                name="box2"
-                value={box2}
-                onChange={handleChange}
-              />
-              <Label>
-                Box 2<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box2}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassB3}
-                placeholder="Enter content "
-                required
-                name="box3"
-                value={box3}
-                onChange={handleChange}
-              />
-              <Label>
-                Box 3<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box3}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassB4}
-                placeholder="Enter content "
-                required
-                name="box4"
-                value={box4}
-                onChange={handleChange}
-              />
-              <Label>
-                Box 4<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box4}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassDS}
-                placeholder="Enter description "
-                required
-                name="description"
-                value={description}
-                onChange={handleChange}
-              />
-              <Label>
-                Description<span className="text-danger">*</span>{" "}
+                Sort Order<span className="text-danger">*</span>{" "}
               </Label>
               {isSubmit && (
-                <p className="text-danger">{formErrors.description}</p>
+                <p className="text-danger">{formErrors.SortOrder}</p>
               )}
             </div>
 
             <Col lg={6}>
               <label>
-                Image <span className="text-danger">*</span>
+                PopUpFile <span className="text-danger">*</span>
               </label>
 
               <input
                 type="file"
-                name="abtImage"
+                name="PopUpFile"
                 className={validClassBI}
                 // accept="images/*"
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.PopUpFile}</p>
+              )}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -730,157 +591,70 @@ const AboutUs = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Banner
+          Edit PopUpFile
         </ModalHeader>
         <form>
           <ModalBody>
-            <div className="mb-3">
-              <Label>
-                Tagline<span className="text-danger">*</span>{" "}
-              </Label>
-              <TextArea
-                type="text"
-                className={validClassTG}
-                placeholder="Enter Tagline "
-                required
-                name="Tagline"
-                value={Tagline}
-                onChange={handleChange}
-                rows={3}
-              />
-
-              {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
-            </div>
-
             <div className="form-floating mb-3">
               <Input
                 type="text"
-                className={validClassB1}
-                placeholder="Enter content "
+                className={validClassTT}
+                placeholder="Enter code "
                 required
-                name="box1"
-                value={box1}
+                name="Title"
+                value={Title}
                 onChange={handleChange}
               />
               <Label>
-                Box 1<span className="text-danger">*</span>{" "}
+                Name<span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box1}</p>}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
                 type="text"
-                className={validClassB2}
-                placeholder="Enter content "
+                className={validClassTT}
+                placeholder="Enter SortOrder "
                 required
-                name="box2"
-                value={box2}
+                name="SortOrder"
+                value={SortOrder}
                 onChange={handleChange}
               />
               <Label>
-                Box 2<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box2}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassB3}
-                placeholder="Enter content "
-                required
-                name="box3"
-                value={box3}
-                onChange={handleChange}
-              />
-              <Label>
-                Box 3<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box3}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassB4}
-                placeholder="Enter content "
-                required
-                name="box4"
-                value={box4}
-                onChange={handleChange}
-              />
-              <Label>
-                Box 4<span className="text-danger">*</span>{" "}
-              </Label>
-              {isSubmit && <p className="text-danger">{formErrors.box4}</p>}
-            </div>
-            <div className="form-floating mb-3">
-              <Input
-                type="text"
-                className={validClassDS}
-                placeholder="Enter description "
-                required
-                name="description"
-                value={description}
-                onChange={handleChange}
-              />
-              <Label>
-                Description<span className="text-danger">*</span>{" "}
+                Sort Order<span className="text-danger">*</span>
               </Label>
               {isSubmit && (
-                <p className="text-danger">{formErrors.description}</p>
+                <p className="text-danger">{formErrors.SortOrder}</p>
               )}
             </div>
-            {/* <Col lg={6}>
-              <label>
-                Image <span className="text-danger">*</span>
-              </label>
 
-              <input
-                type="file"
-                name="abtImage"
-                className={validClassBI}
-                // accept="images/*"
-                accept=".jpg, .jpeg, .png"
-                onChange={PhotoUpload}
-              />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.abtImage}</p>
-              )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
-              ) : null}
-            </Col> */}
             <Col lg={6}>
               <label>
-                Image <span className="text-danger">*</span>
+                PopUpFile Image <span className="text-danger">*</span>
               </label>
               <input
-                key={"abtImage" + _id}
+                key={"PopUpFile" + _id}
                 type="file"
-                name="abtImage"
+                name="PopUpFile"
                 className={validClassBI}
                 // accept="images/*"
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.PopUpFile}</p>
+              )}
 
-              {values.abtImage || photoAdd ? (
+              {values.PopUpFile || photoAdd ? (
                 <img
                   // key={photoAdd}
                   className="m-2"
                   src={
                     checkImagePhoto
                       ? photoAdd
-                      : `${process.env.REACT_APP_API_URL_BPC}/${abtImage}`
+                      : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`
                   }
-                  width="180"
+                  width="300"
                   height="200"
                 />
               ) : null}
@@ -987,4 +761,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default PopUpFile;

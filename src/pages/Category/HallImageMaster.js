@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -105,18 +107,8 @@ const HallImageMaster = () => {
           setmodal_list(!modal_list);
             setValues(initialState);
             fetchCategories();
-          // if (res.isOk) {
-          //   setmodal_list(!modal_list);
-          //   setValues(initialState);
-          //   fetchCategories();
-          // } else {
-          //   if (res.field === 1) {
-          //     setErrCN(true);
-          //     setFormErrors({
-          //       categoryName: "This Category name is already exists!",
-          //     });
-          //   }
-          // }
+          
+         toast.success("Data submitted Successfully!");
         })
         .catch((error) => {
           console.log(error);
@@ -132,6 +124,8 @@ const HallImageMaster = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+                toast.success("Data deleted Successfully!");
+
       })
       .catch((err) => {
         console.log(err);
@@ -149,6 +143,8 @@ const HallImageMaster = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+                  toast.success("Data edited Successfully!");
+
         })
         .catch((err) => {
           console.log(err);
@@ -295,6 +291,7 @@ const HallImageMaster = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -308,7 +305,9 @@ const HallImageMaster = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Halle Category</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        Halle Category
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -407,7 +406,9 @@ const HallImageMaster = () => {
                 value={categoryName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+                Category Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>
               )}
@@ -479,7 +480,9 @@ const HallImageMaster = () => {
                 value={categoryName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+                Category Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>
               )}

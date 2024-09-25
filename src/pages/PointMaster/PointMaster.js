@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UiContent from "../../Components/Common/UiContent";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
+import { ToastContainer, toast } from "react-toastify";
 
 
 
@@ -134,6 +135,7 @@ const {
           setmodal_edit(!modal_edit);
           fetchPointMaster();
           setValues(initialState);
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -224,6 +226,7 @@ const loadPoints = () => {
             setIsSubmit(false);
             setFormErrors({});
             fetchPointMaster();
+            toast.success("Data submitted successfully");
           } 
         })
         .catch((err) => {
@@ -240,6 +243,7 @@ const loadPoints = () => {
         console.log("deleted", res);
         setmodal_delete(false);
         fetchPointMaster();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -379,30 +383,35 @@ if (values.PointMasterPoints !== "") {
 
   const col = [
     {
-      name: "Test Category",
+      name: "Test Group",
       selector: (row) => row.categoryDetails.categoryName,
       sortable: true,
       sortField: "TestCategory",
     },
     {
-      name: "Test Master ",
+      name: "Test Category ",
       selector: (row) => row.TestNameDetails.TestName,
       sortable: true,
       sortField: "TestMaster",
     },
     {
-      name: "Name",
-      selector: (row) => row.PointMasterName,
+      name: "Point Category ",
+      selector: (row) => row.PointDetails.PointName,
+      sortable: true,
+      sortField: "TestMaster",
+    },
+    {
+      name: "Name / Title",
+      selector: (row) => `${row.PointMasterName} / ${row.PointMasterTitle}`,
       sortable: true,
       sortField: "Name",
       minWidth: "180px",
     },
     {
-      name: "Title",
-      selector: (row) => row.PointMasterTitle,
+      name: "Points ",
+      selector: (row) => row.PointMasterPoints,
       sortable: true,
-      sortField: "Title",
-      minWidth: "180px",
+      sortField: "TestMaster",
     },
     {
       name: "Status",
@@ -452,6 +461,7 @@ if (values.PointMasterPoints !== "") {
   return (
     <React.Fragment>
       <UiContent />
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -679,9 +689,7 @@ if (values.PointMasterPoints !== "") {
                 Points <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
-                <p className="text-danger">
-                  {formErrors.PointMasterPoints}
-                </p>
+                <p className="text-danger">{formErrors.PointMasterPoints}</p>
               )}
             </div>
             <div className=" mb-3">
@@ -915,7 +923,7 @@ if (values.PointMasterPoints !== "") {
             setmodal_delete(false);
           }}
         >
-          Remove point
+          Remove point master
         </ModalHeader>
         <form>
           <ModalBody>

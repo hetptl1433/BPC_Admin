@@ -13,12 +13,10 @@ import Banner from "../pages/CMS/Banner";
 import AdminUser from "../pages/Auth/AdminUser";
 import ContactUs from "../pages/CMS/ContactUs";
 import SocialMedia from "../pages/CMS/SocialMedia";
-import HomeAbout from "../pages/HomeAbout/HomeAbout";
 import Visionmission from "../pages/CMS/Visionmission";
-import AboutUs from "../pages/AboutUs/AboutUs";
 import Gallery from "../pages/Gallery/Gallery";
 import Logo from "../pages/Logo/Logo";
-import ControllerProducts from "../pages/ControllerProducts/ControllerProducts";
+
 import Service from "../pages/Services/Service";
 import { components } from "react-select";
 import NewsPage from "../pages/NEWS/NewsPage";
@@ -59,6 +57,7 @@ import Result from "../pages/Result/Result";
 import ResultPage from "../pages/ResultPage/ResultPage";
 import LegacyResult from "../pages/LegacyResult/LegacyResult";
 import LegacyResultPage from "../pages/LegacyResultPage/LegacyResultPage";
+import PopUpFile from "../pages/PopUp/PopUp";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -72,13 +71,10 @@ const authProtectedRoutes = [
   { path: "/contact", component: <ContactUs /> },
   { path: "/socialmedia", component: <SocialMedia /> },
   { path: "/logo", component: <Logo /> },
-  { path: "/aboutus", component: <AboutUs /> },
   { path: "/galleryimg", component: <Gallery /> },
-  { path: "/home-about", component: <HomeAbout /> },
   { path: "/vision-mission", component: <Visionmission /> },
   { path: "/blogs", component: <Blogs /> },
   { path: "/banner", component: <Banner /> },
-  { path: "/controller-products", component: <ControllerProducts /> },
   { path: "/service", component: <Service /> },
   { path: "/news", component: <NewsPage></NewsPage> },
   { path: "/courses", component: <Courses /> },
@@ -115,6 +111,7 @@ const authProtectedRoutes = [
   { path: "/Result/:tid", component: <ResultPage /> },
   { path: "/LegacyResult", component: <LegacyResult /> },
   { path: "/LegacyResult/:tid", component: <LegacyResultPage /> },
+  { path: "/PopupFile", component: <PopUpFile />},
 
   {
     path: "/",

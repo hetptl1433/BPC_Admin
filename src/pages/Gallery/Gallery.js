@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -160,6 +162,7 @@ const Gallery = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -173,6 +176,7 @@ const Gallery = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -200,6 +204,7 @@ const Gallery = () => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -367,6 +372,7 @@ const Gallery = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Gallery" pageTitle="CMS" />
@@ -759,7 +765,7 @@ const Gallery = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Gallary Image
         </ModalHeader>
         <form>
           <ModalBody>

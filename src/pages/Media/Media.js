@@ -18,6 +18,8 @@ import {
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 import DataTable from "react-data-table-component";
 import {
   createMediaFiles,
@@ -159,6 +161,7 @@ const MediaFiles = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submmited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -172,6 +175,7 @@ const MediaFiles = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -200,6 +204,7 @@ const MediaFiles = () => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -365,6 +370,7 @@ const MediaFiles = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Media" pageTitle="CMS" />
@@ -479,10 +485,6 @@ const MediaFiles = () => {
               {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
 
-          
-
-          
-
             <Col lg={6}>
               <label>
                 Media Image <span className="text-danger">*</span>
@@ -585,10 +587,6 @@ const MediaFiles = () => {
               {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
 
-          
-
-           
-
             <Col lg={6}>
               <label>
                 Media Image <span className="text-danger">*</span>
@@ -677,7 +675,7 @@ const MediaFiles = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Media
         </ModalHeader>
         <form>
           <ModalBody>

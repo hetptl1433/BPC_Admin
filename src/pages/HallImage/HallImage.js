@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -18,7 +20,8 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { listHalleActiveCategory } from "../../functions/Category/HallBookingMaster";
+import { listHallBook } from "../../functions/HallBooking/HallBooking";
+
 import { createHalleBoardDetails, getHalleBoardDetails, removeHalleBoardDetails, updateHalleBoardDetails } from "../../functions/HallImage/HallImage";
 
 const HalleImage = () => {
@@ -63,8 +66,8 @@ const HalleImage = () => {
 
   const columns = [
     {
-      name: "Halle Image Category",
-      selector: (row) => row.category.categoryName,
+      name: "hall Name",
+      selector: (row) => row.category.Name,
       sortable: true,
       sortField: "category",
       minWidth: "150px",
@@ -187,12 +190,11 @@ const HalleImage = () => {
       setErrCN(false);
     }
 
-    if (values.SortOrder === "") {
-      errors.SortOrder = "Name is required";
+    // Assuming values.SortOrder is a string and should be validated as a number
+    if (values.SortOrder === "" || isNaN(Number(values.SortOrder))) {
+      errors.SortOrder = "Sort Order is required and must be a number";
       setErrPN(true);
-    }
-
-    if (values.SortOrder !== "") {
+    } else {
       setErrPN(false);
     }
 
@@ -254,7 +256,7 @@ const HalleImage = () => {
   }, [category]);
 
   const loadHalleCategories = () => {
-    listHalleActiveCategory().then((res) => setHalleCategories(res));
+    listHallBook().then((res) => setHalleCategories(res));
   };
 
   const handleClick = (e) => {
@@ -280,6 +282,7 @@ const HalleImage = () => {
           setIsSubmit(false);
           setFormErrors({});
           fetchProducts();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -298,6 +301,7 @@ const HalleImage = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -326,6 +330,7 @@ const HalleImage = () => {
         fetchProducts();
         setCheckImagePhoto(false);
         setValues(initialState);
+        toast.success("Data edited successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -419,15 +424,16 @@ const HalleImage = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  document.title = "Halle Image Details | BPC";
+  document.title = "hall Image Details | BPC";
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Halle Image Details"
-            title="Halle Image Details"
+            maintitle="hall Image Details"
+            title="hall Image Details"
             pageTitle="CMS"
           />
 
@@ -438,7 +444,7 @@ const HalleImage = () => {
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" lg={4} md={6} sm={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                      Halle Image Details
+                        hall Image Details
                       </h2>
                     </Col>
                     <Col lg={4} md={6} sm={6}>
@@ -573,7 +579,7 @@ const HalleImage = () => {
                                               <React.Fragment key={c._id}>
                                                 {c.IsActive && (
                                                   <option value={c._id}>
-                                                    {c.categoryName}
+                                                    {c.Name}
                                                   </option>
                                                 )}
                                               </React.Fragment>
@@ -581,7 +587,7 @@ const HalleImage = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Halle Image Category{" "}
+                                          hall Name{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -599,14 +605,14 @@ const HalleImage = () => {
                                           placeholder="Enter Sort Order"
                                           required
                                           name="SortOrder"
-                                          value={values.SortOrder}           
+                                          value={values.SortOrder}
                                           onChange={handleChange}
                                         />
                                         <label
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                         Sort Order
+                                          Sort Order
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -617,8 +623,7 @@ const HalleImage = () => {
                                       </div>
                                     </Col>
                                   </Row>
-                                 
-        
+
                                   <Col lg={6}>
                                     <label>
                                       Image{" "}
@@ -730,7 +735,7 @@ const HalleImage = () => {
                                               <React.Fragment key={c._id}>
                                                 {c.IsActive && (
                                                   <option value={c._id}>
-                                                    {c.categoryName}
+                                                    {c.Name}
                                                   </option>
                                                 )}
                                               </React.Fragment>
@@ -738,7 +743,7 @@ const HalleImage = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Category{" "}
+                                          Hall Name{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -763,7 +768,7 @@ const HalleImage = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Name
+                                          Sort Order
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -773,10 +778,7 @@ const HalleImage = () => {
                                         )}
                                       </div>
                                     </Col>
-                                   
                                   </Row>
-                                  
-                                  
 
                                   <Col lg={6}>
                                     <label>
@@ -812,7 +814,7 @@ const HalleImage = () => {
                                       />
                                     ) : null}
                                   </Col>
-                                 
+
                                   <div className="mt-5">
                                     <Col lg={6}>
                                       <div className="form-check mb-2">
@@ -916,7 +918,7 @@ const HalleImage = () => {
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Hall Image</span>
           {/* <Button
             type="button"
             onClick={() => {

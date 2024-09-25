@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -111,6 +113,7 @@ const Industry = () => {
           setmodal_list(!modal_list);
           setValues(initialState);
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((error) => {
           console.log(error);
@@ -119,18 +122,6 @@ const Industry = () => {
 
 
    
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
       
   };
 
@@ -140,6 +131,7 @@ const Industry = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+          toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -157,6 +149,7 @@ const Industry = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -341,22 +334,17 @@ const Industry = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb
-            maintitle="User"
-            title="Industry"
-            pageTitle="CMS "
-          />
+          <BreadCrumb maintitle="User" title="Industry" pageTitle="CMS " />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">
-                        Industry
-                      </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Industry</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -648,7 +636,7 @@ const Industry = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Industry
         </ModalHeader>
         <form>
           <ModalBody>

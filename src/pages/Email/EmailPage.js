@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -129,7 +131,9 @@ const [IsActive, setIsActive] = useState(false);
         setEmail("");
         setIsActive(false);
         fetchCategories();
+        toast.success("Data submitted successfully");
         setmodal_list(!modal_list);
+        
       })
       .catch((err) => {
         console.log("Error from server:", err);
@@ -168,6 +172,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -191,6 +196,7 @@ const [IsActive, setIsActive] = useState(false);
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
             console.log("Error from server:", err);
@@ -208,13 +214,18 @@ const [IsActive, setIsActive] = useState(false);
     if (Title !== "") {
       setErrTI(false);
     }
-    if (Email === "") {
-      errors.subTitle = "Email is required!";
-      setErrSTI(true);
-    }
-    if (Email !== "") {
-      setErrSTI(false);
-    }
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+   if (!Email) {
+     errors.subTitle = "Email is required!";
+     setErrSTI(true);
+   } else if (!emailRegex.test(Email)) {
+     errors.subTitle = "Please enter a valid email address!";
+     setErrSTI(true);
+   } else {
+     setErrSTI(false);
+   }
+
    
 
     return errors;
@@ -359,6 +370,7 @@ const [IsActive, setIsActive] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -443,7 +455,7 @@ const [IsActive, setIsActive] = useState(false);
       </div>
 
       {/* Add Modal */}
-      
+
       <Modal
         isOpen={modal_list}
         toggle={() => {
@@ -470,14 +482,14 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Title <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -487,7 +499,9 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="subTitle"
                 value={Email}
-                onChange={(e)=>{setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               <Label>
                 {" "}
@@ -495,7 +509,7 @@ const [IsActive, setIsActive] = useState(false);
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.Email}</p>}
             </div>
-        
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -552,7 +566,7 @@ const [IsActive, setIsActive] = useState(false);
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
+            <div className="form-floating mb-3">
               <Input
                 type="text"
                 className={validClassTitle}
@@ -560,14 +574,14 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Title <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -577,7 +591,9 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Email"
                 value={Email}
-                onChange={(e)=>{setEmail(e.target.value)}}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
               <Label>
                 {" "}
@@ -585,7 +601,6 @@ const [IsActive, setIsActive] = useState(false);
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.Email}</p>}
             </div>
-           
           </ModalBody>
 
           <ModalFooter>

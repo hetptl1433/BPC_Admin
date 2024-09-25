@@ -30,6 +30,8 @@ import {
   getLegacyTestData,
   getLegacyUserData,
   getLegacyResultAns,
+  getLegacyAllPoint,
+
 } from "../../functions/LegacyTestCategory/LegacyTestCategory";
 
 
@@ -104,26 +106,33 @@ const LegacyResultPage = () => {
       minWidth: "150px",
     },
     {
-      name: "TestCategoryID",
-      selector: (row) => row.TestCategoryId, // Adjusted to match the API response
+      name: "TestCategory",
+      selector: (row) => row.TestCategoryName, // Adjusted to match the API response
       sortable: true,
       sortField: "ExamId",
       minWidth: "150px",
     },
     {
       name: "ExamDateTime",
-      selector: (row) => row.ExamDateTime, // Adjusted to match the API response
+      selector: (row) => new Date(row.ExamDateTime).toLocaleDateString(), // Adjusted to match the API response
       sortable: true,
       sortField: "ExamDateTime",
       minWidth: "150px",
     },
     {
-      name: "UserId",
-      selector: (row) => row.UserId, // Adjusted to match the API response
+      name: "User",
+      selector: (row) =>
+        `${row.Name} / ${row.Email} / ${row.Mobile} / ${row.UserName} / ${row.Password}`,
       sortable: true,
-      sortField: "UserId",
-      minWidth: "150px",
+      sortField: "UserName",
+      minWidth: "200px",
+      cell: (row) => (
+        <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+          {`${row.Name} / ${row.Email} / ${row.Mobile} `}
+        </div>
+      ),
     },
+
     {
       name: "Action",
       selector: (row) => (
@@ -150,37 +159,46 @@ const LegacyResultPage = () => {
       minWidth: "180px",
     },
   ];
+const groupedData = PointData.reduce((acc, item) => {
+  if (!acc[item.Title]) {
+    acc[item.Name] = { ...item, totalPoints: 0 };
+  }
+  acc[item.Name].totalPoints += item.PointFromMaster;
+  return acc;
+}, {});
 
- const aggregatePoints = (data) => {
-   const aggregated = {};
+// Step 2: Convert grouped data back into an array
+const groupedArray = Object.values(groupedData);
+//  const aggregatePoints = (data) => {
+//    const aggregated = {};
 
-   data.forEach((item) => {
-     const id = item.pointMasterId.PointID;
-     if (!aggregated[id]) {
-       aggregated[id] = {
-         name: item.pointMasterId.PointMasterName,
-         totalPoints: 0,
-       };
-     }
-     aggregated[id].totalPoints += parseInt(
-       item.pointMasterId.PointMasterPoints,
-       10
-     );
-   });
+//    data.forEach((item) => {
+//      const id = item.pointMasterId.PointId;
+//      if (!aggregated[id]) {
+//        aggregated[id] = {
+//          name: item.pointMasterId.PointMasterName,
+//          totalPoints: 0,
+//        };
+//      }
+//      aggregated[id].totalPoints += parseInt(
+//        item.pointMasterId.PointMasterPoints,
+//        10
+//      );
+//    });
 
-   return Object.values(aggregated);
- };
-  const aggregatedData = aggregatePoints(PointData);
+//    return Object.values(aggregated);
+//  };
+  // const aggregatedData = aggregatePoints(PointData);
 
-   useEffect(() => {
-     // Calculate the total points
-     const totalPoints = aggregatedData.reduce(
-       (acc, item) => acc + item.totalPoints,
-       0
-     );
-     // Update the resultPoint state
-     setResultPoint(totalPoints);
-   }, [aggregatedData]);
+  //  useEffect(() => {
+  //    // Calculate the total points
+  //    const totalPoints = aggregatedData.reduce(
+  //      (acc, item) => acc + item.totalPoints,
+  //      0
+  //    );
+  //    // Update the resultPoint state
+  //    setResultPoint(totalPoints);
+  //  }, [aggregatedData]);
 
   useEffect(() => {
     fetchExamMasterData();
@@ -206,12 +224,13 @@ const fetchExamMasterData = async () => {
       }
     );
     
-
-    if (response.length > 0) {
+    
+    if (response.data.length > 0) {
       
       
-      setData(response);
-      setTotalRows(response.length); // Adjust if the total row count is available separately
+      setData(response.data);
+      setTotalRows(response.count);
+      console.log((response.count)); // Adjust if the total row count is available separately
     } else {
       setData([]);
     }
@@ -351,11 +370,11 @@ const fetchExamMasterData = async () => {
      // Second API call with additional parameters (if needed)
      const detailedRes = await getLegacyResultAns(ExamId, res.UserId);
      
-    //  setPointData(detailedRes);
+     setPointData(detailedRes.data);
 
 
-     const TotalpointCategory= await getPointMaster(res.id._id);
-     setAllPoint(TotalpointCategory);
+     const TotalpointCategory = await getLegacyAllPoint(res.TestCategoryId);
+     setAllPoint(TotalpointCategory.pointsData);
 
 
    } catch (err) {
@@ -417,7 +436,7 @@ const fetchExamMasterData = async () => {
                         }}
                       >
                         <div className="text-end mt-1">
-                          <Input
+                          {/* <Input
                             type="checkbox"
                             className="form-check-input"
                             name="filter"
@@ -427,7 +446,7 @@ const fetchExamMasterData = async () => {
                           />
                           <Label className="form-check-label ms-2">
                             Active
-                          </Label>
+                          </Label> */}
                         </div>
                       </div>
                     </Col>
@@ -672,19 +691,23 @@ const fetchExamMasterData = async () => {
                                           </thead>
                                           <tbody>
                                             {PointData.map((entry, index) => (
-                                              <div
+                                              <tr
                                                 className="table-row pp"
                                                 key={index}
                                               >
-                                                <div className="answer-selected m-1">
-                                                  {index + 1}
+                                                <td className="answer-selected m-1">
+                                                  <span>{index + 1}</span>
+
                                                   <label>
                                                     <input
                                                       type="radio"
                                                       value="A"
                                                       checked={
-                                                        entry.selectedOption ===
-                                                        "A"
+                                                        entry.Answer === "A" 
+                                                        // ||
+                                                        // entry.Answer ===
+                                                        //   "<p>Strongly Agree</p>\r\n" ||
+                                                        // entry.Answer === "L"
                                                       }
                                                       readOnly
                                                     />{" "}
@@ -695,8 +718,10 @@ const fetchExamMasterData = async () => {
                                                       type="radio"
                                                       value="B"
                                                       checked={
-                                                        entry.selectedOption ===
-                                                        "B"
+                                                        entry.Answer === "B" ||
+                                                        entry.Answer ===
+                                                          "Agree" ||
+                                                        entry.Answer === "D"
                                                       }
                                                       readOnly
                                                     />{" "}
@@ -707,8 +732,10 @@ const fetchExamMasterData = async () => {
                                                       type="radio"
                                                       value="C"
                                                       checked={
-                                                        entry.selectedOption ===
-                                                        "C"
+                                                        entry.Answer === "C" ||
+                                                        entry.Answer ===
+                                                          "<p>Uncertain</p>\r\n" ||
+                                                        entry.Answer === "?"
                                                       }
                                                       readOnly
                                                     />{" "}
@@ -719,34 +746,29 @@ const fetchExamMasterData = async () => {
                                                       type="radio"
                                                       value="D"
                                                       checked={
-                                                        entry.selectedOption ===
-                                                        "D"
+                                                        entry.Answer === "D" ||
+                                                        entry.Answer ===
+                                                          "<p>Disagree</p>\r\n"
                                                       }
                                                       readOnly
                                                     />{" "}
                                                     D
                                                   </label>
-                                                </div>
-                                                <div className="points-table">
-                                                  {/* This represents any other data that relates to points */}
-                                                  {/* {
-                                                    entry.pointMasterId
-                                                      .PointMasterTitle
-                                                  } */}
-                                                </div>
-                                                <div className="points-gain">
-                                                  {/* Displaying the points */}
-                                                  {/* {
-                                                    entry.pointMasterId
-                                                      .PointMasterName
-                                                  }
-                                                  :{" "}
-                                                  {
-                                                    entry.pointMasterId
-                                                      .PointMasterPoints
-                                                  } */}
-                                                </div>
-                                              </div>
+                                                  <label>
+                                                    <input
+                                                      type="radio"
+                                                      value="D"
+                                                      checked={
+                                                        entry.Answer === "E" ||
+                                                        entry.Answer ===
+                                                          "<p>Strongly Disagree</p>\r\n"
+                                                      }
+                                                      readOnly
+                                                    />{" "}
+                                                    E
+                                                  </label>
+                                                </td>
+                                              </tr>
                                             ))}
                                           </tbody>
                                         </table>
@@ -768,21 +790,18 @@ const fetchExamMasterData = async () => {
                                                     .slice() // Create a shallow copy of the array to avoid mutating the original array
                                                     .sort(
                                                       (a, b) =>
-                                                        b.PointMasterPoints -
-                                                        a.PointMasterPoints
-                                                    ) // Sort in descending order
+                                                        b.Points - a.Points // Sort in descending order based on Points
+                                                    )
                                                     .map((item) => (
-                                                      <tr key={item._id}>
+                                                      <tr key={item.PointId}>
+                                                        {" "}
+                                                        {/* Use PointId for the key */}
+                                                        <td>{item.Title}</td>{" "}
+                                                        {/* Display Title */}
                                                         <td>
-                                                          {
-                                                            item.PointMasterTitle
-                                                          }
-                                                        </td>
-                                                        <td>
-                                                          {
-                                                            item.PointMasterPoints
-                                                          }
-                                                        </td>
+                                                          {item.Points}
+                                                        </td>{" "}
+                                                        {/* Display Points */}
                                                       </tr>
                                                     ))}
                                                 </tbody>
@@ -803,13 +822,15 @@ const fetchExamMasterData = async () => {
                                                   </tr>
                                                 </thead>
                                                 <tbody>
-                                                  {aggregatedData.map(
+                                                  {groupedArray.map(
                                                     (item, index) => (
                                                       <tr key={index}>
-                                                        <td>{item.name}</td>
+                                                        <td>{item.Name}</td>{" "}
+                                                        {/* Render the name */}
                                                         <td>
                                                           {item.totalPoints}
-                                                        </td>
+                                                        </td>{" "}
+                                                        {/* Render the total points */}
                                                       </tr>
                                                     )
                                                   )}

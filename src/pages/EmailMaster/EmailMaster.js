@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -170,33 +172,14 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
         setSSLType(false);
         fetchCategories();
         setmodal_list(!modal_list);
+        toast.success("Data submitted successfully");
       })
       .catch((err) => {
         console.log("Error from server:", err);
       });
     }
 
-    // createEmailMaster(values)
-    //   .then((res) => {
-    //     setmodal_list(!modal_list);
-    //     setValues(initialState);
-    //     fetchCategories();
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    
   };
 
   const handleDelete = (e) => {
@@ -212,6 +195,7 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
         setSSLType(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -245,6 +229,7 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
             console.log("Error from server:", err);
@@ -270,12 +255,17 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
     }
 
     // Validate Email
-    if (Email === "") {
-      errors.Email = "Email is required!";
-      setErrEmail(true);
-    } else {
-      setErrEmail(false);
-    }
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!Email) {
+  errors.Email = "Email is required!";
+  setErrEmail(true);
+} else if (!emailRegex.test(Email)) {
+  errors.Email = "Please enter a valid email address!";
+  setErrEmail(true);
+} else {
+  setErrEmail(false);
+}
 
     // Validate Password
     if (Password === "") {
@@ -454,13 +444,10 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb
-            maintitle="Email"
-            title="Email"
-            pageTitle="CMS "
-          />
+          <BreadCrumb maintitle="Email" title="Email" pageTitle="CMS " />
           <Row>
             <Col lg={12}>
               <Card>
@@ -706,7 +693,7 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
             setIsSubmit(false);
           }}
         >
-          Edit Description
+          Edit Email
         </ModalHeader>
         <form>
           <ModalBody>
@@ -859,7 +846,7 @@ const [errOutgoingPort, setErrOutgoingPort] = useState(false);
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Email
         </ModalHeader>
         <form>
           <ModalBody>

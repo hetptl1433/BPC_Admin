@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -167,6 +168,8 @@ const BannerImages = () => {
           setPhotoAdd("");
 
           fetchCategories();
+
+          toast.success("Data submitted Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -180,6 +183,7 @@ const BannerImages = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -206,8 +210,10 @@ const BannerImages = () => {
           setmodal_edit(!modal_edit);
           fetchCategories();
           setPhotoAdd("");
+          toast.success("Data edited Successfully!");
 
           setCheckImagePhoto(false);
+
         })
         .catch((err) => {
           console.log(err);
@@ -344,6 +350,7 @@ const BannerImages = () => {
       selector: (row) => {
         return (
           <React.Fragment>
+          
             <div className="d-flex gap-2">
               <div className="edit">
                 <button
@@ -379,6 +386,7 @@ const BannerImages = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Banner" pageTitle="CMS" />
@@ -388,7 +396,9 @@ const BannerImages = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">BannerImages</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        Banner Images
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -509,8 +519,6 @@ const BannerImages = () => {
               {isSubmit && <p className="text-danger">{formErrors.Text}</p>}
             </div>
 
-          
-
             <Col lg={6}>
               <label>
                 Banner Image <span className="text-danger">*</span>
@@ -624,12 +632,10 @@ const BannerImages = () => {
                 onChange={handleChange}
               />
               <Label>
-              Text <span className="text-danger">*</span>
+                Text <span className="text-danger">*</span>
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.Text}</p>}
             </div>
-
-           
 
             <Col lg={6}>
               <label>
@@ -719,7 +725,7 @@ const BannerImages = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Banner Image
         </ModalHeader>
         <form>
           <ModalBody>

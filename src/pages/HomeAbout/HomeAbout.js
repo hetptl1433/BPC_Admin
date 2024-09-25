@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -207,6 +209,7 @@ const HomeAbout = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -220,6 +223,7 @@ const HomeAbout = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -250,6 +254,7 @@ const HomeAbout = () => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -434,16 +439,23 @@ const HomeAbout = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="Home About Section" pageTitle="CMS" />
+          <BreadCrumb
+            maintitle="CMS"
+            title="Home About Section"
+            pageTitle="CMS"
+          />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Home About Section</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        Home About Section
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -543,7 +555,7 @@ const HomeAbout = () => {
                 onChange={handleChange}
               />
               <Label>
-              Tagline<span className="text-danger">*</span>{" "}
+                Tagline<span className="text-danger">*</span>{" "}
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
             </div>
@@ -622,9 +634,7 @@ const HomeAbout = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.abtImage}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -695,7 +705,7 @@ const HomeAbout = () => {
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
+            <div className="form-floating mb-3">
               <Input
                 type="text"
                 className={validClassTG}
@@ -706,7 +716,7 @@ const HomeAbout = () => {
                 onChange={handleChange}
               />
               <Label>
-              Tagline<span className="text-danger">*</span>{" "}
+                Tagline<span className="text-danger">*</span>{" "}
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.Tagline}</p>}
             </div>
@@ -785,9 +795,7 @@ const HomeAbout = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.abtImage}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.abtImage}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}

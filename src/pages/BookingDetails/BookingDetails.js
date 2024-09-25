@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -64,8 +66,8 @@ const [formData, setFormData] = useState({
 });
 
   
-  const calculateTotal = (id, price) => {
-    const quantity = quantities[id] || 1; // Default to 1 if quantity is not set yet
+  const calculateTotal = (id, price,Quantity) => {
+    const quantity = Quantity || 1; // Default to 1 if quantity is not set yet
     return quantity * price;
   };
 
@@ -249,6 +251,8 @@ const {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+                toast.success("Data deleted Successfully!");
+
       })
       .catch((err) => {
         console.log(err);
@@ -327,6 +331,7 @@ const {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -352,7 +357,7 @@ const {
                         }}
                       >
                         <div className="text-end mt-1">
-                          <Input
+                          {/* <Input
                             type="checkbox"
                             className="form-check-input"
                             name="filter"
@@ -362,7 +367,7 @@ const {
                           />
                           <Label className="form-check-label ms-2">
                             Active
-                          </Label>
+                          </Label> */}
                         </div>
                       </div>
                     </Col>
@@ -535,7 +540,8 @@ const {
                                           readOnly
                                           value={calculateTotal(
                                             item._id,
-                                            item.Price
+                                            item.Price,
+                                            item.Quantity
                                           ).toFixed(2)}
                                           className="form-control"
                                         />

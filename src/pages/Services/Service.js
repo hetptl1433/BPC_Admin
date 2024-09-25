@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -90,8 +92,11 @@ useEffect(() => {
           sortOrder: res.sortOrder,
           IsActive: res.IsActive,
         });
-        console.log("res", values.name);
+         values(initialState);
       })
+
+
+     
       .catch((err) => {
         console.log(err);
       });
@@ -222,6 +227,7 @@ const HandleShortDesc = (e) => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -235,6 +241,7 @@ const HandleShortDesc = (e) => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -265,6 +272,7 @@ const HandleShortDesc = (e) => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -435,6 +443,7 @@ const HandleShortDesc = (e) => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Services" pageTitle="CMS" />
@@ -684,7 +693,7 @@ const HandleShortDesc = (e) => {
             setIsSubmit(false);
           }}
         >
-          Edit Banner
+          Edit Service
         </ModalHeader>
         <form>
           <ModalBody>
@@ -867,7 +876,7 @@ const HandleShortDesc = (e) => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Service
         </ModalHeader>
         <form>
           <ModalBody>

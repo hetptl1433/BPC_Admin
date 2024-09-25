@@ -58,3 +58,9 @@ import axios from "axios";
       `${process.env.REACT_APP_API_URL_BPC}/api/legacyExamDetails/${UserId}/${ExamId}`
     );
   };
+
+   export const getLegacyAllPoint = async (ExamId) => {
+     return await axios.get(
+       `${process.env.REACT_APP_API_URL_BPC}/api/legacyAllPoint/${ExamId}`
+     );
+   };

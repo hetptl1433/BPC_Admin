@@ -17,6 +17,8 @@ import {
   Row,
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
+import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -135,6 +137,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         fetchCategories();
         setmodal_list(!modal_list);
+        toast.success("Data submitted Successfully!");
       })
       .catch((err) => {
         console.log("Error from server:", err);
@@ -174,6 +177,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -198,6 +202,7 @@ const [IsActive, setIsActive] = useState(false);
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated Successfully!");
         })
         .catch((err) => {
             console.log("Error from server:", err);
@@ -372,20 +377,17 @@ const [IsActive, setIsActive] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb
-            maintitle="Content"
-            title="Content"
-            pageTitle="CMS "
-          />
+          <BreadCrumb maintitle="Content" title="Content" pageTitle="CMS " />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Content</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">CMS Master</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -456,13 +458,14 @@ const [IsActive, setIsActive] = useState(false);
       </div>
 
       {/* Add Modal */}
-      
+
       <Modal
         isOpen={modal_list}
         toggle={() => {
           tog_list();
         }}
         centered
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -483,14 +486,14 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Name <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -500,7 +503,9 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="subTitle"
                 value={subTitle}
-                onChange={(e)=>{setsubTitle(e.target.value)}}
+                onChange={(e) => {
+                  setsubTitle(e.target.value);
+                }}
               />
               <Label>
                 {" "}
@@ -509,26 +514,23 @@ const [IsActive, setIsActive] = useState(false);
               {isSubmit && <p className="text-danger">{formErrors.subTitle}</p>}
             </div>
             <div className="mb-3">
-            <Label>
+              <Label>
                 Description <span className="text-danger">*</span>
               </Label>
-            <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
+              <CKEditor
+                key={"Desc_" + _id}
+                editor={ClassicEditor}
+                data={Desc}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
 
-                                            setDesc(data);
-                                          }}
-                                        />
-              
+                  setDesc(data);
+                }}
+              />
+
               {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
-             
             </div>
-            
-           
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -573,6 +575,7 @@ const [IsActive, setIsActive] = useState(false);
           handleTog_edit();
         }}
         centered
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -581,11 +584,11 @@ const [IsActive, setIsActive] = useState(false);
             setIsSubmit(false);
           }}
         >
-          Edit Description
+          Edit Content
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
+            <div className="form-floating mb-3">
               <Input
                 type="text"
                 className={validClassTitle}
@@ -593,14 +596,14 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Name <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -610,7 +613,9 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="subTitle"
                 value={subTitle}
-                onChange={(e)=>{setsubTitle(e.target.value)}}
+                onChange={(e) => {
+                  setsubTitle(e.target.value);
+                }}
               />
               <Label>
                 {" "}
@@ -633,20 +638,19 @@ const [IsActive, setIsActive] = useState(false);
                 Description <span className="text-danger">*</span>
               </Label>
               <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
+                key={"Desc_" + _id}
+                editor={ClassicEditor}
+                data={Desc}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
 
-                                            setDesc(data);
-                                          }}
-                                        />
-              
+                  setDesc(data);
+                }}
+              />
+
               {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
             </div>
-        
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -701,7 +705,7 @@ const [IsActive, setIsActive] = useState(false);
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Content
         </ModalHeader>
         <form>
           <ModalBody>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -135,6 +137,7 @@ const Logo = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -148,6 +151,7 @@ const Logo = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -171,6 +175,7 @@ const Logo = () => {
           setmodal_edit(!modal_edit);
           fetchCategories();
           setPhotoAdd("");
+          toast.success("Data edited successfully");
 
           setCheckImagePhoto(false);
         })
@@ -329,6 +334,7 @@ const Logo = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Logo" pageTitle="CMS" />
@@ -440,9 +446,7 @@ const Logo = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.logo}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.logo}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}
@@ -526,9 +530,7 @@ const Logo = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={PhotoUpload}
               />
-              {isSubmit && (
-                <p className="text-danger">{formErrors.logo}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.logo}</p>}
               {checkImagePhoto ? (
                 <img
                   //   src={image ?? myImage}

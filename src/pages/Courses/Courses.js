@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -53,6 +55,7 @@ const [IsActive, setIsActive] = useState(false);
   const [filter, setFilter] = useState(true);
 
   const [errTI, setErrTI] = useState(false);
+  const [errNA, setErrNA] = useState(false);
   const [errDU, setErrDU] = useState(false);
   const [errEL, setErrEL] = useState(false);
   const [errFE, setErrFE,] = useState(false);
@@ -179,6 +182,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         fetchCategories();
         setmodal_list(!modal_list);
+        toast.success("Data submitted successfully");
       })
       .catch((err) => {
         console.log("Error from server:", err);
@@ -202,6 +206,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -239,6 +244,7 @@ const [IsActive, setIsActive] = useState(false);
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
             console.log("Error from server:", err);
@@ -259,11 +265,11 @@ const [IsActive, setIsActive] = useState(false);
     const errors = {};
 
     if (Name === "") {
-      errors.Name = "Name is required!";
-      setErrTI(true);
+      errors.Name = "Course Name is required!";
+      setErrNA(true);
     }
     if (Name !== "") {
-      setErrTI(false);
+      setErrNA(false);
     }
     if (Duration === "") {
       errors.Duration = "Duration is required!";
@@ -274,10 +280,10 @@ const [IsActive, setIsActive] = useState(false);
         }
         if (Timing === "") {
           errors.Timing = "Timing is required!";
-          setErrTI(false);
+          setErrSTI(true);
           }
           if (Timing !== "") {
-            setErrTI(false);
+            setErrSTI(false);
             }
             
     if (Eligibility === "") {
@@ -312,7 +318,7 @@ const [IsActive, setIsActive] = useState(false);
   };
 
   const validClassTitle =
-    errTI && isSubmit ? "form-control is-invalid" : "form-control";
+    errNA && isSubmit ? "form-control is-invalid" : "form-control";
     const validClassSORTORDER =
       errSO && isSubmit ? "form-control is-invalid" : "form-control";
   const validClassFEES =
@@ -474,6 +480,7 @@ const [IsActive, setIsActive] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="Courses" title="Courses" pageTitle="CMS " />
@@ -561,6 +568,7 @@ const [IsActive, setIsActive] = useState(false);
           tog_list();
         }}
         centered
+        size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -746,6 +754,7 @@ const [IsActive, setIsActive] = useState(false);
           handleTog_edit();
         }}
         centered
+      size="xl"
       >
         <ModalHeader
           className="bg-light p-3"
@@ -949,7 +958,7 @@ const [IsActive, setIsActive] = useState(false);
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Courses
         </ModalHeader>
         <form>
           <ModalBody>

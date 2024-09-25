@@ -12,6 +12,114 @@
     }
 }
 
+@media print {
+        @page {
+                size: landscape;
+       
+            }
+    .no-print {
+        display: none;
+    }
+
+    .lli {
+        display: none;
+    }
+
+    .col-md-4 {
+        width: 40%;
+    }
+
+    .second.table-bordered {
+        width: 100%;
+        table-layout: fixed;
+        /* Ensures fixed layout for consistent column sizes */
+    }
+    .mahiti{
+        width: 5%;
+    }
+    /* Set width for the first column (index) */
+    .second.table-bordered td:nth-child(1) {
+        width: 5%;
+        /* Set first index row to 5% width */
+    }
+
+    /* Set width for the third column (input field text) */
+    .second.table-bordered td:nth-child(3) {
+        width: 5%;
+        /* Set third child to 5% width */
+        word-wrap: break-word;
+        /* Ensure content wraps inside the cell */
+    }
+
+    /* Set width for the heading text (question text) */
+    .second.table-bordered td:nth-child(2) {
+        width: 70%;
+        /* Allocate 70% width to the heading text */
+        word-wrap: break-word;
+        /* Ensure heading text wraps within the cell */
+    }
+
+    /* Ensure input fields stretch fully within their container */
+    .form-control {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Adjust font sizes for headers and input fields */
+    th,
+    td:nth-child(4) {
+        font-size: 16px;
+        /* Larger size for headers and input columns */
+    }
+
+    /* Smaller font for the remaining cells */
+    td:nth-child(2),
+    td:nth-child(3) {
+        font-size: 14px;
+    }
+
+    /* Ensure long content in the last row wraps */
+    td {
+        white-space: normal;
+        /* Allows text to wrap in all cells */
+        overflow-wrap: break-word;
+        /* Breaks long words into the next line */
+    }
+
+    /* Optional: Provide more height for rows with long text */
+    tr:nth-child(8) {
+        height: auto;
+        /* Adjust the height based on content */
+    }
+
+
+    .row{
+        --vz-gutter-x: 1.5rem;
+    --vz-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--vz-gutter-y));
+    margin-right: calc(-.5* var(--vz-gutter-x));
+    margin-left: calc(-.5* var(--vz-gutter-x));
+
+    }
+
+    // .result-page{
+    //     width: 50%;
+    // }
+    .col-lg-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+
+}
 .main-content {
     transition: all .1s ease-out;
 

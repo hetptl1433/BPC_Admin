@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -112,18 +114,7 @@ const ExtraBooking = () => {
         setmodal_list(!modal_list);
         setValues(initialState);
         fetchCategories();
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
+      toast.success("Data submitted successfully");
       })
       .catch((error) => {
         console.log(error);
@@ -138,6 +129,7 @@ const ExtraBooking = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -155,6 +147,7 @@ const ExtraBooking = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -336,6 +329,7 @@ const ExtraBooking = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -648,7 +642,7 @@ const ExtraBooking = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Extra Booking
         </ModalHeader>
         <form>
           <ModalBody>

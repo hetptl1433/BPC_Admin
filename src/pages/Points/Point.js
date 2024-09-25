@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -107,18 +109,7 @@ const Points = () => {
           setmodal_list(!modal_list);
             setValues(initialState);
             fetchCategories();
-          // if (res.isOk) {
-          //   setmodal_list(!modal_list);
-          //   setValues(initialState);
-          //   fetchCategories();
-          // } else {
-          //   if (res.field === 1) {
-          //     setErrCN(true);
-          //     setFormErrors({
-          //       PointName: "This Category name is already exists!",
-          //     });
-          //   }
-          // }
+          toast.success("Data submitted successfully");
         })
         .catch((error) => {
           console.log(error);
@@ -134,6 +125,7 @@ const Points = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -151,6 +143,7 @@ const Points = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -162,7 +155,7 @@ const Points = () => {
     const errors = {};
 
     if (values.PointName === "") {
-      errors.PointName = "Category Name is required!";
+      errors.PointName = "point category Name is required!";
       setErrCN(true);
     }
     if (values.PointName !== "") {
@@ -242,7 +235,7 @@ const Points = () => {
   };
   const col = [
     {
-      name: "Category Name",
+      name: "point category Name",
       selector: (row) => row.PointName,
       sortable: true,
       sortField: "PointName",
@@ -297,12 +290,13 @@ const Points = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Category"
+            maintitle="point category"
             title="Point Category"
-            pageTitle="Category"
+            pageTitle="point category"
           />
           <Row>
             <Col lg={12}>
@@ -397,7 +391,7 @@ const Points = () => {
             setIsSubmit(false);
           }}
         >
-          Add Category
+          Add point category
         </ModalHeader>
         <form>
           <ModalBody>
@@ -405,14 +399,14 @@ const Points = () => {
               <Input
                 type="text"
                 className={validClassPointName}
-                placeholder="Enter Category Name"
+                placeholder="Enter point category Name"
                 required
                 name="PointName"
                 value={PointName}
                 onChange={handleChange}
               />
               <Label>
-                Category Name <span className="text-danger">*</span>
+                point category Name <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.PointName}</p>
@@ -472,7 +466,7 @@ const Points = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Category
+          Edit point category
         </ModalHeader>
         <form>
           <ModalBody>
@@ -480,14 +474,14 @@ const Points = () => {
               <Input
                 type="text"
                 className={validClassPointName}
-                placeholder="Enter Category Name"
+                placeholder="Enter point category Name"
                 required
                 name="PointName"
                 value={PointName}
                 onChange={handleChange}
               />
               <Label>
-                Category Name <span className="text-danger">*</span>
+                point category Name <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.PointName}</p>
@@ -548,7 +542,7 @@ const Points = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove point category
         </ModalHeader>
         <form>
           <ModalBody>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -252,6 +254,7 @@ const EmailForm = () => {
           setIsSubmit(false);
           setFormErrors({});
           fetchProducts();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -270,6 +273,7 @@ const EmailForm = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -296,6 +300,7 @@ const EmailForm = () => {
         fetchProducts();
         setCheckImagePhoto(false);
         setValues(initialState);
+        toast.success("Data updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -385,15 +390,16 @@ const EmailForm = () => {
   const handleFilter = (e) => {
     setFilter(e.target.checked);
   };
-  document.title = "Emai Form Details | BPC";
+  document.title = "Email Form Details | BPC";
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Emai Form Details"
-            title="Emai Form Details"
+            maintitle="Email Form Details"
+            title="Email Form Details"
             pageTitle="CMS"
           />
 
@@ -404,7 +410,7 @@ const EmailForm = () => {
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" lg={4} md={6} sm={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                      Emai Form Details
+                        Email Form Details
                       </h2>
                     </Col>
                     <Col lg={4} md={6} sm={6}>
@@ -533,7 +539,7 @@ const EmailForm = () => {
                                           data-choices
                                           data-choices-sorting="true"
                                         >
-                                          <option>Select Category</option>
+                                          <option>Select Email</option>
                                           {ledCategories.map((c) => {
                                             return (
                                               <React.Fragment key={c._id}>
@@ -547,7 +553,7 @@ const EmailForm = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Emai Form Category{" "}
+                                          Select Email{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -562,7 +568,7 @@ const EmailForm = () => {
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Form name"
                                           required
                                           name="FormName"
                                           value={values.FormName}
@@ -572,7 +578,7 @@ const EmailForm = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                          Form Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -583,9 +589,6 @@ const EmailForm = () => {
                                       </div>
                                     </Col>
                                   </Row>
-                                 
-        
-                                
 
                                   <div className="mt-5">
                                     <Col lg={6}>
@@ -661,7 +664,7 @@ const EmailForm = () => {
                                           data-choices
                                           data-choices-sorting="true"
                                         >
-                                          <option>Select Category</option>
+                                          <option>Select Email</option>
                                           {ledCategories.map((c) => {
                                             return (
                                               <React.Fragment key={c._id}>
@@ -675,7 +678,7 @@ const EmailForm = () => {
                                           })}
                                         </select>
                                         <Label>
-                                          Product Category{" "}
+                                          Email{" "}
                                           <span className="text-danger">*</span>
                                         </Label>
                                         {isSubmit && (
@@ -690,7 +693,7 @@ const EmailForm = () => {
                                         <input
                                           type="text"
                                           className={validClassPN}
-                                          placeholder="Enter product name"
+                                          placeholder="Enter Form name"
                                           required
                                           name="FormName"
                                           value={values.FormName}
@@ -700,7 +703,7 @@ const EmailForm = () => {
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                          Form Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
@@ -710,13 +713,8 @@ const EmailForm = () => {
                                         )}
                                       </div>
                                     </Col>
-                                   
                                   </Row>
-                                  
-                                  
 
-                              
-                                 
                                   <div className="mt-5">
                                     <Col lg={6}>
                                       <div className="form-check mb-2">
@@ -820,7 +818,7 @@ const EmailForm = () => {
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Email</span>
           {/* <Button
             type="button"
             onClick={() => {

@@ -17,6 +17,8 @@ import {
   Row,
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
+import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -183,6 +185,7 @@ setIsActive(false);
       setHelp("");
       setHereFrom("");
       setKnowMore(false);
+      toast.success("Data submitted Successfully!");
       setIsActive(false);
 
         fetchCategories();
@@ -220,6 +223,7 @@ setIsActive(false);
     e.preventDefault();
     removeContactForm(remove_id)
       .then((res) => {
+         toast.success("Data deleted Successfully!");
    setName("");
    setEmail("");
    setMobile("");
@@ -239,46 +243,46 @@ setIsActive(false);
       });
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    let erros = validate(
-      Name,
-      Email,
-      Mobile,
-      Company,
-      City,
-      Services,
-      Help,
-      HereFrom,
-    );
-    setFormErrors(erros);
-    setIsSubmit(true);
+  // const handleUpdate = (e) => {
+  //   e.preventDefault();
+  //   let erros = validate(
+  //     Name,
+  //     Email,
+  //     Mobile,
+  //     Company,
+  //     City,
+  //     Services,
+  //     Help,
+  //     HereFrom,
+  //   );
+  //   setFormErrors(erros);
+  //   setIsSubmit(true);
 
-    if (Object.keys(erros).length === 0) {
+  //   if (Object.keys(erros).length === 0) {
 
-        const formdata = new FormData();
+  //       const formdata = new FormData();
 
-          formdata.append("Name", Name);
-          formdata.append("Email", Email);
-          formdata.append("Mobile", Mobile);
-          formdata.append("Company", Company);
-          formdata.append("City", City);
-          formdata.append("Services", Services);
-          formdata.append("Help", Help);
-          formdata.append("HereFrom", HereFrom);
-          formdata.append("KnowMore", KnowMore);
-          formdata.append("IsActive", IsActive);
+  //         formdata.append("Name", Name);
+  //         formdata.append("Email", Email);
+  //         formdata.append("Mobile", Mobile);
+  //         formdata.append("Company", Company);
+  //         formdata.append("City", City);
+  //         formdata.append("Services", Services);
+  //         formdata.append("Help", Help);
+  //         formdata.append("HereFrom", HereFrom);
+  //         formdata.append("KnowMore", KnowMore);
+  //         formdata.append("IsActive", IsActive);
 
-      updateContactForm(_id, formdata)
-        .then((res) => {
-          setmodal_edit(!modal_edit);
-          fetchCategories();
-        })
-        .catch((err) => {
-            console.log("Error from server:", err);
-        });
-    }
-  };
+  //     updateContactForm(_id, formdata)
+  //       .then((res) => {
+  //         setmodal_edit(!modal_edit);
+  //         fetchCategories();
+  //       })
+  //       .catch((err) => {
+  //           console.log("Error from server:", err);
+  //       });
+  //   }
+  // };
 
   const validate = (
     Name,
@@ -522,6 +526,7 @@ const validClassHereFrom =
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -535,14 +540,12 @@ const validClassHereFrom =
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">
-                        Form Master
-                      </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Form Master</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
                       <div className="text-end mt-2">
-                        <Input
+                        {/* <Input
                           type="checkbox"
                           className="form-check-input"
                           name="filter"
@@ -550,12 +553,11 @@ const validClassHereFrom =
                           defaultChecked={true}
                           onChange={handleFilter}
                         />
-                        <Label className="form-check-label ms-2">Active</Label>
+                        <Label className="form-check-label ms-2">Active</Label> */}
                       </div>
                     </Col>
                     <Col className="col-sm-auto" sm={12} lg={4} md={12}>
                       <div className="d-flex justify-content-sm-end">
-                      
                         <div className="search-box ms-2">
                           <input
                             type="text"
@@ -769,148 +771,132 @@ const validClassHereFrom =
         <form>
           <ModalBody>
             <div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassName}
-    placeholder="Enter Name"
-    readOnly
-    name="Name"
-    value={Name}
-    onChange={(e) => setName(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Name <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Name}</p>
-  )}
-</div>
+              <Input
+                type="text"
+                className={validClassName}
+                placeholder="Enter Name"
+                readOnly
+                name="Name"
+                value={Name}
+                onChange={(e) => setName(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Name <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Name}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="email"
-    className={validClassEmail}
-    placeholder="Enter Email"
-    readOnly
-    name="Email"
-    value={Email}
-    onChange={(e) => setEmail(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Email <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Email}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="email"
+                className={validClassEmail}
+                placeholder="Enter Email"
+                readOnly
+                name="Email"
+                value={Email}
+                onChange={(e) => setEmail(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Email <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Email}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassMobile}
-    placeholder="Enter Mobile"
-    readOnly
-    name="Mobile"
-    value={Mobile}
-    onChange={(e) => setMobile(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Mobile <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Mobile}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassMobile}
+                placeholder="Enter Mobile"
+                readOnly
+                name="Mobile"
+                value={Mobile}
+                onChange={(e) => setMobile(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Mobile <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Mobile}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassCompany}
-    placeholder="Enter Company"
-    readOnly
-    name="Company"
-    value={Company}
-    onChange={(e) => setCompany(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Company <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Company}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassCompany}
+                placeholder="Enter Company"
+                readOnly
+                name="Company"
+                value={Company}
+                onChange={(e) => setCompany(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Company <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Company}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassCity}
-    placeholder="Enter City"
-    readOnly
-    name="City"
-    value={City}
-    onChange={(e) => setCity(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    City <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.City}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassCity}
+                placeholder="Enter City"
+                readOnly
+                name="City"
+                value={City}
+                onChange={(e) => setCity(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                City <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.City}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassServices}
-    placeholder="Enter Services"
-    readOnly
-    name="Services"
-    value={Services}
-    onChange={(e) => setServices(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Services <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Services}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassServices}
+                placeholder="Enter Services"
+                readOnly
+                name="Services"
+                value={Services}
+                onChange={(e) => setServices(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Services <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Services}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassHelp}
-    placeholder="Enter Help"
-    readOnly
-    name="Help"
-    value={Help}
-    onChange={(e) => setHelp(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Help <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.Help}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassHelp}
+                placeholder="Enter Help"
+                readOnly
+                name="Help"
+                value={Help}
+                onChange={(e) => setHelp(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Help <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.Help}</p>}
+            </div>
 
-<div className="form-floating mb-3">
-  <Input
-    type="text"
-    className={validClassHereFrom}
-    placeholder="Enter Source of Referral"
-    readOnly
-    name="HereFrom"
-    value={HereFrom}
-    onChange={(e) => setHereFrom(e.target.value)} // You may want to disable this as well if fields are read-only
-  />
-  <Label>
-    Here From <span className="text-danger"></span>
-  </Label>
-  {isSubmit && (
-    <p className="text-danger">{formErrors.HereFrom}</p>
-  )}
-</div>
+            <div className="form-floating mb-3">
+              <Input
+                type="text"
+                className={validClassHereFrom}
+                placeholder="Enter Source of Referral"
+                readOnly
+                name="HereFrom"
+                value={HereFrom}
+                onChange={(e) => setHereFrom(e.target.value)} // You may want to disable this as well if fields are read-only
+              />
+              <Label>
+                Here From <span className="text-danger"></span>
+              </Label>
+              {isSubmit && <p className="text-danger">{formErrors.HereFrom}</p>}
+            </div>
 
             <div className="form-check mb-2">
               <Input
@@ -926,8 +912,6 @@ const validClassHereFrom =
 
           <ModalFooter>
             <div className="hstack gap-2 justify-content-end">
-             
-
               <button
                 type="button"
                 className="btn btn-outline-danger"

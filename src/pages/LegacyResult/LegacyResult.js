@@ -218,6 +218,8 @@ window.URL.revokeObjectURL(link.href);
   };
 
 
+ 
+
 
 
  const [errCN, setErrCN] = useState(false);
@@ -273,6 +275,7 @@ const [errEDesc, setErrEDesc] = useState(false);
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);

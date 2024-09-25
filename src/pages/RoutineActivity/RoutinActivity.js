@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -303,6 +305,7 @@ const {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -384,6 +387,7 @@ const {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -409,7 +413,7 @@ const {
                         }}
                       >
                         <div className="text-end mt-1">
-                          <Input
+                          {/* <Input
                             type="checkbox"
                             className="form-check-input"
                             name="filter"
@@ -419,7 +423,7 @@ const {
                           />
                           <Label className="form-check-label ms-2">
                             Active
-                          </Label>
+                          </Label> */}
                         </div>
                       </div>
                     </Col>
@@ -443,7 +447,7 @@ const {
                             <Col lg={12}>
                               <div className="text-end">
                                 <button
-                                  className="btn bg-success text-light mb-3 "
+                                  className="btn bg-success text-light mb-3 lli"
                                   onClick={() => {
                                     setValues(initialState);
                                     setShowForm(false);
@@ -496,6 +500,20 @@ const {
                                 type="hidden"
                               />
                               {/* Header Start */}
+                              <Col xxl={4} className="mb-3 no-print">
+                                <div className="text-end">
+                                  <button
+                                    type="button"
+                                    className="btn btn-outline-success m-1"
+                                    onClick={() => {
+                                      window.print();
+                                    }}
+                                  >
+                                    Print
+                                  </button>
+                                </div>
+                              </Col>
+
                               <section>
                                 <div className="container">
                                   <header id="headerMain">
@@ -547,7 +565,7 @@ const {
                                     }}
                                   >
                                     <div className="row">
-                                      <div className="col-md-4">
+                                      <div className="col-md-4 ">
                                         <label className="lbf">
                                           <b>Name of the Organization:</b>
                                           <small style={{ color: "red" }}>
@@ -779,7 +797,7 @@ const {
                                         <b>Personal Data:</b>
                                       </label>
                                     </div>
-                                    <table className="table table-bordered">
+                                    <table className="table second table-bordered">
                                       <tbody>
                                         <tr>
                                           <th
@@ -957,7 +975,7 @@ const {
                                           </th>
                                           <th
                                             className="header_bg"
-                                            style={{ whiteSpace: "nowrap" }}
+                                            
                                           >
                                             Any idea or any change suggested /
                                             any additional responsibility you

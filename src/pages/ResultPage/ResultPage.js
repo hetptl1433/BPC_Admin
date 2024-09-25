@@ -25,6 +25,7 @@ import { Select } from "antd";
 import { listIndustry } from "../../functions/Industry/Industry";
 import { getTestCategory, listTestCategory } from "../../functions/TestCat/TestCat";
 import { listTestCatMasterDetails } from "../../functions/TextCategoryMaster/TextCatMaster";
+import { toast, ToastContainer } from "react-toastify";
 
 
 const ResultPage = () => {
@@ -93,13 +94,15 @@ const ResultPage = () => {
       sortField: "TestName",
       minWidth: "150px",
     },
+
     {
-      name: "TestName",
-      selector: (row) => row.industryDetails.Name,
+      name: "ExamDate",
+      selector: (row) => new Date(row.ExamDate).toLocaleDateString(), // Formats the date
       sortable: true,
-      sortField: "TestName",
-      minWidth: "150px",
+      sortField: "ExamDate",
+      minWidth: "70px",
     },
+
     {
       name: "ExamUniqueID",
       selector: (row) => row._id,
@@ -107,21 +110,20 @@ const ResultPage = () => {
       sortField: "_id",
       minWidth: "150px",
     },
-    {
-      name: "UserName/Password",
-      selector: (row) =>
-        `${row.userDetails.UserName} / ${row.userDetails.Password}`,
-      sortable: true,
-      sortField: "UserName",
-      minWidth: "150px",
-    },
-    {
-      name: "ExamDate",
-      selector: (row) => row.ExamDate,
-      sortable: true,
-      sortField: "ExamDate",
-      minWidth: "150px",
-    },
+ {
+  name: "Name/Email/Mobile/UserName/Password",
+  selector: (row) =>
+    `${row.userDetails.Name} / ${row.userDetails.Email} / ${row.userDetails.Mobile} / ${row.userDetails.UserName} / ${row.userDetails.Password}`,
+  sortable: true,
+  sortField: "UserName",
+  minWidth: "200px",
+  cell: (row) => (
+    <div style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
+      {`${row.userDetails.Name} / ${row.userDetails.Email} / ${row.userDetails.Mobile} / ${row.userDetails.UserName} / ${row.userDetails.Password}`}
+    </div>
+  ),
+}
+,
 
     {
       name: "Action",
@@ -162,6 +164,8 @@ const ResultPage = () => {
    const aggregated = {};
 
    data.forEach((item) => {
+
+    if(item.pointMasterId?.PointID){
      const id = item.pointMasterId.PointID;
      if (!aggregated[id]) {
        aggregated[id] = {
@@ -173,6 +177,10 @@ const ResultPage = () => {
        item.pointMasterId.PointMasterPoints,
        10
      );
+    }
+    else{
+      console.log("yee");
+    }
    });
 
    return Object.values(aggregated);
@@ -287,6 +295,7 @@ const ResultPage = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -413,6 +422,7 @@ const ResultPage = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer/>
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -436,7 +446,7 @@ const ResultPage = () => {
                         }}
                       >
                         <div className="text-end mt-1">
-                          <Input
+                          {/* <Input
                             type="checkbox"
                             className="form-check-input"
                             name="filter"
@@ -446,7 +456,7 @@ const ResultPage = () => {
                           />
                           <Label className="form-check-label ms-2">
                             Active
-                          </Label>
+                          </Label> */}
                         </div>
                       </div>
                     </Col>
@@ -476,7 +486,7 @@ const ResultPage = () => {
                             <Col lg={12}>
                               <div className="text-end">
                                 <button
-                                  className="btn bg-success text-light mb-3 "
+                                  className="btn bg-success text-light mb-3 no-print"
                                   onClick={() => {
                                     setValues(initialState);
                                     setShowForm(false);
@@ -543,7 +553,7 @@ const ResultPage = () => {
                                             htmlFor="role-field"
                                             className="form-label"
                                           >
-                                            Test Name
+                                            Test Category
                                           </label>
                                         </div>
                                       </Col>
@@ -672,7 +682,7 @@ const ResultPage = () => {
                                     <div className="text-end">
                                       <button
                                         type="button"
-                                        className="btn btn-outline-success m-1"
+                                        className="btn btn-outline-success m-1 no-print"
                                         onClick={() => {
                                           window.print();
                                         }}
@@ -846,7 +856,7 @@ const ResultPage = () => {
                                     <div className="text-end">
                                       <button
                                         type="button"
-                                        className="btn btn-outline-danger m-1"
+                                        className="btn btn-outline-danger m-1 no-print"
                                         onClick={handleUpdateCancel}
                                       >
                                         close

@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import DataTable from "react-data-table-component";
 
 import {
@@ -128,6 +129,7 @@ const AdminUser = () => {
           setPhotoAdd("");
 
           fetchUsers();
+           toast.success("Data submitted Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -141,6 +143,7 @@ const AdminUser = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchUsers();
+        toast.success("Data deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -170,6 +173,7 @@ const AdminUser = () => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data edited Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -212,13 +216,17 @@ const AdminUser = () => {
       setErrLN(false);
     }
 
-    if (values.email === "") {
-      errors.email = "email is required!";
-      setErrEM(true);
-    }
-    if (values.email !== "") {
-      setErrEM(false);
-    }
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+   if (values.email === "") {
+     errors.email = "Email is required!";
+     setErrEM(true);
+   } else if (!emailRegex.test(values.email)) {
+     errors.email = "Invalid email format!";
+     setErrEM(true);
+   } else {
+     setErrEM(false);
+   }
 
     if (values.password === "") {
       errors.password = "password is required!";
@@ -395,10 +403,11 @@ const AdminUser = () => {
     },
   ];
 
-  document.title = "Admin Users | EcoSoch";
+  document.title = "Admin Users | BPC";
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="Setup" title="Admin Users" pageTitle="Setup" />
@@ -710,7 +719,7 @@ const AdminUser = () => {
             </div>
             <Col lg={6}>
               <label>
-                Banner Image <span className="text-danger">*</span>
+                Admin Image <span className="text-danger">*</span>
               </label>
               <input
                 key={"bannerImage" + _id}

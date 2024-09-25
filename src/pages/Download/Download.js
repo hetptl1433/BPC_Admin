@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -106,7 +108,7 @@ const DownloadFiles = () => {
     const errors = {};
 
     if (values.Title === "") {
-      errors.Title = "Title is required!";
+      errors.Title = "Name is required!";
       setErrTT(true);
     }
     if (values.Title !== "") {
@@ -116,7 +118,7 @@ const DownloadFiles = () => {
   
 
     if (values.DownloadFile === "") {
-      errors.DownloadFile = "Download File is required!";
+      errors.DownloadFile = "upload image is required!";
       setErrBI(true);
     }
     if (values.DownloadFile !== "") {
@@ -161,6 +163,7 @@ const DownloadFiles = () => {
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -174,6 +177,7 @@ const DownloadFiles = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -202,7 +206,9 @@ const DownloadFiles = () => {
           fetchCategories();
           setPhotoAdd("");
 
+          toast.success("Data edited successfully");
           setCheckImagePhoto(false);
+
         })
         .catch((err) => {
           console.log(err);
@@ -271,18 +277,28 @@ const DownloadFiles = () => {
   const [photoAdd, setPhotoAdd] = useState();
   const [checkImagePhoto, setCheckImagePhoto] = useState(false);
 
-  const PhotoUpload = (e) => {
-    if (e.target.files.length > 0) {
-      const image = new Image();
+ const PhotoUpload = (e) => {
+   if (e.target.files.length > 0) {
+     const file = e.target.files[0];
+     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
-      let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
+     // Check if the selected file is one of the allowed types
+     if (!allowedTypes.includes(file.type)) {
+       alert("Invalid file type. Only .jpeg, .jpg, .png, .gif are allowed.");
+       e.target.value = ""; // Reset the file input
+       return;
+     }
 
-      setPhotoAdd(imageurl);
-      setValues({ ...values, DownloadFile: e.target.files[0] });
-      setCheckImagePhoto(true);
-    }
-  };
+     const image = new Image();
+     let imageurl = URL.createObjectURL(file);
+     console.log("img", file);
+
+     setPhotoAdd(imageurl); // Set the preview URL
+     setValues({ ...values, DownloadFile: file }); // Set the selected file
+     setCheckImagePhoto(true); // Show the image preview
+   }
+ };
+
 
   const handlePerRowsChange = async (newPerPage, page) => {
     // setPageNo(page);
@@ -375,6 +391,7 @@ const DownloadFiles = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Download" pageTitle="CMS" />
@@ -385,7 +402,7 @@ const DownloadFiles = () => {
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                        Download Files
+                        upload images
                       </h2>
                     </Col>
 
@@ -504,12 +521,15 @@ const DownloadFiles = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.SortOrder}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.SortOrder}</p>
+              )}
             </div>
 
             <Col lg={6}>
               <label>
-                Download Image <span className="text-danger">*</span>
+                upload image <span className="text-danger">*</span>(.jpej, .jpg,
+                .png, .gif only)
               </label>
 
               <input
@@ -517,7 +537,7 @@ const DownloadFiles = () => {
                 name="DownloadFile"
                 className={validClassBI}
                 // accept="images/*"
-                accept=".jpg, .jpeg, .png"
+                accept=".jpg, .jpeg, .png, .gif"
                 onChange={PhotoUpload}
               />
               {isSubmit && (
@@ -610,7 +630,7 @@ const DownloadFiles = () => {
             </div>
             <div className="form-floating mb-3">
               <Input
-                type="text"
+                type="number"
                 className={validClassTT}
                 placeholder="Enter SortOrder "
                 required
@@ -621,12 +641,15 @@ const DownloadFiles = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.SortOrder}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.SortOrder}</p>
+              )}
             </div>
 
             <Col lg={6}>
               <label>
-                Download Image <span className="text-danger">*</span>
+                upload image <span className="text-danger">*</span>(.jpej, .jpg,
+                .png, .gif only)
               </label>
               <input
                 key={"DownloadFile" + _id}
@@ -712,7 +735,7 @@ const DownloadFiles = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Download
         </ModalHeader>
         <form>
           <ModalBody>

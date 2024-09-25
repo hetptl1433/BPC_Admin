@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -170,7 +172,7 @@ const ServeFiles = () => {
           setIsSubmit(false);
           setFormErrors({});
           setPhotoAdd("");
-
+toast.success("Data submitted successfully");
           fetchCategories();
         })
         .catch((err) => {
@@ -185,6 +187,7 @@ const ServeFiles = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -214,6 +217,7 @@ const ServeFiles = () => {
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -386,6 +390,7 @@ const ServeFiles = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="CMS" title="Serve" pageTitle="CMS" />
@@ -395,9 +400,7 @@ const ServeFiles = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">
-                        Serve Files
-                      </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">Serve Files</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -515,7 +518,9 @@ const ServeFiles = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>{" "}
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.SortOrder}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.SortOrder}</p>
+              )}
             </div>
 
             <Col lg={6}>
@@ -632,7 +637,9 @@ const ServeFiles = () => {
               <Label>
                 Sort Order<span className="text-danger">*</span>
               </Label>
-              {isSubmit && <p className="text-danger">{formErrors.SortOrder}</p>}
+              {isSubmit && (
+                <p className="text-danger">{formErrors.SortOrder}</p>
+              )}
             </div>
 
             <Col lg={6}>
@@ -723,7 +730,7 @@ const ServeFiles = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Serve
         </ModalHeader>
         <form>
           <ModalBody>

@@ -16,6 +16,8 @@ import {
   Row,
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
+import { ToastContainer, toast } from "react-toastify";
+
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { createCompanyProfileDetails, getCompanyProfileDetails, removeCompanyProfileDetails, updateCompanyProfileDetails } from "../../functions/CompanyProfile/CompanyProfile";
@@ -407,6 +409,7 @@ const validClassPI =
           setIsSubmit(false);
           setFormErrors({});
           fetchProducts();
+          toast.success("Data submitted Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -423,8 +426,11 @@ const validClassPI =
     e.preventDefault();
     removeCompanyProfileDetails(remove_id)
       .then((res) => {
+         toast.success("Data deleted Successfully!");
         setmodal_delete(!modal_delete);
+
         fetchProducts();
+
       })
       .catch((err) => {
         console.log(err);
@@ -458,7 +464,7 @@ const validClassPI =
         // setmodal_edit(!modal_edit);
         setPhotoAdd("");
         setUpdateForm(false);
-
+         toast.success("Data edited Successfully!");
         fetchProducts();
         setCheckImagePhoto(false);
         setValues(initialState);
@@ -568,6 +574,7 @@ const validClassPI =
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -1458,7 +1465,7 @@ const validClassPI =
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Company Profile</span>
           {/* <Button
             type="button"
             onClick={() => {

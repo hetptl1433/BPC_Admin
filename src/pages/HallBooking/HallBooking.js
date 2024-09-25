@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -367,6 +369,7 @@ formdata.append("IsActive", values.IsActive);
           setPhotoAdd("");
 
           fetchCategories();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -380,6 +383,7 @@ formdata.append("IsActive", values.IsActive);
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -417,6 +421,7 @@ formdata.append("IsActive", values.IsActive);
           setPhotoAdd("");
 
           setCheckImagePhoto(false);
+          toast.success("Data edited successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -580,9 +585,10 @@ formdata.append("IsActive", values.IsActive);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="About Us" pageTitle="CMS" />
+          <BreadCrumb maintitle="CMS" title="Hall Booking" pageTitle="CMS" />
           <Row>
             <Col lg={12}>
               <Card>
@@ -707,7 +713,6 @@ formdata.append("IsActive", values.IsActive);
                   onChange={handleCKEditorChange}
                 />
 
-                {isSubmit && <p className="text-danger">{formErrors.Name}</p>}
                 {isSubmit && formErrors.Desc && (
                   <p className="text-danger">{formErrors.Desc}</p>
                 )}
@@ -1022,7 +1027,6 @@ formdata.append("IsActive", values.IsActive);
                   data={values.Desc}
                   onChange={handleCKEditorChange}
                 />
-                {isSubmit && <p className="text-danger">{formErrors.Name}</p>}
                 {isSubmit && formErrors.Desc && (
                   <p className="text-danger">{formErrors.Desc}</p>
                 )}
@@ -1239,9 +1243,7 @@ formdata.append("IsActive", values.IsActive);
                   accept=".jpg, .jpeg, .png"
                   onChange={PhotoUpload}
                 />
-                {isSubmit && (
-                  <p className="text-danger">{formErrors.Icon}</p>
-                )}
+                {isSubmit && <p className="text-danger">{formErrors.Icon}</p>}
 
                 {values.Icon || photoAdd ? (
                   <img
@@ -1313,7 +1315,7 @@ formdata.append("IsActive", values.IsActive);
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Hall Booking
         </ModalHeader>
         <form>
           <ModalBody>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -352,6 +354,7 @@ const ContactUs = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -601,11 +604,9 @@ const ContactUs = () => {
                 onChange={handleChange}
               />
               <Label>
-              address <span className="text-danger">*</span>
+                address <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.address}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.address}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -618,11 +619,9 @@ const ContactUs = () => {
                 onChange={handleChange}
               />
               <Label>
-              email <span className="text-danger">*</span>
+                email <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.email}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.email}</p>}
             </div>
             <div className="form-floating mb-3">
               <Input
@@ -635,11 +634,9 @@ const ContactUs = () => {
                 onChange={handleChange}
               />
               <Label>
-              Google Map Link <span className="text-danger">*</span>
+                Google Map Link <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.gmaplink}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.gmaplink}</p>}
             </div>
             <div className="form-check mb-2">
               <Input

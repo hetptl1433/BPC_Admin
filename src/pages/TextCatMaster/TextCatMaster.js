@@ -19,6 +19,8 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { ToastContainer, toast } from "react-toastify";
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { listLEDActiveCategory } from "../../functions/TestCat/TestCat";
 import { createTestCatMasterDetails, getTestCatMasterDetails, removeTestCatMasterDetails, updateTestCatMasterDetails } from "../../functions/TextCategoryMaster/TextCatMaster";
@@ -84,26 +86,20 @@ const initialState = {
 
   const columns = [
     {
-      name: "Test Category",
+      name: "Test Group",
       selector: (row) => row.category.categoryName,
       sortable: true,
       sortField: "TestCatgeory",
       minWidth: "150px",
     },
     {
-      name: "Test Name",
+      name: "Test Category",
       selector: (row) => row.TestName,
       sortable: true,
       sortField: "TestName",
       minWidth: "150px",
     },
-    {
-      name: "Image",
-      selector: (row) => renderImage(row.productImage),
-      sortable: false,
-      sortField: "productImage",
-      minWidth: "150px",
-    },
+   
 
     {
       name: "Action",
@@ -233,7 +229,7 @@ const [errEDesc, setErrEDesc] = useState(false);
     }
 
     if (values.productImage === "") {
-      errors.productImage = "Product Image is required";
+      errors.productImage = "Image is required";
       setErrPI(true);
     } else {
       setErrPI(false);
@@ -371,6 +367,7 @@ const [errEDesc, setErrEDesc] = useState(false);
       createTestCatMasterDetails(formdata)
         .then((res) => {
           // setModalList(!modal_list);
+          toast.success("Data submitted successfully");
           setShowForm(false);
           setValues(initialState);
           setCheckImagePhoto(false);
@@ -396,6 +393,7 @@ const [errEDesc, setErrEDesc] = useState(false);
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchProducts();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -432,6 +430,7 @@ formdata.append("IsActive", values.IsActive);
         fetchProducts();
         setCheckImagePhoto(false);
         setValues(initialState);
+        toast.success("Data updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -557,11 +556,12 @@ formdata.append("IsActive", values.IsActive);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Test Catgeory Details"
-            title="Test Catgeory Details"
+            maintitle="Test Catgeory Master"
+            title="Test Catgeory Master"
             pageTitle="CMS"
           />
 
@@ -1196,7 +1196,7 @@ formdata.append("IsActive", values.IsActive);
                                           data={HindiDesc}
                                           onChange={(event, editor) => {
                                             const data = editor.getData();
-                                          setHindiDesc(data);
+                                            setHindiDesc(data);
                                           }}
                                           key={`HindiDesc_${_id}`}
                                         />
@@ -1399,7 +1399,7 @@ formdata.append("IsActive", values.IsActive);
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Test Category</span>
           {/* <Button
             type="button"
             onClick={() => {

@@ -134,14 +134,14 @@ window.URL.revokeObjectURL(link.href);
 
   const columns = [
     {
-      name: "Test Category",
+      name: "Group",
       selector: (row) => row.category.categoryName,
       sortable: true,
       sortField: "TestCatgeory",
       minWidth: "150px",
     },
     {
-      name: "Test Name",
+      name: "Category ",
       selector: (row) => row.TestName,
       sortable: true,
       sortField: "TestName",
@@ -332,6 +332,7 @@ const [errEDesc, setErrEDesc] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -347,7 +348,7 @@ const [errEDesc, setErrEDesc] = useState(false);
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" lg={4} md={6} sm={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                        Test Category Master
+                       Result
                       </h2>
                     </Col>
                     <Col lg={4} md={6} sm={6}>
@@ -356,19 +357,7 @@ const [errEDesc, setErrEDesc] = useState(false);
                           display: showForm || updateForm ? "none" : "",
                         }}
                       >
-                        <div className="text-end mt-1">
-                          <Input
-                            type="checkbox"
-                            className="form-check-input"
-                            name="filter"
-                            value={filter}
-                            defaultChecked={true}
-                            onChange={handleFilter}
-                          />
-                          <Label className="form-check-label ms-2">
-                            Active
-                          </Label>
-                        </div>
+                       
                       </div>
                     </Col>
                     <Col className="col-sm-auto" lg={4} md={12} sm={12}>
@@ -572,7 +561,6 @@ const [errEDesc, setErrEDesc] = useState(false);
                                     >
                                       Export to Excel
                                     </button>
-                                    
                                   </div>
                                 </Col>
                               </Row>

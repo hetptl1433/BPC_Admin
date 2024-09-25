@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -165,6 +167,7 @@ setIsActive(false);
 
         fetchCategories();
         setmodal_list(!modal_list);
+        toast.success("Data submitted successfully");
       })
       .catch((err) => {
         console.log("Error from server:", err);
@@ -208,6 +211,7 @@ setIsActive(false);
 
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -461,6 +465,7 @@ const validClassCourseName =
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
@@ -479,7 +484,7 @@ const validClassCourseName =
 
                     <Col sm={6} lg={4} md={6}>
                       <div className="text-end mt-2">
-                        <Input
+                        {/* <Input
                           type="checkbox"
                           className="form-check-input"
                           name="filter"
@@ -487,7 +492,7 @@ const validClassCourseName =
                           defaultChecked={true}
                           onChange={handleFilter}
                         />
-                        <Label className="form-check-label ms-2">Active</Label>
+                        <Label className="form-check-label ms-2">Active</Label> */}
                       </div>
                     </Col>
                     <Col className="col-sm-auto" sm={12} lg={4} md={12}>
@@ -787,8 +792,6 @@ const validClassCourseName =
                 <p className="text-danger">{formErrors.CompanyName}</p>
               )}
             </div>
-
-          
           </ModalBody>
 
           <ModalFooter>

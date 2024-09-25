@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -122,18 +124,8 @@ const LocationNumUs = () => {
         setmodal_list(!modal_list);
         setValues(initialState);
         fetchCategories();
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
+        toast.success("Data submitted successfully");
+       
       })
       .catch((error) => {
         console.log(error);
@@ -146,6 +138,7 @@ const LocationNumUs = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -163,6 +156,7 @@ const LocationNumUs = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -344,6 +338,7 @@ const LocationNumUs = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="Location" title="Location" pageTitle="CMS " />

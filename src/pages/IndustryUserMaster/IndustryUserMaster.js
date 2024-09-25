@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Input,
   Label,
@@ -370,6 +372,7 @@ const validClassAddress =
           setIsSubmit(false);
           setFormErrors({});
           fetchIndustryGroupMaster();
+          toast.success("Data submitted successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -388,6 +391,7 @@ const validClassAddress =
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchIndustryGroupMaster();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -422,6 +426,7 @@ const validClassAddress =
         fetchIndustryGroupMaster();
         setCheckImagePhoto(false);
         setValues(initialState);
+        toast.success("Data updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -524,6 +529,7 @@ const validClassAddress =
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="User" title="User Master" pageTitle="CMS" />
@@ -735,12 +741,12 @@ const validClassAddress =
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                           Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
                                           <p className="text-danger">
-                                            {formErrors.productName}
+                                            {formErrors.Name}
                                           </p>
                                         )}
                                       </div>
@@ -1044,12 +1050,12 @@ const validClassAddress =
                                           htmlFor="role-field"
                                           className="form-label"
                                         >
-                                          Product Name
+                                        Name
                                           <span className="text-danger">*</span>
                                         </label>
                                         {isSubmit && (
                                           <p className="text-danger">
-                                            {formErrors.productName}
+                                            {formErrors.Name}
                                           </p>
                                         )}
                                       </div>
@@ -1206,10 +1212,6 @@ const validClassAddress =
                                     </Col>
                                   </Row>
 
-                              
-
-                               
-
                                   <div className="mt-5">
                                     <Col lg={6}>
                                       <div className="form-check mb-2">
@@ -1313,7 +1315,7 @@ const validClassAddress =
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove User</span>
           {/* <Button
             type="button"
             onClick={() => {

@@ -19,6 +19,8 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
 import DataTable from "react-data-table-component";
+import { ToastContainer, toast } from "react-toastify";
+
 
 
 
@@ -105,18 +107,7 @@ const TestCategory = () => {
           setmodal_list(!modal_list);
             setValues(initialState);
             fetchCategories();
-          // if (res.isOk) {
-          //   setmodal_list(!modal_list);
-          //   setValues(initialState);
-          //   fetchCategories();
-          // } else {
-          //   if (res.field === 1) {
-          //     setErrCN(true);
-          //     setFormErrors({
-          //       categoryName: "This Category name is already exists!",
-          //     });
-          //   }
-          // }
+          toast.success("Data submitted successfully");
         })
         .catch((error) => {
           console.log(error);
@@ -132,6 +123,7 @@ const TestCategory = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -149,6 +141,7 @@ const TestCategory = () => {
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
           console.log(err);
@@ -160,7 +153,7 @@ const TestCategory = () => {
     const errors = {};
 
     if (values.categoryName === "") {
-      errors.categoryName = "Category Name is required!";
+      errors.categoryName = "Test Group Name is required!";
       setErrCN(true);
     }
     if (values.categoryName !== "") {
@@ -240,7 +233,7 @@ const TestCategory = () => {
   };
   const col = [
     {
-      name: "Category Name",
+      name: "Test Group Name",
       selector: (row) => row.categoryName,
       sortable: true,
       sortField: "categoryName",
@@ -291,15 +284,16 @@ const TestCategory = () => {
     },
   ];
 
-  document.title = "Test Category | BPC India";
+  document.title = "Test Group | BPC India";
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
             maintitle="Category"
-            title="Test Category"
+            title="Test Group"
             pageTitle="Category"
           />
           <Row>
@@ -308,7 +302,9 @@ const TestCategory = () => {
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">Test Category</h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">
+                        Test Group
+                      </h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -393,7 +389,7 @@ const TestCategory = () => {
             setIsSubmit(false);
           }}
         >
-          Add Category
+          Add Test Group
         </ModalHeader>
         <form>
           <ModalBody>
@@ -401,13 +397,15 @@ const TestCategory = () => {
               <Input
                 type="text"
                 className={validClassCategoryName}
-                placeholder="Enter Category Name"
+                placeholder="Enter Test Group Name"
                 required
                 name="categoryName"
                 value={categoryName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+                Test Group Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>
               )}
@@ -465,7 +463,7 @@ const TestCategory = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Category
+          Edit Test Group
         </ModalHeader>
         <form>
           <ModalBody>
@@ -473,13 +471,15 @@ const TestCategory = () => {
               <Input
                 type="text"
                 className={validClassCategoryName}
-                placeholder="Enter Category Name"
+                placeholder="Enter Test Group Name"
                 required
                 name="categoryName"
                 value={categoryName}
                 onChange={handleChange}
               />
-              <Label>Category Name <span className="text-danger">*</span></Label>
+              <Label>
+               Test Group Name <span className="text-danger">*</span>
+              </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>
               )}
@@ -539,7 +539,7 @@ const TestCategory = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Test Group
         </ModalHeader>
         <form>
           <ModalBody>

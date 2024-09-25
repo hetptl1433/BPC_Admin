@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment-timezone";
+import { ToastContainer, toast } from "react-toastify";
+
 import {
   Button,
   Card,
@@ -169,6 +171,7 @@ const Blogs = () => {
           setPhotoAdd("");
           setFormErrors({});
           fetchCategories();
+          toast.success("Data submitted Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -182,6 +185,7 @@ const Blogs = () => {
       .then((res) => {
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted Successfully!");
       })
       .catch((err) => {
         console.log(err);
@@ -229,6 +233,7 @@ const Blogs = () => {
           setViews(0);
           setblogImage("");
           fetchCategories();
+           toast.success("Data edited Successfully!");
         })
         .catch((err) => {
           console.log(err);
@@ -458,6 +463,7 @@ const Blogs = () => {
       selector: (row) => {
         return (
           <React.Fragment>
+           
             <div className="d-flex gap-2">
               <div className="edit">
                 <button
@@ -493,6 +499,7 @@ const Blogs = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
           <BreadCrumb maintitle="Blogs" title="Blogs" pageTitle="Blogs" />

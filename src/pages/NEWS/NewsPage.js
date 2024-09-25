@@ -18,6 +18,8 @@ import {
 } from "reactstrap";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 import DataTable from "react-data-table-component";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -129,6 +131,8 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         fetchCategories();
         setmodal_list(!modal_list);
+                toast.success("Data submitted successfully");
+
       })
       .catch((err) => {
         console.log("Error from server:", err);
@@ -167,6 +171,7 @@ const [IsActive, setIsActive] = useState(false);
         setIsActive(false);
         setmodal_delete(!modal_delete);
         fetchCategories();
+        toast.success("Data deleted successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -190,6 +195,7 @@ const [IsActive, setIsActive] = useState(false);
         .then((res) => {
           setmodal_edit(!modal_edit);
           fetchCategories();
+          toast.success("Data updated successfully");
         })
         .catch((err) => {
             console.log("Error from server:", err);
@@ -360,13 +366,10 @@ const [IsActive, setIsActive] = useState(false);
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb
-            maintitle="News"
-            title="News"
-            pageTitle="CMS "
-          />
+          <BreadCrumb maintitle="News" title="News" pageTitle="CMS " />
           <Row>
             <Col lg={12}>
               <Card>
@@ -444,7 +447,7 @@ const [IsActive, setIsActive] = useState(false);
       </div>
 
       {/* Add Modal */}
-      
+
       <Modal
         isOpen={modal_list}
         toggle={() => {
@@ -472,37 +475,34 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Title <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
-            
+
             <div className="mb-3">
-            <Label>
+              <Label>
                 Description <span className="text-danger">*</span>
               </Label>
-            <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
+              <CKEditor
+                key={"Desc_" + _id}
+                editor={ClassicEditor}
+                data={Desc}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
 
-                                            setDesc(data);
-                                          }}
-                                        />
-              
+                  setDesc(data);
+                }}
+              />
+
               {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
-             
             </div>
-            
-           
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -560,7 +560,7 @@ const [IsActive, setIsActive] = useState(false);
         </ModalHeader>
         <form>
           <ModalBody>
-          <div className="form-floating mb-3">
+            <div className="form-floating mb-3">
               <Input
                 type="text"
                 className={validClassTitle}
@@ -568,16 +568,16 @@ const [IsActive, setIsActive] = useState(false);
                 required
                 name="Title"
                 value={Title}
-                onChange={(e)=>{setTitle(e.target.value)}}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
               <Label>
-              Title <span className="text-danger">*</span>
+                Title <span className="text-danger">*</span>
               </Label>
-              {isSubmit && (
-                <p className="text-danger">{formErrors.Title}</p>
-              )}
+              {isSubmit && <p className="text-danger">{formErrors.Title}</p>}
             </div>
-       
+
             <div className="mb-3">
               {/* <TextArea
                 type="text"
@@ -593,20 +593,19 @@ const [IsActive, setIsActive] = useState(false);
                 Description <span className="text-danger">*</span>
               </Label>
               <CKEditor
-                                          key={"Desc_" + _id}
-                                          editor={ClassicEditor}
-                                          data={Desc}
-                                          
-                                          onChange={(event, editor) => {
-                                            const data = editor.getData();
+                key={"Desc_" + _id}
+                editor={ClassicEditor}
+                data={Desc}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
 
-                                            setDesc(data);
-                                          }}
-                                        />
-              
+                  setDesc(data);
+                }}
+              />
+
               {isSubmit && <p className="text-danger">{formErrors.Desc}</p>}
             </div>
-            
+
             <div className="form-check mb-2">
               <Input
                 type="checkbox"
@@ -661,7 +660,7 @@ const [IsActive, setIsActive] = useState(false);
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove NEWS
         </ModalHeader>
         <form>
           <ModalBody>
