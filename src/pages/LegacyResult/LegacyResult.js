@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { listIndustry } from "../../functions/Industry/Industry";
 import { excelResultData } from "../../functions/ResultPage/ResultPage";
 import { saveAs } from "file-saver"; 
+import { listLegacyIndustry, listLegacyTestCatMasterDetails } from "../../functions/LegacyExcel/LegacyExcel";
 const LegacyResult = () => {
   const navigate = useNavigate();
    const [testCategories, setTestCategories] = useState([]);
@@ -55,23 +56,35 @@ const handleEndDate = (e) => {
 };
 
  const loadIndustry = () => {
-   listIndustry().then((res) => setIndustries(res));
+   listLegacyIndustry().then((res) => setIndustries(res));
  };
  const loadTestCategory = () => {
-   listTestCatMasterDetails().then((res) => setTestCategories(res));
+   listLegacyTestCatMasterDetails().then((res) => setTestCategories(res));
  };
 const ExportExcel = async () => {
+   const errors = {};
+   if (!startDate) errors.startDate = "Start date is required";
+   if (!endDate) errors.endDate = "End date is required";
+   if (!testCategory) errors.testCategory = "Test category is required";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors); // Assuming you have setFormErrors in your state
+      setIsSubmit(true); // Mark form as submitted
+      return; // Exit the function if validation fails
+    }
+    setFormErrors({});
   const requestData = {
     testCategory: testCategory, // Assumes testCategory is defined
-    industry: selectedIndustry, // Assumes selectedIndustry is defined
+    industry: selectedIndustry ? selectedIndustry : "0", // Assumes selectedIndustry is defined
     startDate: startDate, // Assumes startDate is defined
     endDate: endDate, // Assumes endDate is defined
   };
 
   try {
+      setLoading(true);
     // Make POST request with responseType 'blob' to handle binary data
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL_BPC}/api/auth/get/ResultExcel`,
+      `${process.env.REACT_APP_API_URL_BPC}/api/auth/get/LegacyResultExcel`,
       requestData,
       {
         headers: { "Content-Type": "application/json" },
@@ -95,7 +108,7 @@ link.click(); // Trigger download
 document.body.removeChild(link);
 window.URL.revokeObjectURL(link.href);
     // Check if the response is valid
-  
+     setLoading(false);
   } catch (error) {
     console.error(
       "Error exporting Excel data:",
@@ -476,9 +489,9 @@ const [errEDesc, setErrEDesc] = useState(false);
                                       Start Date{" "}
                                       <span className="text-danger">*</span>
                                     </Label>
-                                    {isSubmit && (
+                                    {isSubmit && formErrors.startDate && (
                                       <p className="text-danger">
-                                        {formErrors.PointMasterName}
+                                        {formErrors.startDate}
                                       </p>
                                     )}
                                   </div>
@@ -498,9 +511,9 @@ const [errEDesc, setErrEDesc] = useState(false);
                                       End Date{" "}
                                       <span className="text-danger">*</span>
                                     </Label>
-                                    {isSubmit && (
+                                    {isSubmit && formErrors.endDate && (
                                       <p className="text-danger">
-                                        {formErrors.PointMasterName}
+                                        {formErrors.endDate}
                                       </p>
                                     )}
                                   </div>
@@ -516,9 +529,9 @@ const [errEDesc, setErrEDesc] = useState(false);
                                       <option value="">Select Industry</option>
                                       {industries.map((c) => {
                                         return (
-                                          <React.Fragment key={c._id}>
+                                          <React.Fragment key={c.IndustryId}>
                                             {c.IsActive && (
-                                              <option value={c._id}>
+                                              <option value={c.IndustryId}>
                                                 {c.Name}
                                               </option>
                                             )}
@@ -548,10 +561,12 @@ const [errEDesc, setErrEDesc] = useState(false);
                                       <option value="">Select Category</option>
                                       {testCategories.map((c) => {
                                         return (
-                                          <React.Fragment key={c._id}>
+                                          <React.Fragment
+                                            key={c.TestCategoryId}
+                                          >
                                             {c.IsActive && (
-                                              <option value={c._id}>
-                                                {c.TestName}
+                                              <option value={c.TestCategoryId}>
+                                                {c.TestCategoryName}
                                               </option>
                                             )}
                                           </React.Fragment>
@@ -562,9 +577,9 @@ const [errEDesc, setErrEDesc] = useState(false);
                                       Test Name{" "}
                                       <span className="text-danger">*</span>
                                     </Label>
-                                    {isSubmit && (
+                                    {isSubmit && formErrors.testCategory && (
                                       <p className="text-danger">
-                                        {formErrors.IndustryCategory}
+                                        {formErrors.testCategory}
                                       </p>
                                     )}
                                   </div>
@@ -572,13 +587,16 @@ const [errEDesc, setErrEDesc] = useState(false);
                                 <Col lg={12}>
                                   <div className="text-end">
                                     <button
-                                      className=" btn btn-primary m-1"
+                                      className="btn btn-primary m-1"
                                       id="add-btn"
                                       onClick={ExportExcel}
+                                      disabled={loading}
                                     >
-                                      Export to Excel
+                                      {loading
+                                        ? "Exporting..."
+                                        : "Export to Excel"}{" "}
+                                      {/* Show "Exporting..." while loading */}
                                     </button>
-                                    
                                   </div>
                                 </Col>
                               </Row>

@@ -377,16 +377,14 @@ const PopUpFile = () => {
       <ToastContainer />
       <div className="page-content">
         <Container fluid>
-          <BreadCrumb maintitle="CMS" title="PopUpFile" pageTitle="CMS" />
+          <BreadCrumb maintitle="CMS" title="NEWS Popup" pageTitle="CMS" />
           <Row>
             <Col lg={12}>
               <Card>
                 <CardHeader>
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
-                      <h2 className="card-title mb-0 fs-4 mt-2">
-                        PopUpFile Files
-                      </h2>
+                      <h2 className="card-title mb-0 fs-4 mt-2">NEWS Popup</h2>
                     </Col>
 
                     <Col sm={6} lg={4} md={6}>
@@ -525,15 +523,21 @@ const PopUpFile = () => {
               {isSubmit && (
                 <p className="text-danger">{formErrors.PopUpFile}</p>
               )}
-              {checkImagePhoto ? (
-                <img
-                  //   src={image ?? myImage}
-                  className="m-2"
-                  src={photoAdd}
-                  alt="Profile"
-                  width="300"
-                  height="200"
-                />
+              {values.PopUpFile || photoAdd ? (
+                <div className="m-2">
+                  <p>{photoAdd ? "Uploaded File" : values.PopUpFile}</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      const fileUrl = checkImagePhoto
+                        ? photoAdd
+                        : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`;
+                      window.open(fileUrl, "_blank");
+                    }}
+                  >
+                    Preview
+                  </button>
+                </div>
               ) : null}
             </Col>
 
@@ -630,7 +634,7 @@ const PopUpFile = () => {
 
             <Col lg={6}>
               <label>
-                PopUpFile Image <span className="text-danger">*</span>
+                PopUpFile <span className="text-danger">*</span>
               </label>
               <input
                 key={"PopUpFile" + _id}
@@ -646,17 +650,20 @@ const PopUpFile = () => {
               )}
 
               {values.PopUpFile || photoAdd ? (
-                <img
-                  // key={photoAdd}
-                  className="m-2"
-                  src={
-                    checkImagePhoto
-                      ? photoAdd
-                      : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`
-                  }
-                  width="300"
-                  height="200"
-                />
+                <div className="m-2">
+                  <p>{photoAdd ? "Uploaded File" : values.PopUpFile}</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      const fileUrl = checkImagePhoto
+                        ? photoAdd
+                        : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`;
+                      window.open(fileUrl, "_blank");
+                    }}
+                  >
+                    Preview
+                  </button>
+                </div>
               ) : null}
             </Col>
 
@@ -716,7 +723,7 @@ const PopUpFile = () => {
             setmodal_delete(false);
           }}
         >
-          Remove Promocode
+          Remove Popup file
         </ModalHeader>
         <form>
           <ModalBody>

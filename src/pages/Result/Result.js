@@ -69,6 +69,7 @@ const ExportExcel = async () => {
 
   try {
     // Make POST request with responseType 'blob' to handle binary data
+      setLoading(true);
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL_BPC}/api/auth/get/ResultExcel`,
       requestData,
@@ -94,7 +95,7 @@ link.click(); // Trigger download
 document.body.removeChild(link);
 window.URL.revokeObjectURL(link.href);
     // Check if the response is valid
-  
+     setLoading(false);
   } catch (error) {
     console.error(
       "Error exporting Excel data:",
@@ -554,14 +555,16 @@ const [errEDesc, setErrEDesc] = useState(false);
                                 </Col>
                                 <Col lg={12}>
                                   <div className="text-end">
-                                    <button
-                                      className=" btn btn-primary m-1"
-                                      id="add-btn"
-                                      onClick={ExportExcel}
-                                    >
-                                      Export to Excel
-                                    </button>
-                                  </div>
+  <button
+    className="btn btn-primary m-1"
+    id="add-btn"
+    onClick={ExportExcel}
+    disabled={loading}  
+  >
+    {loading ? 'Exporting...' : 'Export to Excel'} {/* Show "Exporting..." while loading */}
+  </button>
+</div>
+
                                 </Col>
                               </Row>
                             </div>

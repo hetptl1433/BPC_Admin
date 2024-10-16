@@ -626,7 +626,7 @@ const {
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Record</span>
           {/* <Button
             type="button"
             onClick={() => {

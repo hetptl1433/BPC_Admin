@@ -292,9 +292,9 @@ const TestCategory = () => {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Category"
+            maintitle="Test"
             title="Test Group"
-            pageTitle="Category"
+            pageTitle="Test"
           />
           <Row>
             <Col lg={12}>

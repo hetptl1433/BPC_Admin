@@ -58,6 +58,7 @@ import ResultPage from "../pages/ResultPage/ResultPage";
 import LegacyResult from "../pages/LegacyResult/LegacyResult";
 import LegacyResultPage from "../pages/LegacyResultPage/LegacyResultPage";
 import PopUpFile from "../pages/PopUp/PopUp";
+import RACPdf from "../pages/RACPdf/RACPdf";
 // import HalleImage from "../pages/HallImage/HallImage";
 
 const authProtectedRoutes = [
@@ -124,7 +125,8 @@ const authProtectedRoutes = [
 const publicRoutes = [
   // { path: "/dashboard", component: <DashboardCrm /> },
   { path: "/", component: <Login /> },
-  { path: "examlogin", component: <ExamUser/>}
+  { path: "examlogin", component: <ExamUser/>},
+   { path: "/RACPDF", component: <RACPdf />},
 
 ];
 

@@ -164,7 +164,7 @@ const EmailForm = () => {
   const validate = (values) => {
     const errors = {};
     if (values.category === "") {
-      errors.category = "Email is required";
+      errors.category = "Form Categrory Name is required";
       setErrCN(true);
     }
     if (values.category !== "") {
@@ -172,7 +172,7 @@ const EmailForm = () => {
     }
 
     if (values.FormName === "") {
-      errors.FormName = "Product Name is required";
+      errors.FormName = "Form Title is required";
       setErrPN(true);
     }
 

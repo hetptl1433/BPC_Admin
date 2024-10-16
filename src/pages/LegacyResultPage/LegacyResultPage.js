@@ -53,26 +53,26 @@ const LegacyResultPage = () => {
   
 
   const [allPoint, setAllPoint] = useState([]);
-  const [resultPoint, setResultPoint] = useState(0);
+  // const [resultPoint, setResultPoint] = useState(0);
 
   const initialState = {
     UserRegCode: "",
     ExamName: "",
-    ExamDate:"",
+    ExamDate: "",
     TotalTime: "",
     TotalQues: "",
     Name: "",
     Email: "",
-    Mobile:"",
-    UserName:"",
-    TotalPoints:"",
-
-  
+    Mobile: "",
+    UserName: "",
+    TotalPoints: "",
+    Language: "",
   };
 
   
 
   const [remove_id, setRemove_id] = useState("");
+  const stripHTML = (str) => str?.replace(/<[^>]*>?/gm, "").trim();
 
   //search and pagination state
   const [query, setQuery] = useState("");
@@ -160,15 +160,21 @@ const LegacyResultPage = () => {
     },
   ];
 const groupedData = PointData.reduce((acc, item) => {
-  if (!acc[item.Title]) {
-    acc[item.Name] = { ...item, totalPoints: 0 };
+  if (!acc[item.PointCategoryName]) {
+    acc[item.PointCategoryName] = {
+      PointCategoryName: item.PointCategoryName,
+      totalPoints: 0,
+    };
   }
-  acc[item.Name].totalPoints += item.PointFromMaster;
+  acc[item.PointCategoryName].totalPoints += item.PointFromMaster;
   return acc;
 }, {});
-
 // Step 2: Convert grouped data back into an array
 const groupedArray = Object.values(groupedData);
+const ResultPoint = groupedArray.reduce(
+  (sum, category) => sum + category.totalPoints,
+  0
+);
 //  const aggregatePoints = (data) => {
 //    const aggregated = {};
 
@@ -355,7 +361,8 @@ const fetchExamMasterData = async () => {
          TotalQues: res.TotalQuestion, // use TotalQuestion from the response
          ExamDate: new Date(res.ExamDateTime).toLocaleDateString(), // format the date as needed
          Mobile: res.Mobile, // if Mobile exists in the response, otherwise map it appropriately
-         UserName: res.UserId, // if UserName needs to be mapped from UserId, adjust as necessary
+         UserName: res.UserId,
+         Language: res.Language 
        });
 
 
@@ -637,7 +644,7 @@ const fetchExamMasterData = async () => {
                                             className={validClassPN}
                                             required
                                             readOnly
-                                            value={resultPoint}
+                                            value={ResultPoint}
                                           />
                                           <label
                                             htmlFor="role-field"
@@ -681,95 +688,195 @@ const fetchExamMasterData = async () => {
                                   </Col>
 
                                   <Row className="mt-5">
+                                    
                                     <Col lg={6}>
                                       <div className="result-page">
+                                        <h2>Answer Selected</h2>
                                         <table>
-                                          <thead>
-                                            <tr>
-                                              <th>Answer Selected</th>
-                                            </tr>
-                                          </thead>
+                                          
                                           <tbody>
-                                            {PointData.map((entry, index) => (
-                                              <tr
-                                                className="table-row pp"
-                                                key={index}
-                                              >
-                                                <td className="answer-selected m-1">
-                                                  <span>{index + 1}</span>
+                                            {PointData.map((entry, index) => {
+                                              // Determine which answer language to use based on the selectedLanguage
+                                              let selectedAnswer = "";
+                                              if (
+                                                values.Language === "English"
+                                              ) {
+                                                values.Language = stripHTML(
+                                                  entry.EnglishQuestion
+                                                );
+                                              } else if (
+                                                values.Language === "Hindi"
+                                              ) {
+                                                selectedAnswer = stripHTML(
+                                                  entry.HindiQuestion
+                                                );
+                                              } else if (
+                                                values.Language === "Gujarati"
+                                              ) {
+                                                selectedAnswer = stripHTML(
+                                                  entry.GujaratiQuestion
+                                                );
+                                              }
 
-                                                  <label>
-                                                    <input
-                                                      type="radio"
-                                                      value="A"
-                                                      checked={
-                                                        entry.Answer === "A" 
-                                                        // ||
-                                                        // entry.Answer ===
-                                                        //   "<p>Strongly Agree</p>\r\n" ||
-                                                        // entry.Answer === "L"
-                                                      }
-                                                      readOnly
-                                                    />{" "}
-                                                    A
-                                                  </label>
-                                                  <label>
-                                                    <input
-                                                      type="radio"
-                                                      value="B"
-                                                      checked={
-                                                        entry.Answer === "B" ||
-                                                        entry.Answer ===
-                                                          "Agree" ||
-                                                        entry.Answer === "D"
-                                                      }
-                                                      readOnly
-                                                    />{" "}
-                                                    B
-                                                  </label>
-                                                  <label>
-                                                    <input
-                                                      type="radio"
-                                                      value="C"
-                                                      checked={
-                                                        entry.Answer === "C" ||
-                                                        entry.Answer ===
-                                                          "<p>Uncertain</p>\r\n" ||
-                                                        entry.Answer === "?"
-                                                      }
-                                                      readOnly
-                                                    />{" "}
-                                                    C
-                                                  </label>
-                                                  <label>
-                                                    <input
-                                                      type="radio"
-                                                      value="D"
-                                                      checked={
-                                                        entry.Answer === "D" ||
-                                                        entry.Answer ===
-                                                          "<p>Disagree</p>\r\n"
-                                                      }
-                                                      readOnly
-                                                    />{" "}
-                                                    D
-                                                  </label>
-                                                  <label>
-                                                    <input
-                                                      type="radio"
-                                                      value="D"
-                                                      checked={
-                                                        entry.Answer === "E" ||
-                                                        entry.Answer ===
-                                                          "<p>Strongly Disagree</p>\r\n"
-                                                      }
-                                                      readOnly
-                                                    />{" "}
-                                                    E
-                                                  </label>
-                                                </td>
-                                              </tr>
-                                            ))}
+                                              return (
+                                                <tr
+                                                  className="table-row pp"
+                                                  key={index}
+                                                >
+                                                  <td
+                                                   
+                                                  >
+                                                    <span>{index + 1}</span>
+                                                  </td>{" "}
+                                                  <td className="answer-selected " >
+                                                    <label style={{marginBottom:"0px"}}>
+                                                      <input
+                                                        type="radio"
+                                                        value="A"
+                                                        checked={
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.EnglishAnsA
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.HindiAnsA
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.GujaratiAnsA
+                                                            )
+                                                        }
+                                                        readOnly
+                                                      />{" "}
+                                                      A
+                                                    </label>
+
+                                                    <label style={{marginBottom:"0px"}}>
+                                                      <input
+                                                        type="radio"
+                                                        value="B"
+                                                        checked={
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.EnglishAnsB
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.HindiAnsB
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.GujaratiAnsB
+                                                            )
+                                                        }
+                                                        readOnly
+                                                      />{" "}
+                                                      B
+                                                    </label>
+
+                                                    <label style={{marginBottom:"0px"}}>
+                                                      <input
+                                                        type="radio"
+                                                        value="C"
+                                                        checked={
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.EnglishAnsC
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.HindiAnsC
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.GujaratiAnsC
+                                                            )
+                                                        }
+                                                        readOnly
+                                                      />{" "}
+                                                      C
+                                                    </label>
+
+                                                    <label style={{marginBottom:"0px"}}>
+                                                      <input
+                                                        type="radio"
+                                                        value="D"
+                                                        checked={
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.EnglishAnsD
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.HindiAnsD
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.GujaratiAnsD
+                                                            )
+                                                        }
+                                                        readOnly
+                                                      />{" "}
+                                                      D
+                                                    </label>
+
+                                                    <label style={{marginBottom:"0px"}}>
+                                                      <input
+                                                        type="radio"
+                                                        value="E"
+                                                        checked={
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.EnglishAnsE
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.HindiAnsE
+                                                            ) ||
+                                                          stripHTML(
+                                                            entry.Answer
+                                                          ) ===
+                                                            stripHTML(
+                                                              entry.GujaratiAnsE
+                                                            )
+                                                        }
+                                                        readOnly
+                                                      />{" "}
+                                                      E
+                                                    </label>
+                                                  </td>
+                                                </tr>
+                                              );
+                                            })}
                                           </tbody>
                                         </table>
                                       </div>
@@ -825,7 +932,11 @@ const fetchExamMasterData = async () => {
                                                   {groupedArray.map(
                                                     (item, index) => (
                                                       <tr key={index}>
-                                                        <td>{item.Name}</td>{" "}
+                                                        <td>
+                                                          {
+                                                            item.PointCategoryName
+                                                          }
+                                                        </td>{" "}
                                                         {/* Render the name */}
                                                         <td>
                                                           {item.totalPoints}

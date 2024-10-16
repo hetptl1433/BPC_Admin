@@ -206,7 +206,7 @@ const {
     }
     // Validate 
     if (values.IndustryCategory === "") {
-      errors.IndustryCategory = "User Group Category is required";
+      errors.IndustryCategory = "Industry is required";
       setErrIndustry(true);
     } else {
       setErrIndustry(false);
@@ -702,7 +702,7 @@ const validClassAddress =
                                           data-choices
                                           data-choices-sorting="true"
                                         >
-                                          <option>Select Category</option>
+                                          <option>Select Industry</option>
                                           {industries.map((c) => {
                                             return (
                                               <React.Fragment key={c._id}>

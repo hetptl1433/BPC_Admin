@@ -465,7 +465,7 @@ const CompanyLocation = () => {
     },
   ];
 
-  document.title = "Company Location | Project Name";
+  document.title = "Company Location | BPC India";
   return (
     <React.Fragment>
       <UiContent />

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import html2pdf from "html2pdf.js"; 
+
 
 import {
   Input,
@@ -34,6 +36,7 @@ import {
 const RoutineActvity = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openedID, setOpenedID] = useState(null);
   const [filter, setFilter] = useState(true);
   const [submiited, setSubmitted] = useState(false);
 
@@ -319,7 +322,7 @@ const {
  const handleTog_edit = (_id) => {
    setIsSubmit(false);
    setUpdateForm(true);
-
+  setOpenedID(_id);
    set_Id(_id);
    console.log(_id);
    setFormErrors(false);
@@ -338,6 +341,7 @@ const {
          EmailID: res.EmailID,
          MobileNo: res.MobileNo,
          Reporting: res.Reporting,
+         language: res.language,
          DOB: res.DOB,
          DateofJoining: res.DateofJoining,
          PreviousExperience: res.PreviousExperience,
@@ -500,13 +504,16 @@ const {
                                 type="hidden"
                               />
                               {/* Header Start */}
-                              <Col xxl={4} className="mb-3 no-print">
+                              <Col
+                                xxl={12}
+                                className="mb-3 no-print justify-content-end"
+                              >
                                 <div className="text-end">
                                   <button
                                     type="button"
                                     className="btn btn-outline-success m-1"
                                     onClick={() => {
-                                      window.print();
+                                      window.location.href = `${process.env.REACT_APP_API_URL_BPC_FRONT}/RACPDF/${openedID}`;
                                     }}
                                   >
                                     Print
@@ -532,7 +539,8 @@ const {
                                                 fontSize: "22px",
                                               }}
                                             >
-                                              ROUTINE ACTIVITY SHEET (ENGLISH)
+                                              ROUTINE ACTIVITY SHEET ({formData.language}
+                                              )
                                             </th>
                                             <td style={{ padding: "0px" }}>
                                               Revision{" "}
@@ -973,10 +981,7 @@ const {
                                           >
                                             8
                                           </th>
-                                          <th
-                                            className="header_bg"
-                                            
-                                          >
+                                          <th className="header_bg">
                                             Any idea or any change suggested /
                                             any additional responsibility you
                                             want to share?
@@ -1201,7 +1206,7 @@ const {
             setmodal_delete(!modal_delete);
           }}
         >
-          <span style={{ marginRight: "210px" }}>Remove Product</span>
+          <span style={{ marginRight: "210px" }}>Remove Record</span>
           {/* <Button
             type="button"
             onClick={() => {

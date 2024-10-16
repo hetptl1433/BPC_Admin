@@ -566,7 +566,7 @@ const ContentContact = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Content
+          Edit Contact
         </ModalHeader>
         <form>
           <ModalBody>

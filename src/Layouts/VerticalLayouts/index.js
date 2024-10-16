@@ -10,22 +10,14 @@ import { withTranslation } from "react-i18next";
 import withRouter from "../../Components/Common/withRouter";
 
 const VerticalLayout = (props) => {
-  const [locationSetup, setLocationSetup] = useState(false);
   const [result, setResult] = useState(false);
   const [setup, setSetup] = useState(false);
   const [params, setParams] = useState(false);
 
-  const [product, setproduct] = useState(false);
-  const [order, setOrder] = useState(false);
   const [category, setCategory] = useState(false);
-  const [homecomponents, sethomecomponents] = useState(false);
-  const [subs, setSubs] = useState(false);
-  const [inquiry, setInquiry] = useState(false);
-  const [policy, setPolicy] = useState(false);
-  const [neonsigns, setNeonSigns] = useState(false);
+  
   const [Email, setEmail] = useState(false);
   const [cms, setCMS] = useState(false);
-  const [locationBar, setLocationBar] = useState(false);
   const [testbar, setTestbar]= useState(false);
   const [industrybar, setIndustrybar]= useState(false);
   const [forms, setForms] = useState(false);
@@ -202,7 +194,7 @@ const VerticalLayout = (props) => {
         </Collapse>
       </li>
 
-      <li className="nav-item">
+      {/* <li className="nav-item">
         <Link
           className="nav-link menu-link"
           to="#"
@@ -239,7 +231,7 @@ const VerticalLayout = (props) => {
             </li>
           </ul>
         </Collapse>
-      </li>
+      </li> */}
 
       <li className="nav-item">
         <Link
@@ -258,6 +250,11 @@ const VerticalLayout = (props) => {
           //   id="sidebarApps"
         >
           <ul className="nav nav-sm flex-column test">
+            <li className="nav-item">
+              <Link className="nav-link menu-link" to="/PopupFile">
+                <span data-key="t-apps">NEWS Popup </span>
+              </Link>
+            </li>
             <li className="nav-item">
               <Link className="nav-link menu-link" to="/galleryimg">
                 <span data-key="t-apps">Gallery Images</span>

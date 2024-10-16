@@ -315,7 +315,7 @@ const Country = () => {
     },
   ];
 
-  document.title = "Country | Project Name";
+  document.title = "Country | BPC India";
 
   return (
     <React.Fragment>

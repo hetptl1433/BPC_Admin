@@ -312,7 +312,7 @@ const Review = () => {
     // },
   ];
 
-  document.title = "Products Category | Project Name";
+  document.title = "Products Category | BPC India";
 
   return (
     <React.Fragment>

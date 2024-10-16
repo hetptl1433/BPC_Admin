@@ -101,7 +101,7 @@ const DownloadFiles = () => {
   };
 
   const [errTT, setErrTT] = useState(false);
-  const [errKW, setErrKW] = useState(false);
+  const [errKW, setErrKW] = useState(true);
   const [errBI, setErrBI] = useState(false);
 
   const validate = (values) => {
@@ -113,6 +113,10 @@ const DownloadFiles = () => {
     }
     if (values.Title !== "") {
       setErrTT(false);
+    }
+    if(values.SortOrder === ""){
+      errors.SortOrder = "Sort Order is required!";
+      setErrKW(true);
     }
 
   

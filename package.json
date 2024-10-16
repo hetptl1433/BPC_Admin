@@ -39,6 +39,7 @@
     "google-maps-react": "^2.0.6",
     "gridjs": "^5.0.2",
     "gridjs-react": "^5.0.2",
+    "html2pdf.js": "^0.10.2",
     "i18next": "^21.6.11",
     "i18next-browser-languagedetector": "^6.1.3",
     "leaflet": "^1.7.1",

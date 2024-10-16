@@ -105,7 +105,7 @@ const IndustryUser = (props) => {
   const validClassPassword =
     errPassword && isSubmit ? "form-control is-invalid" : "form-control pe-5";
 
-  document.title = " SignIn | Project Name ";
+  document.title = " SignIn | BPC India";
   return (
     <React.Fragment>
       {/* <ParticlesAuth> */}

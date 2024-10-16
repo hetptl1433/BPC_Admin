@@ -424,7 +424,34 @@ const TestQuestionMaster = () => {
   const handleChange = (e) => {
     console.log(e.target.name, e.target.value);
     setValues({ ...values, [e.target.name]: e.target.value });
+    
+    
+    
   };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   let newValues = { ...values, [name]: value }; // First update
+
+  //   if (name === "PointCatIDA") {
+  //     newValues = { ...newValues, PointSelIDA: "" }; // Update both values in one object
+  //   }
+  //   if (name === "PointCatIDB") {
+  //     newValues = { ...newValues, PointSelIDB: "" }; // Update both values in one object
+  //   }
+  //   if (name === "PointCatIDC") {
+  //     newValues = { ...newValues, PointSelIDC: "" }; // Update both values in one object
+  //   }
+  //   if (name === "PointCatIDD") {
+  //     newValues = { ...newValues, PointSelIDD: "" }; // Update both values in one object
+  //   }
+  //   if (name === "PointCatIDE") {
+  //     newValues = { ...newValues, PointSelIDE: "" }; // Update both values in one object
+  //   }
+
+  //   setValues(newValues);
+  // };
 const handleCKEditorChange = (name, data) => {
   console.log(name, data);
   setValues({ ...values, [name]: data });
@@ -753,6 +780,12 @@ const handleCKEditorChange = (name, data) => {
   const handlePageChange = (page) => {
     setPageNo(page);
   };
+  
+  // useEffect(() => {
+  //   if(PointCatIDA == ""){
+      
+  //   }
+  // }, [PointCatIDA, PointCatIDB, PointCatIDC, PointCatIDD, PointCatIDD]);
 
   const handlePerRowsChange = async (newPerPage, page) => {
     // setPageNo(page);
@@ -842,9 +875,9 @@ const handleCKEditorChange = (name, data) => {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Location Setup"
+            maintitle="Test"
             title="Test Question Master"
-            pageTitle="Location SetUp"
+            pageTitle="Test"
           />
           <Row>
             <Col lg={12}>
@@ -2406,7 +2439,7 @@ const handleCKEditorChange = (name, data) => {
                     value={values.PointCatIDB}
                     data-choices
                   >
-                    <option>Please Select</option>
+                    <option value="">Please Select</option>
                     {Pointss.map((c) => {
                       return (
                         <React.Fragment key={c._id}>

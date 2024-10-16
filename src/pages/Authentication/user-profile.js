@@ -36,7 +36,7 @@ const UserProfile = () => {
   
   const [idx, setidx] = useState("1");
 
-  const [userName, setUserName] = useState("Project Name");
+  const [userName, setUserName] = useState("BPC India");
 
   const [firstName, setFirstName]= useState("");
   const [lastName, setLastName]= useState("");

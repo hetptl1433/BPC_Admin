@@ -153,7 +153,7 @@ const UserGroup = () => {
     const errors = {};
 
     if (values.categoryName === "") {
-      errors.categoryName = "Category Name is required!";
+      errors.categoryName = "Group name is required!";
       setErrCN(true);
     }
     if (values.categoryName !== "") {
@@ -233,7 +233,7 @@ const UserGroup = () => {
   };
   const col = [
     {
-      name: "Category Name",
+      name: "Group name",
       selector: (row) => row.categoryName,
       sortable: true,
       sortField: "categoryName",
@@ -284,7 +284,7 @@ const UserGroup = () => {
     },
   ];
 
-  document.title = "User Category | BPC";
+  document.title = "User Group Master | BPC";
 
   return (
     <React.Fragment>
@@ -293,7 +293,7 @@ const UserGroup = () => {
         <Container fluid>
           <BreadCrumb
             maintitle="User"
-            title="User Category"
+            title="User Group Master"
             pageTitle="Category"
           />
           <Row>
@@ -303,7 +303,7 @@ const UserGroup = () => {
                   <Row className="g-4 mb-1">
                     <Col className="col-sm" sm={6} lg={4} md={6}>
                       <h2 className="card-title mb-0 fs-4 mt-2">
-                        User Category
+                        User Group Master
                       </h2>
                     </Col>
 
@@ -397,14 +397,14 @@ const UserGroup = () => {
               <Input
                 type="text"
                 className={validClassCategoryName}
-                placeholder="Enter Category Name"
+                placeholder="Enter Group name"
                 required
                 name="categoryName"
                 value={categoryName}
                 onChange={handleChange}
               />
               <Label>
-                Category Name <span className="text-danger">*</span>
+                Group name <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>
@@ -471,14 +471,14 @@ const UserGroup = () => {
               <Input
                 type="text"
                 className={validClassCategoryName}
-                placeholder="Enter Category Name"
+                placeholder="Enter Group name"
                 required
                 name="categoryName"
                 value={categoryName}
                 onChange={handleChange}
               />
               <Label>
-                Category Name <span className="text-danger">*</span>
+                Group name <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.categoryName}</p>

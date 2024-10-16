@@ -495,7 +495,7 @@ const Blogs = () => {
     },
   ];
 
-  document.title = "Blogs | Project Name";
+  document.title = "Blogs | BPC India";
 
   return (
     <React.Fragment>

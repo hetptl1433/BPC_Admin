@@ -294,9 +294,9 @@ const Points = () => {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="point category"
+            maintitle="Test"
             title="Point Category"
-            pageTitle="point category"
+            pageTitle="Test"
           />
           <Row>
             <Col lg={12}>

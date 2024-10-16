@@ -192,7 +192,6 @@ const loadPoints = () => {
       listTestCatMasterDetails()
         .then((res) => {
           setTestMasters(res);
-          console.log("Test Masters:", res);
         })
         .catch((err) => {
           console.error("Error loading test masters:", err);
@@ -274,7 +273,7 @@ if (values.PointMasterPoints !== "") {
   setErrPNN(false);
 }
     if (values.TestCategoryID == "") {
-      errors.TestCategoryID = "Select Test Category name!";
+      errors.TestCategoryID = "Select Test Group name!";
       setErrCN(true);
     }
     if (values.TestCategoryID !== "") {
@@ -465,9 +464,9 @@ if (values.PointMasterPoints !== "") {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            maintitle="Location Setup"
-            title="City"
-            pageTitle="Location SetUp"
+            maintitle="Test"
+            title="Point Master"
+            pageTitle="Test"
           />
           <Row>
             <Col lg={12}>
@@ -583,7 +582,7 @@ if (values.PointMasterPoints !== "") {
               </select>
               <Label>
                 {" "}
-                Test Category<span className="text-danger">*</span>
+                Test Group<span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.TestCategoryID}</p>
@@ -612,7 +611,7 @@ if (values.PointMasterPoints !== "") {
 
               <Label>
                 {" "}
-                Test Master <span className="text-danger">*</span>
+                Test Category <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.TestMasterID}</p>
@@ -637,7 +636,7 @@ if (values.PointMasterPoints !== "") {
               </select>
               <Label>
                 {" "}
-                Point Name<span className="text-danger">*</span>
+                Point Category<span className="text-danger">*</span>
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.PointID}</p>}
             </div>
@@ -645,7 +644,7 @@ if (values.PointMasterPoints !== "") {
               <Input
                 type="text"
                 className={validClassPointMasterName}
-                placeholder="Enter Point Name"
+                placeholder="Enter Point Category"
                 id="PointMasterName"
                 name="PointMasterName"
                 value={PointMasterName}
@@ -767,7 +766,7 @@ if (values.PointMasterPoints !== "") {
                 ))}
               </select>
               <Label>
-                Test Category <span className="text-danger">*</span>
+                Test Group <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.TestCategoryID}</p>
@@ -791,7 +790,7 @@ if (values.PointMasterPoints !== "") {
                 ))}
               </select>
               <Label>
-                Test Master <span className="text-danger">*</span>
+                Test Category <span className="text-danger">*</span>
               </Label>
               {isSubmit && (
                 <p className="text-danger">{formErrors.TestMasterID}</p>
@@ -813,7 +812,7 @@ if (values.PointMasterPoints !== "") {
                 ))}
               </select>
               <Label>
-                Point Name <span className="text-danger">*</span>
+                Point Category <span className="text-danger">*</span>
               </Label>
               {isSubmit && <p className="text-danger">{formErrors.PointID}</p>}
             </div>
@@ -822,7 +821,7 @@ if (values.PointMasterPoints !== "") {
               <Input
                 type="text"
                 className={validClassPointName}
-                placeholder="Enter Point Name"
+                placeholder="Enter Point Category"
                 id="PointMasterName"
                 name="PointMasterName"
                 value={PointMasterName}

@@ -361,7 +361,7 @@ const State = () => {
     },
   ];
 
-  document.title = "State | Project Name";
+  document.title = "State | BPC India";
   return (
     <React.Fragment>
       <UiContent />

@@ -70,21 +70,34 @@ const EmailTemplete = () => {
 
   const columns = [
     {
-      name: "Email Form Name",
+      name: "Sr No",
+      selector: (row, index) => index + 1,
+      sortable: false,
+      maxWidth: "10px",
+    },
+    {
+      name: "Form Name",
       selector: (row) => row.formdata.FormName,
       sortable: true,
       sortField: "Email",
       minWidth: "150px",
     },
     {
-      name: "Form Title",
+      name: "Title Name",
       selector: (row) => row.FormTitle,
       sortable: true,
       sortField: "FormTitle",
       minWidth: "150px",
     },
-   
-    
+    {
+      name: "Status",
+      selector: (row) => {
+        return <p>{row.IsActive ? "Active" : "InActive"}</p>;
+      },
+      sortable: false,
+      sortField: "Status",
+    },
+
     {
       name: "Action",
       selector: (row) => {
@@ -172,7 +185,7 @@ const EmailTemplete = () => {
   const validate = (values) => {
     const errors = {};
     if (values.category === "") {
-      errors.category = "Email is required";
+      errors.category = "Form Email Category is required";
       setErrCN(true);
     }
     if (values.category !== "") {

@@ -942,7 +942,7 @@ const validClassHereFrom =
             setmodal_delete(false);
           }}
         >
-          Remove Category
+          Remove Record
         </ModalHeader>
         <form>
           <ModalBody>
