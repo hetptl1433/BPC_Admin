@@ -39,7 +39,6 @@ const CoverPasswCreate = () => {
                 .required("Confirm Password Required"),
         }),
         onSubmit: (values) => {
-            // console.log(values);
         }
     });
     return (

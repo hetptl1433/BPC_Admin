@@ -75,7 +75,6 @@ const BannerImages = () => {
     set_Id(_id);
     getBannerImages(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           Title: res.Title,
@@ -269,7 +268,6 @@ const BannerImages = () => {
         } else if (response.length === 0) {
           setData([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
@@ -287,7 +285,6 @@ const BannerImages = () => {
       const image = new Image();
 
       let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
 
       setPhotoAdd(imageurl);
       setValues({ ...values, bannerImage: e.target.files[0] });

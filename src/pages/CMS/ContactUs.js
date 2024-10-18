@@ -83,7 +83,6 @@ const ContactUs = () => {
     set_Id(_id);
     getContact(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           contactno: res.contactno,
@@ -260,7 +259,6 @@ const ContactUs = () => {
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

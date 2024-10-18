@@ -21,7 +21,6 @@ const BasicTwosVerify = () => {
             } else {
                 getInputElement(index).blur();
                 // Submit code
-                console.log('submit code');
             }
         }
     }

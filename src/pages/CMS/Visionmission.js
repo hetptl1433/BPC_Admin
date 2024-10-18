@@ -77,7 +77,6 @@ const Visionmission = () => {
     set_Id(_id);
     getVisionmission(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           vision: res.vision,
@@ -102,7 +101,6 @@ const Visionmission = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
     let errors = validate(values);
     setFormErrors(errors);
     setIsSubmit(true);
@@ -251,7 +249,6 @@ const Visionmission = () => {
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

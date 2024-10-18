@@ -22,7 +22,6 @@ const BasicPasswReset = () => {
             .matches("Please include an @ in the email address"),
         }),
         onSubmit: (values) => {
-            // console.log(values);
         }
     });
 

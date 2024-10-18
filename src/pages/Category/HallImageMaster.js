@@ -74,7 +74,6 @@ const HallImageMaster = () => {
     set_Id(_id);
     getHalleCategory(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           categoryName: res.categoryName,
@@ -97,7 +96,6 @@ const HallImageMaster = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
     let errors = validate(values);
     setFormErrors(errors);
     setIsSubmit(true);
@@ -217,7 +215,6 @@ const HallImageMaster = () => {
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

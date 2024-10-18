@@ -145,7 +145,6 @@ setIsActive(false);
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
    let errors = validate(
      Name,
      Email,
@@ -175,7 +174,6 @@ setIsActive(false);
     formdata.append("IsActive", IsActive);
       createContactForm(formdata)
       .then((res) => {
-        console.log(res);
       setName("");
       setEmail("");
       setMobile("");
@@ -243,46 +241,7 @@ setIsActive(false);
       });
   };
 
-  // const handleUpdate = (e) => {
-  //   e.preventDefault();
-  //   let erros = validate(
-  //     Name,
-  //     Email,
-  //     Mobile,
-  //     Company,
-  //     City,
-  //     Services,
-  //     Help,
-  //     HereFrom,
-  //   );
-  //   setFormErrors(erros);
-  //   setIsSubmit(true);
 
-  //   if (Object.keys(erros).length === 0) {
-
-  //       const formdata = new FormData();
-
-  //         formdata.append("Name", Name);
-  //         formdata.append("Email", Email);
-  //         formdata.append("Mobile", Mobile);
-  //         formdata.append("Company", Company);
-  //         formdata.append("City", City);
-  //         formdata.append("Services", Services);
-  //         formdata.append("Help", Help);
-  //         formdata.append("HereFrom", HereFrom);
-  //         formdata.append("KnowMore", KnowMore);
-  //         formdata.append("IsActive", IsActive);
-
-  //     updateContactForm(_id, formdata)
-  //       .then((res) => {
-  //         setmodal_edit(!modal_edit);
-  //         fetchCategories();
-  //       })
-  //       .catch((err) => {
-  //           console.log("Error from server:", err);
-  //       });
-  //   }
-  // };
 
   const validate = (
     Name,
@@ -438,7 +397,6 @@ const validClassHereFrom =
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

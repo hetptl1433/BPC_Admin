@@ -55,14 +55,12 @@ const UserProfile = () => {
     try {
       const userId = localStorage.getItem("AdminUser");
       await getAdminUser(userId).then((response)=> {
-        console.log(response);
         setFirstName(response.firstName);
         setLastName(response.lastName);
         setPassword(response.password);
         setemail(response.email);
         setPhoto(`${process.env.REACT_APP_API_URL_BPC}/${response.bannerImage}`);
         setIsActive(response.IsActive);
-        // console.log(IsActive);
       })
     } catch (error) {
       console.error("Error fetching user data:", error);

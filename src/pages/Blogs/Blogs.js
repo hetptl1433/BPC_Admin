@@ -152,7 +152,6 @@ const Blogs = () => {
 
       createBlogs(formdata)
         .then((res) => {
-          console.log(res);
           // setmodal_list(!modal_list);
           setShowForm(false);
           setLoadingOption(false);
@@ -342,7 +341,6 @@ const Blogs = () => {
         } else if (response.length === 0) {
           setBlogs([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
@@ -360,7 +358,6 @@ const Blogs = () => {
       const image = new Image();
 
       let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
 
       setPhotoAdd(imageurl);
       // setValues({ ...values, blogImage: e.target.files[0] });
@@ -710,7 +707,6 @@ const Blogs = () => {
                                             const data = editor.getData();
 
                                             setblogDesc(data);
-                                            console.log(blogDesc);
                                           }}
                                         />
                                         {isSubmit && (

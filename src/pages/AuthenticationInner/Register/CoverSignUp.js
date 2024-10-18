@@ -28,7 +28,6 @@ const CoverSignUp = () => {
                 .required("This field is required"),
         }),
         onSubmit: (values) => {
-            // console.log(values);
         }
     });
     return (

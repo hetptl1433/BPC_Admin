@@ -389,7 +389,7 @@ const UserGroup = () => {
             setIsSubmit(false);
           }}
         >
-          Add Category
+          Add User Group Master
         </ModalHeader>
         <form>
           <ModalBody>
@@ -463,7 +463,7 @@ const UserGroup = () => {
             setIsSubmit(false);
           }}
         >
-          Edit Category
+          Edit User Group Master
         </ModalHeader>
         <form>
           <ModalBody>

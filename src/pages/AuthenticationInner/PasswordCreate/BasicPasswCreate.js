@@ -40,7 +40,6 @@ const BasicPasswCreate = () => {
                 .required("Confirm Password Required"),
         }),
         onSubmit: (values) => {
-            // console.log(values);
         }
     });
     return (

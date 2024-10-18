@@ -197,7 +197,6 @@ const {
         } else if (response.length === 0) {
           setData([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
@@ -280,7 +279,6 @@ const {
 
    getBookingDetails(_id)
      .then((res) => {
-      console.log("res",res);
        setFormData((prevFormData) => ({
          ...prevFormData,
          HallName: res.HallName,
@@ -298,7 +296,6 @@ const {
        return getExtraBookingDetailsData(res._id);
      })
      .then((res) => {
-      console.log(res);
       setExtraBookData(res);
       
      })

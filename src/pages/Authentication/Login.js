@@ -61,7 +61,6 @@ const Login = (props) => {
       .post(`${process.env.REACT_APP_API_URL_BPC}/api/adminLogin`, values)
       .then((res) => {
         if (res.isOk) {
-          console.log(" login", res);
 
           localStorage.setItem("AdminUser", res.data._id);
 

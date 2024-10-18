@@ -28,10 +28,8 @@ const ProfileDropdown = () => {
       try {
         const userId = localStorage.getItem("AdminUser");
         const response = await axios.get(`${process.env.REACT_APP_API_URL_BPC}/api/auth/get/adminUser/${userId}`);
-        console.log("response", response);
         const userData = response; // Access response data
         setUserName(userData.firstName);
-        console.log("image", userData.bannerImage);
         const logoUrl = `${process.env.REACT_APP_API_URL_BPC}/${userData.bannerImage}`;
         setLogo(logoUrl);
       } catch (error) {

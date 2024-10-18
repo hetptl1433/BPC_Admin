@@ -108,7 +108,6 @@ const [IsActive, setIsActive] = useState(false);
     set_Id(_id);
     getCoursesFun(_id)
       .then((res) => {
-        console.log(res);
         setName(res.Name);
         setDuration(res.Duration);
         setTiming(res.Timing);
@@ -166,11 +165,7 @@ const [IsActive, setIsActive] = useState(false);
      
       createCoursesFun(formdata)
       .then((res) => {
-        console.log(res);
-        console.log(Name);
-        console.log(Duration);
-        console.log(Timing);
-        console.log(Eligibility);
+      
         
         setName("");
         setDuration("");
@@ -386,7 +381,6 @@ const [IsActive, setIsActive] = useState(false);
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

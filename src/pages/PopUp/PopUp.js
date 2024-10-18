@@ -115,7 +115,13 @@ const PopUpFile = () => {
       setErrTT(false);
     }
 
-  
+  if (values.SortOrder === "") {
+    errors.SortOrder = "Sort Order is required!";
+    setErrKW(true);
+  }
+  if (values.SortOrder !== "") {
+    setErrKW(false);
+  }
 
     if (values.PopUpFile === "") {
       errors.PopUpFile = "PopUpFile File is required!";
@@ -523,22 +529,23 @@ const PopUpFile = () => {
               {isSubmit && (
                 <p className="text-danger">{formErrors.PopUpFile}</p>
               )}
-              {values.PopUpFile || photoAdd ? (
+              {(values.PopUpFile || photoAdd) && (
                 <div className="m-2">
-                  <p>{photoAdd ? "Uploaded File" : values.PopUpFile}</p>
+                  <p>{photoAdd ? "Uploaded File" : values.PopUpFile.name}</p>
                   <button
                     className="btn btn-primary"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent page refresh
                       const fileUrl = checkImagePhoto
                         ? photoAdd
-                        : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`;
+                        : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile.name}`;
                       window.open(fileUrl, "_blank");
                     }}
                   >
                     Preview
                   </button>
                 </div>
-              ) : null}
+              )}
             </Col>
 
             <div className="form-check mb-2">
@@ -617,7 +624,7 @@ const PopUpFile = () => {
             <div className="form-floating mb-3">
               <Input
                 type="text"
-                className={validClassTT}
+                className={validClassKW}
                 placeholder="Enter SortOrder "
                 required
                 name="SortOrder"
@@ -649,22 +656,38 @@ const PopUpFile = () => {
                 <p className="text-danger">{formErrors.PopUpFile}</p>
               )}
 
-              {values.PopUpFile || photoAdd ? (
+              {(values.PopUpFile || photoAdd) && (
                 <div className="m-2">
-                  <p>{photoAdd ? "Uploaded File" : values.PopUpFile}</p>
+                  <p>
+                    {photoAdd
+                      ? "Uploaded File"
+                      : values.PopUpFile.name
+                      ? values.PopUpFile.name
+                      : values.PopUpFile}
+                  </p>
                   <button
                     className="btn btn-primary"
-                    onClick={() => {
-                      const fileUrl = checkImagePhoto
-                        ? photoAdd
-                        : `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`;
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent page refresh
+                      let fileUrl;
+
+                      if (checkImagePhoto) {
+                        fileUrl = photoAdd;
+                      } else if (values.PopUpFile instanceof File) {
+                        // Handle new file upload case
+                        fileUrl = URL.createObjectURL(values.PopUpFile);
+                      } else {
+                        // Handle existing file case (assumed to be a URL string)
+                        fileUrl = `${process.env.REACT_APP_API_URL_BPC}/${values.PopUpFile}`;
+                      }
+
                       window.open(fileUrl, "_blank");
                     }}
                   >
                     Preview
                   </button>
                 </div>
-              ) : null}
+              )}
             </Col>
 
             <div className="form-check mb-2">

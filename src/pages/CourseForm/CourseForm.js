@@ -131,7 +131,6 @@ setIsActive(false);
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
    let errors = validate(
      Email,
      Mobile,
@@ -156,7 +155,6 @@ setIsActive(false);
     formdata.append("IsActive", IsActive);
       createCourseForm(formdata)
       .then((res) => {
-        console.log(res);
       setEmail("");
       setMobile("");
       setContactPerson("");
@@ -377,7 +375,6 @@ const validClassCourseName =
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

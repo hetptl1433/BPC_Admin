@@ -80,7 +80,6 @@ const ContentContact = () => {
     set_Id(_id);
     getContentContact(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           Name: res.Name,
@@ -106,7 +105,6 @@ const ContentContact = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("Contact", values);
     let errors = validate(values);
     setFormErrors(errors);
     setIsSubmit(true);
@@ -262,7 +260,6 @@ const ContentContact = () => {
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

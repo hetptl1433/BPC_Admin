@@ -76,7 +76,6 @@ const DownloadFiles = () => {
     set_Id(_id);
     getDownloadFiles(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           Title: res.Title,
@@ -85,7 +84,6 @@ const DownloadFiles = () => {
           DownloadFile: res.DownloadFile,
           IsActive: res.IsActive,
         });
-        console.log("res", values.Title);
       })
       .catch((err) => {
         console.log(err);
@@ -268,7 +266,6 @@ const DownloadFiles = () => {
         } else if (response.length === 0) {
           setData([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
@@ -295,7 +292,6 @@ const DownloadFiles = () => {
 
      const image = new Image();
      let imageurl = URL.createObjectURL(file);
-     console.log("img", file);
 
      setPhotoAdd(imageurl); // Set the preview URL
      setValues({ ...values, DownloadFile: file }); // Set the selected file

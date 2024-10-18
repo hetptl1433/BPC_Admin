@@ -12,7 +12,6 @@ import UserProfile from "../pages/Authentication/user-profile";
 import Banner from "../pages/CMS/Banner";
 import AdminUser from "../pages/Auth/AdminUser";
 import ContactUs from "../pages/CMS/ContactUs";
-import SocialMedia from "../pages/CMS/SocialMedia";
 import Visionmission from "../pages/CMS/Visionmission";
 import Gallery from "../pages/Gallery/Gallery";
 import Logo from "../pages/Logo/Logo";
@@ -70,7 +69,6 @@ const authProtectedRoutes = [
   { path: "/location", component: <CompanyLocation /> },
   { path: "/admin-user", component: <AdminUser /> },
   { path: "/contact", component: <ContactUs /> },
-  { path: "/socialmedia", component: <SocialMedia /> },
   { path: "/logo", component: <Logo /> },
   { path: "/galleryimg", component: <Gallery /> },
   { path: "/vision-mission", component: <Visionmission /> },

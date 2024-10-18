@@ -89,7 +89,6 @@ const [IsActive, setIsActive] = useState(false);
     set_Id(_id);
     getEmailControl(_id)
       .then((res) => {
-        console.log(res);
         setTitle(res.Title);
         setEmail(res.Email);
         setIsActive(res.IsActive)
@@ -112,7 +111,6 @@ const [IsActive, setIsActive] = useState(false);
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors({});
-    console.log("country", values);
     let errors = validate(Title, Email);
     setFormErrors(errors);
     setIsSubmit(true);
@@ -126,7 +124,6 @@ const [IsActive, setIsActive] = useState(false);
       formdata.append("IsActive", IsActive);
       createEmailControl(formdata)
       .then((res) => {
-        console.log(res);
         setTitle("");
         setEmail("");
         setIsActive(false);
@@ -289,7 +286,6 @@ const [IsActive, setIsActive] = useState(false);
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

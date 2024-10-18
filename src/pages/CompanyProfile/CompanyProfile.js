@@ -182,7 +182,6 @@ const CompanyProfile = () => {
         } else if (response.length === 0) {
           setData([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
@@ -358,7 +357,6 @@ const validClassPI =
   const [modal_edit, setmodal_edit] = useState(false);
 
   const handlecheck = (e) => {
-    console.log(e.target.checked);
     setValues({ ...values, IsActive: e.target.checked });
   };
 
@@ -546,7 +544,6 @@ const validClassPI =
       const image = new Image();
 
       let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
 
       image.onload = () => {
         const width = image.width;

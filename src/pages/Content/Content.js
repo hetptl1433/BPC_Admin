@@ -91,7 +91,6 @@ const [IsActive, setIsActive] = useState(false);
     set_Id(_id);
     getContent(_id)
       .then((res) => {
-        console.log(res);
         setTitle(res.Title);
         setDesc(res.Desc);
         setsubTitle(res.subTitle);
@@ -130,7 +129,6 @@ const [IsActive, setIsActive] = useState(false);
       formdata.append("IsActive", IsActive);
       createContent(formdata)
       .then((res) => {
-        console.log(res);
         setTitle("");
         setsubTitle("");
         setDesc("");
@@ -144,27 +142,6 @@ const [IsActive, setIsActive] = useState(false);
       });
     }
 
-    // createContent(values)
-    //   .then((res) => {
-    //     setmodal_list(!modal_list);
-    //     setValues(initialState);
-    //     fetchCategories();
-        // if (res.isOk) {
-        //   setmodal_list(!modal_list);
-        //   setValues(initialState);
-        //   fetchCategories();
-        // } else {
-        //   if (res.field === 1) {
-        //     setErrCN(true);
-        //     setFormErrors({
-        //       categoryName: "This Category name is already exists!",
-        //     });
-        //   }
-        // }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   const handleDelete = (e) => {
@@ -295,7 +272,6 @@ const [IsActive, setIsActive] = useState(false);
         } else if (response.length === 0) {
           setCategories([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);

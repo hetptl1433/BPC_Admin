@@ -185,7 +185,6 @@ const AdminUser = () => {
       const image = new Image();
 
       let imageurl = URL.createObjectURL(e.target.files[0]);
-      console.log("img", e.target.files[0]);
 
       setPhotoAdd(imageurl);
       setValues({ ...values, bannerImage: e.target.files[0] });

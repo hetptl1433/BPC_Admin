@@ -60,13 +60,9 @@ const IndustryUser = (props) => {
     axios
       .post(`${process.env.REACT_APP_API_URL_BPC}/api/ExamUserLogin`, values)
       .then((res) => {
-        console.log(res);
-        console.log(res.success)
         if (res.success) {
-          console.log(" login", res);
 
           localStorage.setItem(" Exam User", res._id);
-          console.log(res._id)
 
           window.location.replace("/contact");
         } else {
@@ -105,7 +101,7 @@ const IndustryUser = (props) => {
   const validClassPassword =
     errPassword && isSubmit ? "form-control is-invalid" : "form-control pe-5";
 
-  document.title = " SignIn | BPC India";
+  document.title = " :: BPC INDIA | Baroda Productivity Council Exam Portal : Admin ::";
   return (
     <React.Fragment>
       {/* <ParticlesAuth> */}

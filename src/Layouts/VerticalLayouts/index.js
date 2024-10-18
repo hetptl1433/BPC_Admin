@@ -382,11 +382,7 @@ const VerticalLayout = (props) => {
               </Collapse>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link " to="/RoutineActivity">
-                <span data-key="t-apps"> Routine Sheet</span>
-              </Link>
-            </li>
+           
           </ul>
         </Collapse>
       </li>

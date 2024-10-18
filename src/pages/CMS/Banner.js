@@ -76,7 +76,6 @@ const BannerImage = () => {
     set_Id(_id);
     getBannerImages(_id)
       .then((res) => {
-        console.log(res);
         setValues({
           ...values,
           Title: res.Title,
@@ -85,7 +84,6 @@ const BannerImage = () => {
           bannerImage: res.bannerImage,
           IsActive: res.IsActive,
         });
-        console.log("res", values.Title);
       })
       .catch((err) => {
         console.log(err);
@@ -265,7 +263,6 @@ const BannerImage = () => {
         } else if (response.length === 0) {
           setData([]);
         }
-        // console.log(res);
       });
 
     setLoading(false);
